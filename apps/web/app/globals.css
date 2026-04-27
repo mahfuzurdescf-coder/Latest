@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-serif: 'Lora', Georgia, serif;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-earth-50 text-earth-800 font-sans;
+  }
+
+  ::selection {
+    @apply bg-forest-100 text-forest-900;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-forest-600 ring-offset-2;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+  .container-site {
+    @apply max-w-site mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .section-padding-sm {
+    @apply py-10 md:py-14 lg:py-16;
+  }
+
+  /* Status badges */
+  .badge-current {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md
+           bg-forest-50 text-forest-900 border border-forest-200;
+  }
+  .badge-preparation {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md
+           bg-bark-50 text-bark-800 border border-bark-200;
+  }
+  .badge-development {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md
+           bg-blue-50 text-blue-800 border border-blue-200;
+  }
+  .badge-exploratory {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md
+           bg-earth-100 text-earth-700 border border-earth-200;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium
+           bg-forest-800 text-forest-50 hover:bg-forest-900
+           transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-forest-600;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium
+           border border-forest-700 text-forest-800 hover:bg-forest-50
+           transition-colors duration-150;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm
+           text-earth-600 hover:text-earth-900 hover:bg-earth-100
+           transition-colors duration-150;
+  }
+  .btn-cta {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium
+           bg-bark-500 text-bark-50 hover:bg-bark-600
+           transition-colors duration-150;
+  }
+
+  /* Card base */
+  .card-base {
+    @apply bg-white border border-earth-200 rounded-xl overflow-hidden
+           transition-shadow duration-200 hover:shadow-card-lg;
+  }
+
+  /* Section label — the small uppercase label above headings */
+  .section-label {
+    @apply text-label text-forest-700 uppercase tracking-widest;
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    @apply border-l-4 border-forest-600 pl-5 my-8
+           font-serif italic text-xl text-earth-800 leading-relaxed;
+  }
+}
