@@ -245,7 +245,6 @@ export const siteSettings = defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
-  __experimental_actions: ['update', 'publish'],  // Prevent creating duplicates
   fields: [
     defineField({ name: 'siteTitle', title: 'Site title', type: 'string', validation: (R) => R.required() }),
     defineField({ name: 'tagline',   title: 'Tagline (English)', type: 'string' }),

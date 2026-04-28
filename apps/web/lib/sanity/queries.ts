@@ -18,8 +18,8 @@ const POST_CARD_FRAGMENT = `
   _id, _type, title, slug, excerpt, publishedAt, updatedAt,
   readingTime, featured, editorPick, contentType, language, status,
   coverImage{${IMAGE_FRAGMENT}},
-  category{${CATEGORY_FRAGMENT}},
-  tags[]{${TAG_FRAGMENT}},
+  category->{${CATEGORY_FRAGMENT}},
+  tags[]->{${TAG_FRAGMENT}},
   author->{${AUTHOR_CARD_FRAGMENT}}
 `
 
@@ -124,7 +124,7 @@ export const TAG_BY_SLUG_QUERY = `{
   "tag": *[_type == "tag" && slug.current == $slug][0]{${TAG_FRAGMENT}},
   "posts": *[
     _type == "post" && status == "published"
-    && $slug in tags[].slug.current
+    && $slug in tags[]->slug.current
     && language == "en"
   ] | order(publishedAt desc){${POST_CARD_FRAGMENT}}
 }`
@@ -222,6 +222,16 @@ export const SITEMAP_QUERY = `{
   "programmes": *[_type == "programme"]{
     "slug": slug.current, _updatedAt
   },
-  "categories": *[_type == "category"]{"slug": slug.current},
-  "events": *[_type == "event"]{"slug": slug.current, _updatedAt}
+  "categories": *[_type == "category"]{
+    "slug": slug.current
+  },
+  "tags": *[_type == "tag"]{
+    "slug": slug.current
+  },
+  "authors": *[_type == "author"]{
+    "slug": slug.current
+  },
+  "events": *[_type == "event"]{
+    "slug": slug.current, _updatedAt
+  }
 }`

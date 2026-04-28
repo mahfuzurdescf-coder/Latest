@@ -1,19 +1,18 @@
 import Link from 'next/link'
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
-    <section className="section-padding container-site flex flex-col items-center text-center py-32">
-      <p className="text-8xl font-serif text-earth-200 mb-6">404</p>
-      <h1 className="text-h2 font-serif text-earth-900 mb-4">Page not found</h1>
-      <p className="text-body text-earth-500 max-w-prose-sm mb-8 leading-relaxed">
+    <main id="main-content" className="min-h-screen flex flex-col items-center justify-center bg-earth-50 text-earth-900 p-6">
+      <h1 className="text-6xl font-serif mb-4">404</h1>
+      <h2 className="text-2xl mb-4">Page not found</h2>
+      <p className="text-body text-earth-700 mb-6">
         The page you are looking for may have been moved, renamed, or removed.
-        If you followed a link from another site, it may be outdated.
       </p>
-      <div className="flex flex-wrap gap-3 justify-center">
-        <Link href="/"         className="btn-primary">Back to home</Link>
+      <div className="flex gap-4">
+        <Link href="/" className="btn-primary">Back to home</Link>
         <Link href="/newsroom" className="btn-secondary">Browse newsroom</Link>
-        <Link href="/contact"  className="btn-ghost">Contact DESCF</Link>
+        <Link href="/contact" className="btn-cta">Contact DESCF</Link>
       </div>
-    </section>
+    </main>
   )
 }

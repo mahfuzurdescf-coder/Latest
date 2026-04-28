@@ -1,26 +1,22 @@
 import { createClient } from 'next-sanity'
+import { env, isPreviewDeployment, isProduction } from '@/lib/env'
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
-export const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production'
+export const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID
+export const dataset = env.NEXT_PUBLIC_SANITY_DATASET
 export const apiVersion = '2024-05-01'
 
 export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === 'production',
-  // For draft previews — keep token server-side only
-  token: process.env.SANITY_API_READ_TOKEN,
+  useCdn: isProduction && !isPreviewDeployment,
+  token: env.SANITY_API_READ_TOKEN,
   stega: {
-    enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
-    studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? 'https://studio.descf.org',
+    enabled: isPreviewDeployment,
+    studioUrl: env.NEXT_PUBLIC_SANITY_STUDIO_URL,
   },
 })
 
-/**
- * Typed fetch helper — wraps client.fetch with revalidation tags.
- * Use this in all Server Components instead of calling client.fetch directly.
- */
 export async function sanityFetch<T>({
   query,
   params = {},
@@ -32,7 +28,6 @@ export async function sanityFetch<T>({
 }): Promise<T> {
   return client.fetch<T>(query, params, {
     next: {
-      // ISR revalidation — override per-query with specific tags
       tags: tags.length > 0 ? tags : ['sanity'],
     },
   })

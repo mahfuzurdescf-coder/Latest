@@ -1,3 +1,14 @@
-no.env.local
-apps/web/.env.local
-apps/studio/.env.localde_modules
+node_modules/
+.next/
+.turbo/
+dist/
+.env
+.env.local
+*.tsbuildinfo
+
+apps/**/.env.local
+apps/**/.turbo/
+apps/**/node_modules/
+apps/**/.next/
+apps/studio/dist/
+apps/studio/.sanity/
