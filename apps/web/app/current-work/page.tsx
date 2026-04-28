@@ -1,90 +1,185 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { sanityFetch } from '@/lib/sanity/client'
-import { PROGRAMMES_PAGE_QUERY } from '@/lib/sanity/queries'
-import { ProgrammeCard } from '@/components/cards'
-import { SectionHeader } from '@/components/ui'
-import type { ProgrammeCard as ProgrammeCardType } from '@/types/sanity'
 
-export const metadata: Metadata = {
+import { Button } from '@/components/ui/Button'
+import { Card, CardContent } from '@/components/ui/Card'
+import { Container } from '@/components/ui/Container'
+import { Section, SectionHeader } from '@/components/ui/Section'
+import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
+import { buildMetadata } from '@/lib/seo'
+import { SITE } from '@/lib/site'
+
+export const metadata: Metadata = buildMetadata({
   title: 'Current Work',
-  description: "What DESCF is actively working on — field programmes, awareness outreach, and conservation documentation currently underway.",
-}
+  description:
+    'Explore DESCF’s current work in snake conservation, biodiversity awareness, field documentation, conservation storytelling, and human-wildlife coexistence in Bangladesh.',
+  canonicalUrl: 'https://descf.org/current-work',
+})
 
-export default async function CurrentWorkPage() {
-  const programmes = await sanityFetch<ProgrammeCardType[]>({
-    query: PROGRAMMES_PAGE_QUERY,
-    tags: ['programme'],
-  })
+const currentWorkJsonLd = buildBreadcrumbJSONLD([
+  { name: 'Home', url: 'https://descf.org' },
+  { name: 'Current Work', url: 'https://descf.org/current-work' },
+])
 
-  const current = (programmes ?? []).filter(p => p.status === 'current')
-  const preparation = (programmes ?? []).filter(p => p.status === 'in-preparation')
+const WORK_AREAS = [
+  {
+    title: 'Snake conservation awareness',
+    description:
+      'DESCF works to improve public understanding of snakes, reduce harmful fear-based responses, and communicate coexistence-oriented knowledge.',
+  },
+  {
+    title: 'Biodiversity documentation',
+    description:
+      'Field observation, species documentation, and ecological learning help build a stronger public understanding of Bangladesh’s natural diversity.',
+  },
+  {
+    title: 'Conservation communication',
+    description:
+      'DESCF develops public-facing communication that connects conservation knowledge with accessible storytelling and education.',
+  },
+  {
+    title: 'Human-wildlife coexistence',
+    description:
+      'The organisation promotes practical awareness and responsible attitudes toward wildlife in human-dominated landscapes.',
+  },
+  {
+    title: 'Nature learning materials',
+    description:
+      'Educational resources, articles, field notes, and visual materials can support schools, communities, and general audiences.',
+  },
+  {
+    title: 'Institutional collaboration',
+    description:
+      'DESCF seeks meaningful partnerships with researchers, educators, conservation organisations, and media professionals.',
+  },
+]
 
+const CURRENT_PRIORITIES = [
+  'Strengthening snake awareness and conservation communication',
+  'Improving institutional presentation and public trust',
+  'Publishing structured conservation stories and resources',
+  'Developing partnership-ready programme pages',
+  'Preparing for a separate Nature Tales editorial platform',
+]
+
+export default function CurrentWorkPage() {
   return (
     <>
-      <section className="bg-forest-900 text-forest-50 section-padding">
-        <div className="container-site">
-          <p className="section-label text-forest-500 mb-4">Active work</p>
-          <h1 className="text-display-md font-serif text-forest-50 mb-5">Current Work</h1>
-          <p className="text-body-lg text-forest-300 max-w-prose leading-relaxed">
-            This page shows what DESCF is actively doing right now — not what we plan to do,
-            not what we aspire to. We use status labels honestly.
-          </p>
-        </div>
-      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(currentWorkJsonLd) }}
+      />
 
-      {/* Honesty note */}
-      <div className="bg-forest-50 border-b border-forest-200">
-        <div className="container-site py-5">
-          <p className="text-body-sm text-forest-800 italic">
-            "We do not present ambition as achievement. The programmes below are active —
-            meaning work is underway. Programmes in preparation or development are listed
-            separately on our{' '}
-            <Link href="/programmes" className="underline hover:text-forest-900">Programmes page</Link>."
-          </p>
-        </div>
-      </div>
+      <main id="main-content">
+        <section className="border-b border-earth-200 bg-earth-50">
+          <Container className="section-padding-sm">
+            <div className="max-w-3xl">
+              <p className="section-label mb-4">Current work</p>
+              <h1 className="font-serif text-h1 text-earth-950">
+                DESCF’s current work connects awareness, documentation, and coexistence.
+              </h1>
+              <p className="mt-5 text-body-lg text-earth-700">
+                DESCF’s present work focuses on snake conservation awareness, biodiversity
+                learning, nature communication, and human-wildlife coexistence in Bangladesh.
+              </p>
+            </div>
+          </Container>
+        </section>
 
-      <section className="section-padding bg-white">
-        <div className="container-site space-y-16">
-          {current.length > 0 ? (
-            <div>
-              <SectionHeader
-                label="Active programmes"
-                title="What we are working on now"
-                subtitle="These programmes are currently active — with ongoing field work, outreach, or documentation."
-              />
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {current.map(p => <ProgrammeCard key={p._id} programme={p} />)}
+        <Section>
+          <Container>
+            <SectionHeader
+              eyebrow="Work areas"
+              title="A focused institutional portfolio for conservation communication"
+              description="The website should present DESCF’s work as a serious conservation portfolio—not a scattered list of activities."
+            />
+
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {WORK_AREAS.map((area) => (
+                <Card key={area.title}>
+                  <CardContent>
+                    <h2 className="font-serif text-2xl text-earth-950">
+                      {area.title}
+                    </h2>
+                    <p className="mt-3 text-body-sm text-earth-700">
+                      {area.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </Container>
+        </Section>
+
+        <section className="bg-earth-100/70">
+          <Container className="py-16 md:py-20">
+            <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr]">
+              <div>
+                <p className="section-label mb-3">Current priorities</p>
+                <h2 className="font-serif text-h2 text-earth-950">
+                  The next stage is about credibility, structure, and maintainable growth.
+                </h2>
+                <p className="mt-5 text-body text-earth-700">
+                  DESCF should prioritise a clear institutional portfolio, CMS-driven content,
+                  consistent public communication, and partnership-ready pages. This creates
+                  a stronger foundation before expanding into Nature Tales as a separate
+                  editorial platform.
+                </p>
+              </div>
+
+              <Card>
+                <CardContent>
+                  <h3 className="font-serif text-2xl text-earth-950">
+                    Priority checklist
+                  </h3>
+
+                  <ul className="mt-5 space-y-3">
+                    {CURRENT_PRIORITIES.map((priority) => (
+                      <li key={priority} className="flex gap-3 text-body-sm text-earth-700">
+                        <span className="mt-2 h-2 w-2 rounded-full bg-forest-700" />
+                        <span>{priority}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </Container>
+        </section>
+
+        <Section>
+          <Container>
+            <div className="rounded-3xl bg-forest-900 p-8 text-white md:p-10">
+              <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div className="max-w-3xl">
+                  <p className="section-label mb-3 text-forest-300">
+                    Collaboration
+                  </p>
+                  <h2 className="font-serif text-h3 text-white">
+                    Current work becomes stronger when it is connected with serious partners.
+                  </h2>
+                  <p className="mt-4 text-body text-forest-100">
+                    Researchers, educators, media teams, institutions, and conservation organisations
+                    can contact DESCF for responsible collaboration.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <Button href="/partner" variant="cta">
+                    Partner with DESCF
+                  </Button>
+                  <Button
+                    href={`mailto:${SITE.contactEmail}`}
+                    variant="secondary"
+                    className="border-forest-300 text-forest-50 hover:bg-forest-800"
+                  >
+                    Email DESCF
+                  </Button>
+                </div>
               </div>
             </div>
-          ) : (
-            <div className="py-16 text-center text-earth-500">
-              <p className="text-h4 font-serif mb-2">Programmes loading</p>
-              <p className="text-body-sm">Add current programmes via the CMS studio.</p>
-            </div>
-          )}
-
-          {preparation.length > 0 && (
-            <div>
-              <SectionHeader
-                label="Coming soon"
-                title="Programmes in preparation"
-                subtitle="Active planning and preparation underway — not yet launched."
-              />
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {preparation.map(p => <ProgrammeCard key={p._id} programme={p} />)}
-              </div>
-            </div>
-          )}
-
-          <div className="text-center">
-            <Link href="/strategic-priorities" className="btn-secondary">
-              See strategic priorities →
-            </Link>
-          </div>
-        </div>
-      </section>
+          </Container>
+        </Section>
+      </main>
     </>
   )
 }
