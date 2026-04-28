@@ -9,19 +9,33 @@ export interface SanitySlug {
 export interface SanityImageAsset {
   _id: string
   url: string
-  metadata: {
-    dimensions: { width: number; height: number; aspectRatio: number }
-    lqip: string // low-quality image placeholder (base64)
+  metadata?: {
+    dimensions?: {
+      width: number
+      height: number
+      aspectRatio: number
+    }
+    lqip?: string
   }
 }
 
 export interface SanityImage {
-  _type: 'image'
-  asset: SanityImageAsset
+  _type?: 'image'
+  asset?: SanityImageAsset
   alt?: string
   caption?: string
-  hotspot?: { x: number; y: number; height: number; width: number }
-  crop?: { top: number; bottom: number; left: number; right: number }
+  hotspot?: {
+    x: number
+    y: number
+    height: number
+    width: number
+  }
+  crop?: {
+    top: number
+    bottom: number
+    left: number
+    right: number
+  }
 }
 
 export interface SocialLinks {
@@ -29,10 +43,11 @@ export interface SocialLinks {
   linkedin?: string
   facebook?: string
   instagram?: string
+  youtube?: string
   website?: string
 }
 
-// ─── Programme status & content types ────────────────────────────────────────
+// ─── Programme status & content types ─────────────────────────────────────────
 
 export type ProgrammeStatus =
   | 'current'
@@ -49,7 +64,15 @@ export type PostContentType =
   | 'interview'
   | 'event-update'
 
-export type PostStatus = 'draft' | 'review' | 'published'
+export type PostStatus =
+  | 'draft'
+  | 'review'
+  | 'assigned'
+  | 'inReview'
+  | 'factCheck'
+  | 'ready'
+  | 'published'
+  | 'archived'
 
 export type PostLanguage = 'en' | 'bn'
 
@@ -68,7 +91,7 @@ export type EventStatus = 'upcoming' | 'completed'
 
 export interface Category {
   _id: string
-  _type: 'category'
+  _type?: 'category'
   title: string
   slug: SanitySlug
   description?: string
@@ -79,7 +102,7 @@ export interface Category {
 
 export interface Tag {
   _id: string
-  _type: 'tag'
+  _type?: 'tag'
   title: string
   slug: SanitySlug
 }
@@ -88,10 +111,10 @@ export interface Tag {
 
 export interface Author {
   _id: string
-  _type: 'author'
+  _type?: 'author'
   name: string
   slug: SanitySlug
-  role: string
+  role?: string
   bio?: PortableTextBlock[]
   photo?: SanityImage
   email?: string
@@ -105,6 +128,8 @@ export interface Author {
 export interface Post {
   _id: string
   _type: 'post'
+  _createdAt?: string
+  _updatedAt?: string
   title: string
   slug: SanitySlug
   excerpt?: string
@@ -114,7 +139,7 @@ export interface Post {
   tags?: Tag[]
   author?: Author
   coAuthors?: Author[]
-  publishedAt: string
+  publishedAt?: string
   updatedAt?: string
   readingTime?: number
   body?: PortableTextBlock[]
@@ -123,9 +148,8 @@ export interface Post {
   ogImage?: SanityImage
   featured?: boolean
   editorPick?: boolean
-  status: PostStatus
-  contentType: PostContentType
-  // Populated by GROQ query on detail page
+  status?: PostStatus
+  contentType?: PostContentType
   relatedPosts?: PostCard[]
 }
 
@@ -135,28 +159,32 @@ export interface PostCard
     Post,
     | '_id'
     | '_type'
+    | '_createdAt'
+    | '_updatedAt'
     | 'title'
     | 'slug'
     | 'excerpt'
     | 'coverImage'
     | 'publishedAt'
+    | 'updatedAt'
     | 'readingTime'
     | 'featured'
     | 'editorPick'
     | 'contentType'
     | 'language'
+    | 'status'
   > {
   category?: Pick<Category, '_id' | 'title' | 'slug' | 'colorLabel'>
-  author?: Pick<Author, '_id' | 'name' | 'slug' | 'photo' | 'role'>
+  author?: Pick<Author, '_id' | 'name' | 'slug' | 'photo' | 'role' | 'orgRole'>
   tags?: Pick<Tag, '_id' | 'title' | 'slug'>[]
 }
 
-// ─── Impact metric (used inside Programme) ────────────────────────────────────
+// ─── Impact metric ────────────────────────────────────────────────────────────
 
 export interface ImpactMetric {
   _key: string
   label: string
-  value: string        // string so CMS can store "1,000+" or "In progress"
+  value: string
   description?: string
 }
 
@@ -165,6 +193,8 @@ export interface ImpactMetric {
 export interface Programme {
   _id: string
   _type: 'programme'
+  _createdAt?: string
+  _updatedAt?: string
   title: string
   slug: SanitySlug
   shortDescription?: string
@@ -182,7 +212,13 @@ export interface Programme {
 export interface ProgrammeCard
   extends Pick<
     Programme,
-    '_id' | '_type' | 'title' | 'slug' | 'shortDescription' | 'status' | 'heroImage'
+    | '_id'
+    | '_type'
+    | 'title'
+    | 'slug'
+    | 'shortDescription'
+    | 'status'
+    | 'heroImage'
   > {}
 
 // ─── Resource ─────────────────────────────────────────────────────────────────
@@ -190,10 +226,12 @@ export interface ProgrammeCard
 export interface Resource {
   _id: string
   _type: 'resource'
+  _createdAt?: string
+  _updatedAt?: string
   title: string
   slug: SanitySlug
   type: ResourceType
-  fileUrl?: string        // external URL or Sanity file URL
+  fileUrl?: string
   pubDate?: string
   summary?: string
   relatedProgramme?: ProgrammeCard
@@ -204,7 +242,14 @@ export interface Resource {
 export interface ResourceCard
   extends Pick<
     Resource,
-    '_id' | '_type' | 'title' | 'slug' | 'type' | 'fileUrl' | 'pubDate' | 'summary'
+    | '_id'
+    | '_type'
+    | 'title'
+    | 'slug'
+    | 'type'
+    | 'fileUrl'
+    | 'pubDate'
+    | 'summary'
   > {}
 
 // ─── Event ────────────────────────────────────────────────────────────────────
@@ -212,6 +257,8 @@ export interface ResourceCard
 export interface Event {
   _id: string
   _type: 'event'
+  _createdAt?: string
+  _updatedAt?: string
   title: string
   slug: SanitySlug
   date: string
@@ -226,7 +273,14 @@ export interface Event {
 export interface EventCard
   extends Pick<
     Event,
-    '_id' | '_type' | 'title' | 'slug' | 'date' | 'time' | 'location' | 'status'
+    | '_id'
+    | '_type'
+    | 'title'
+    | 'slug'
+    | 'date'
+    | 'time'
+    | 'location'
+    | 'status'
   > {}
 
 // ─── TeamMember ───────────────────────────────────────────────────────────────
@@ -234,6 +288,8 @@ export interface EventCard
 export interface TeamMember {
   _id: string
   _type: 'teamMember'
+  _createdAt?: string
+  _updatedAt?: string
   name: string
   slug: SanitySlug
   role: string
@@ -243,7 +299,7 @@ export interface TeamMember {
   social?: SocialLinks
 }
 
-// ─── NavLink (used in SiteSettings) ──────────────────────────────────────────
+// ─── NavLink ──────────────────────────────────────────────────────────────────
 
 export interface NavLink {
   _key: string
@@ -254,11 +310,11 @@ export interface NavLink {
 // ─── SiteSettings ─────────────────────────────────────────────────────────────
 
 export interface SiteSettings {
-  _id: string
-  _type: 'siteSettings'
-  siteTitle: string
+  _id?: string
+  _type?: 'siteSettings'
+  siteTitle?: string
   tagline?: string
-  tagline_bn?: string   // Bengali tagline — future bilingual support
+  tagline_bn?: string
   logo?: SanityImage
   navLinks?: NavLink[]
   footerLinks?: NavLink[]
@@ -270,7 +326,7 @@ export interface SiteSettings {
   defaultOgImage?: SanityImage
 }
 
-// ─── Page metadata (for generateMetadata) ────────────────────────────────────
+// ─── Page metadata ────────────────────────────────────────────────────────────
 
 export interface PageSEO {
   title: string
