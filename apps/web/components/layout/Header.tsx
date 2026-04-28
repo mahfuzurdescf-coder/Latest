@@ -1,7 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import { LogoMark } from '@/components/brand/LogoMark'
+import { cn } from '@/lib/utils'
 import type { SiteSettings } from '@/types/sanity'
 
 interface HeaderProps {
@@ -9,93 +13,144 @@ interface HeaderProps {
 }
 
 const DEFAULT_NAV = [
-  { label: 'About',       href: '/about' },
-  { label: 'Current Work',href: '/current-work' },
-  { label: 'Programmes',  href: '/programmes' },
-  { label: 'Newsroom',    href: '/newsroom' },
-  { label: 'Partner',     href: '/partner' },
-  { label: 'Contact',     href: '/contact' },
+  { label: 'About', href: '/about' },
+  { label: 'Current Work', href: '/current-work' },
+  { label: 'Programmes', href: '/programmes' },
+  { label: 'Newsroom', href: '/newsroom' },
+  { label: 'Partner', href: '/partner' },
+  { label: 'Contact', href: '/contact' },
 ]
 
+function isActivePath(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/'
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
+
 export function Header({ settings }: HeaderProps) {
+  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+
   const navLinks = settings.navLinks?.length ? settings.navLinks : DEFAULT_NAV
   const donationLink = settings.donationLink ?? '/donate'
 
-  return (
-    <header className="sticky top-0 z-50 bg-forest-900 border-b border-forest-800">
-      <div className="container-site">
-        <div className="flex items-center h-16 gap-8">
-          {/* Logo / wordmark */}
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 flex-shrink-0"
-          >
-            <span className="sr-only">{settings.siteTitle}</span>
-            <span className="font-serif text-xl font-medium text-forest-50 tracking-tight">
-              DESCF
-            </span>
-            <span className="hidden sm:block text-forest-400 text-xs font-medium mt-0.5 leading-tight max-w-[160px]">
-              Deep Ecology & Snake Conservation Foundation
-            </span>
-          </Link>
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1 ml-4" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-3 py-2 text-sm text-forest-300 hover:text-forest-50 hover:bg-forest-800 rounded-md transition-colors duration-150"
-              >
-                {link.label}
-              </Link>
-            ))}
+  useEffect(() => {
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-earth-200 bg-white/95 backdrop-blur">
+      <div className="container-site">
+        <div className="flex h-18 min-h-16 items-center gap-6 py-3">
+          <LogoMark showText />
+
+          <nav
+            className="ml-3 hidden items-center gap-1 lg:flex"
+            aria-label="Main navigation"
+          >
+            {navLinks.map((link) => {
+              const active = isActivePath(pathname, link.href)
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                    active
+                      ? 'bg-forest-50 text-forest-800'
+                      : 'text-earth-600 hover:bg-earth-100 hover:text-earth-950',
+                  )}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
 
-          {/* Donate CTA */}
           <div className="ml-auto flex items-center gap-3">
             <Link
               href={donationLink}
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-bark-500 text-bark-50 hover:bg-bark-600 transition-colors duration-150"
+              className="hidden rounded-lg bg-bark-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-bark-600 sm:inline-flex"
             >
               Support DESCF
             </Link>
 
-            {/* Mobile hamburger */}
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden flex flex-col gap-1.5 p-2 rounded-md hover:bg-forest-800 transition-colors"
+              type="button"
+              onClick={() => setMenuOpen((current) => !current)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-earth-200 bg-white text-earth-800 transition-colors hover:bg-earth-100 lg:hidden"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
             >
-              <span className={`block w-5 h-0.5 bg-forest-300 transition-transform duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <span className={`block w-5 h-0.5 bg-forest-300 transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`block w-5 h-0.5 bg-forest-300 transition-transform duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <span className="sr-only">
+                {menuOpen ? 'Close menu' : 'Open menu'}
+              </span>
+              <span aria-hidden="true" className="flex flex-col gap-1.5">
+                <span
+                  className={cn(
+                    'block h-0.5 w-5 bg-current transition-transform',
+                    menuOpen && 'translate-y-2 rotate-45',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'block h-0.5 w-5 bg-current transition-opacity',
+                    menuOpen && 'opacity-0',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'block h-0.5 w-5 bg-current transition-transform',
+                    menuOpen && '-translate-y-2 -rotate-45',
+                  )}
+                />
+              </span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden bg-forest-900 border-t border-forest-800 animate-slide-down">
-          <div className="container-site py-3">
+        <div
+          id="mobile-navigation"
+          className="border-t border-earth-200 bg-white lg:hidden"
+        >
+          <div className="container-site py-4">
             <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="px-3 py-2.5 text-sm text-forest-300 hover:text-forest-50 hover:bg-forest-800 rounded-md transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActivePath(pathname, link.href)
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={cn(
+                      'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                      active
+                        ? 'bg-forest-50 text-forest-800'
+                        : 'text-earth-700 hover:bg-earth-100 hover:text-earth-950',
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
+
               <Link
                 href={donationLink}
-                onClick={() => setMenuOpen(false)}
-                className="mt-2 btn-cta justify-center"
+                className="mt-3 inline-flex justify-center rounded-lg bg-bark-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-bark-600"
               >
                 Support DESCF
               </Link>
