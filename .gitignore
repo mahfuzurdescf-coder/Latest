@@ -12,3 +12,4 @@ apps/**/node_modules/
 apps/**/.next/
 apps/studio/dist/
 apps/studio/.sanity/
+apps/web/next-env.d.ts
