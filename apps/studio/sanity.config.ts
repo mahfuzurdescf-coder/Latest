@@ -17,6 +17,11 @@ import {
   seoFields,
   editorialWorkflow,
   link,
+  partner,
+  governanceDocument,
+  policy,
+  homepageCuration,
+  redirect,
 } from './schemas'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || '7guoe2i2'
@@ -54,6 +59,12 @@ export default defineConfig({
       event,
       teamMember,
       siteSettings,
+
+      partner,
+      governanceDocument,
+      policy,
+      homepageCuration,
+      redirect,
     ],
   },
 })
