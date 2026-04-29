@@ -1,4 +1,5 @@
 ﻿import type { StructureResolver } from 'sanity/structure'
+import { ExportSubmissionsTool } from '../components/ExportSubmissionsTool'
 
 export const deskStructure: StructureResolver = (S) =>
   S.list()
@@ -137,6 +138,10 @@ export const deskStructure: StructureResolver = (S) =>
                 ),
             ]),
         ),
+      S.listItem()
+        .title('Export CSV')
+        .child(S.component(ExportSubmissionsTool).title('Export CSV')),
+
 
       S.listItem()
         .title('Newsroom')
@@ -385,3 +390,4 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
     ])
+
