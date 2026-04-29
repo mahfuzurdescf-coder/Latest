@@ -1,8 +1,6 @@
-// ─── Shared fragments ─────────────────────────────────────────────────────────
-
-const IMAGE_FRAGMENT = `
+﻿const IMAGE_FRAGMENT = `
   asset->{_id, url, metadata{dimensions, lqip}},
-  alt, caption, hotspot, crop
+  alt, caption, credit, hotspot, crop
 `
 
 const AUTHOR_CARD_FRAGMENT = `
@@ -201,7 +199,11 @@ export const EVENT_BY_SLUG_QUERY = `
   }
 `
 
-export const EVENT_SLUGS_QUERY = `*[_type == "event"].slug.current`
+export const EVENT_SLUGS_QUERY = /* groq */ `
+  *[_type == "event" && defined(slug.current)] {
+    "slug": slug.current
+  }
+`
 
 // ─── Team / Leadership ────────────────────────────────────────────────────────
 
@@ -235,7 +237,8 @@ export const SITEMAP_QUERY = `{
     "slug": slug.current, _updatedAt
   }
 }`
-// --- DESCF institutional CMS queries ------------------------------------------
+
+// ─── DESCF institutional CMS queries ──────────────────────────────────────────
 
 export const PARTNERS_QUERY = /* groq */ `
   *[_type == "partner" && relationshipStatus in ["current", "past"]] | order(featured desc, order asc, name asc) {
@@ -293,7 +296,7 @@ export const POLICIES_QUERY = /* groq */ `
   }
 `
 
-// --- Homepage curation query --------------------------------------------------
+// ─── Homepage curation query ──────────────────────────────────────────────────
 
 export const HOMEPAGE_CURATION_QUERY = /* groq */ `
   *[_type == "homepageCuration"][0] {
@@ -324,6 +327,53 @@ export const HOMEPAGE_CURATION_QUERY = /* groq */ `
     },
     featuredResources[]->{
       ${RESOURCE_CARD_FRAGMENT}
+    }
+  }
+`
+
+// ─── Event detail with registration form ──────────────────────────────────────
+
+export const EVENT_DETAIL_WITH_REGISTRATION_QUERY = /* groq */ `
+  *[_type == "event" && slug.current == $slug][0] {
+    _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    title,
+    slug,
+    date,
+    time,
+    location,
+    status,
+    description,
+    speakers,
+    registrationLink,
+    "registrationForm": *[
+      _type == "registrationForm" &&
+      event._ref == ^._id &&
+      status == "published"
+    ] | order(_updatedAt desc)[0] {
+      _id,
+      _type,
+      title,
+      status,
+      isActive,
+      registrationTitle,
+      registrationIntro,
+      deadline,
+      capacity,
+      successMessage,
+      closedMessage,
+      fields[]{
+        _key,
+        label,
+        fieldKey,
+        fieldType,
+        required,
+        placeholder,
+        helpText,
+        options
+      }
     }
   }
 `

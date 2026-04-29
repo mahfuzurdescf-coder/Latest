@@ -483,3 +483,43 @@ export interface HomepageCuration {
   featuredPosts?: PostCard[]
   featuredResources?: ResourceCard[]
 }
+// --- Public form types --------------------------------------------------------
+
+export type PublicFormFieldType =
+  | 'text'
+  | 'email'
+  | 'phone'
+  | 'textarea'
+  | 'select'
+  | 'radio'
+  | 'checkbox'
+
+export interface PublicFormField {
+  _key?: string
+  label: string
+  fieldKey: string
+  fieldType: PublicFormFieldType
+  required?: boolean
+  placeholder?: string
+  helpText?: string
+  options?: string[]
+}
+
+export interface RegistrationFormPublic {
+  _id: string
+  _type: 'registrationForm'
+  title?: string
+  status?: 'draft' | 'published' | 'archived'
+  isActive?: boolean
+  registrationTitle?: string
+  registrationIntro?: string
+  deadline?: string
+  capacity?: number
+  successMessage?: string
+  closedMessage?: string
+  fields?: PublicFormField[]
+}
+
+export interface EventDetail extends Event {
+  registrationForm?: RegistrationFormPublic | null
+}
