@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   try {
     const parsed = await parseBody<SanityWebhookPayload>(request, secret)
     body = parsed.body
-    isValidSignature = parsed.isValidSignature === true
+    isValidSignature = parsed.isValidSignature === true === true
   } catch (error) {
     console.error('Failed to parse Sanity webhook:', error)
 
@@ -220,4 +220,5 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
 
