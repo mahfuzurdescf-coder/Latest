@@ -1,5 +1,6 @@
 ﻿import type { StructureResolver } from 'sanity/structure'
 import { ExportSubmissionsTool } from '../components/ExportSubmissionsTool'
+import { submissionWorkflowListItem } from "./submissionWorkflowItems"
 
 export const deskStructure: StructureResolver = (S) =>
   S.list()
@@ -80,68 +81,10 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
 
-      S.listItem()
-        .title('Submissions')
-        .child(
-          S.list()
-            .title('Submissions')
-            .items([
-              S.listItem()
-                .title('Contact Submissions')
-                .schemaType('contactSubmission')
-                .child(
-                  S.documentTypeList('contactSubmission')
-                    .title('Contact Submissions')
-                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('New Contact Submissions')
-                .schemaType('contactSubmission')
-                .child(
-                  S.documentTypeList('contactSubmission')
-                    .title('New Contact Submissions')
-                    .filter('_type == "contactSubmission" && status == "new"')
-                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
-                ),
-
-              S.divider(),
-
-              S.listItem()
-                .title('Event Registrations')
-                .schemaType('eventRegistration')
-                .child(
-                  S.documentTypeList('eventRegistration')
-                    .title('Event Registrations')
-                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('New Event Registrations')
-                .schemaType('eventRegistration')
-                .child(
-                  S.documentTypeList('eventRegistration')
-                    .title('New Event Registrations')
-                    .filter('_type == "eventRegistration" && status == "new"')
-                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
-                ),
-
-              S.divider(),
-
-              S.listItem()
-                .title('Registration Forms')
-                .schemaType('registrationForm')
-                .child(
-                  S.documentTypeList('registrationForm')
-                    .title('Registration Forms')
-                    .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
-                ),
-            ]),
-        ),
+      submissionWorkflowListItem(S),
       S.listItem()
         .title('Export CSV')
         .child(S.component(ExportSubmissionsTool).title('Export CSV')),
-
 
       S.listItem()
         .title('Newsroom')
