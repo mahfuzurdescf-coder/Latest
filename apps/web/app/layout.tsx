@@ -11,6 +11,12 @@ import { SITE_SETTINGS_QUERY } from '@/lib/sanity/queries'
 import type { SiteSettings } from '@/types/sanity'
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/brand/descf-logo.png",
+    shortcut: "/brand/descf-logo.png",
+    apple: "/brand/descf-logo.png",
+  },
+
   metadataBase: new URL(SITE.url),
   title: {
     default: `${SITE.shortName} — ${SITE.name}`,
