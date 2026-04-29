@@ -1,12 +1,18 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
+import Image from 'next/image'
 
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Container } from '@/components/ui/Container'
+import { EmptyState } from '@/components/ui/EmptyState'
 import { Section, SectionHeader } from '@/components/ui/Section'
 import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
+import { sanityFetch } from '@/lib/sanity/client'
+import { urlForImage } from '@/lib/sanity/image'
+import { PARTNERS_QUERY } from '@/lib/sanity/queries'
 import { SITE } from '@/lib/site'
+import type { PartnerCard } from '@/types/sanity'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Partner With DESCF',
@@ -52,7 +58,53 @@ const PARTNER_TYPES = [
   'Community-based organisations',
 ]
 
-export default function PartnerPage() {
+function getPartnerTypeLabel(type?: string): string {
+  if (!type) return 'Partner'
+
+  return type
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+function PartnerLogo({ partner }: { partner: PartnerCard }) {
+  const logoUrl = partner.logo
+    ? urlForImage(partner.logo)?.width(240).height(160).url()
+    : null
+
+  if (!logoUrl) {
+    return (
+      <div className="flex h-20 items-center justify-center rounded-2xl border border-earth-200 bg-earth-50 px-4 text-center">
+        <span className="text-sm font-semibold text-earth-600">
+          {partner.name}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex h-20 items-center justify-center rounded-2xl border border-earth-200 bg-white p-4">
+      <Image
+        src={logoUrl}
+        alt={partner.logo?.alt ?? partner.name}
+        width={180}
+        height={100}
+        className="max-h-14 w-auto object-contain"
+      />
+    </div>
+  )
+}
+
+export default async function PartnerPage() {
+  const partners = await sanityFetch<PartnerCard[]>({
+    query: PARTNERS_QUERY,
+    tags: ['partner'],
+  })
+
+  const featuredPartners = partners.filter((partner) => partner.featured)
+  const otherPartners = partners.filter((partner) => !partner.featured)
+  const visiblePartners = featuredPartners.length > 0 ? featuredPartners : partners
+
   return (
     <>
       <script
@@ -147,6 +199,78 @@ export default function PartnerPage() {
             </div>
           </Container>
         </Section>
+
+        <section className="bg-earth-100/70">
+          <Container className="py-16 md:py-20">
+            <SectionHeader
+              eyebrow="Partners"
+              title="Institutional partners and collaborators"
+              description="Partner records are now managed through Sanity CMS. Featured partners appear first."
+            />
+
+            {partners.length > 0 ? (
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {visiblePartners.map((partner) => (
+                  <Card key={partner._id}>
+                    <CardContent>
+                      <PartnerLogo partner={partner} />
+
+                      <div className="mt-5">
+                        <p className="section-label mb-2">
+                          {getPartnerTypeLabel(partner.partnerType)}
+                        </p>
+                        <h2 className="font-serif text-2xl text-earth-950">
+                          {partner.name}
+                        </h2>
+
+                        {partner.summary && (
+                          <p className="mt-3 text-body-sm text-earth-700">
+                            {partner.summary}
+                          </p>
+                        )}
+
+                        {partner.website && (
+                          <a
+                            href={partner.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-4 inline-flex text-sm font-semibold text-forest-700 hover:text-forest-900"
+                          >
+                            Visit website →
+                          </a>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                title="Partner records are being prepared"
+                description="Published DESCF partner records will appear here after they are added in Sanity Studio."
+                actionLabel="Contact DESCF"
+                actionHref="/contact"
+              />
+            )}
+
+            {otherPartners.length > 0 && featuredPartners.length > 0 && (
+              <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {otherPartners.map((partner) => (
+                  <Card key={partner._id}>
+                    <CardContent>
+                      <h3 className="font-serif text-xl text-earth-950">
+                        {partner.name}
+                      </h3>
+                      <p className="mt-2 text-caption uppercase tracking-widest text-forest-700">
+                        {getPartnerTypeLabel(partner.partnerType)}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </Container>
+        </section>
 
         <section className="bg-earth-100/70">
           <Container className="py-14">

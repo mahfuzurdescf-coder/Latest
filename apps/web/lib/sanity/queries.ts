@@ -235,3 +235,60 @@ export const SITEMAP_QUERY = `{
     "slug": slug.current, _updatedAt
   }
 }`
+// --- DESCF institutional CMS queries ------------------------------------------
+
+export const PARTNERS_QUERY = /* groq */ `
+  *[_type == "partner" && relationshipStatus in ["current", "past"]] | order(featured desc, order asc, name asc) {
+    _id,
+    _type,
+    name,
+    slug,
+    logo{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    website,
+    summary,
+    partnerType,
+    relationshipStatus,
+    featured,
+    order
+  }
+`
+
+export const GOVERNANCE_DOCUMENTS_QUERY = /* groq */ `
+  *[_type == "governanceDocument" && status == "published"] | order(order asc, publishedAt desc) {
+    _id,
+    _type,
+    title,
+    slug,
+    summary,
+    documentType,
+    fileUrl,
+    publishedAt,
+    status,
+    order
+  }
+`
+
+export const POLICIES_QUERY = /* groq */ `
+  *[_type == "policy" && status == "active"] | order(effectiveDate desc, title asc) {
+    _id,
+    _type,
+    title,
+    slug,
+    summary,
+    fileUrl,
+    policyArea,
+    effectiveDate,
+    reviewDate,
+    status
+  }
+`

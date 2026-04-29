@@ -1,12 +1,16 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Container } from '@/components/ui/Container'
+import { EmptyState } from '@/components/ui/EmptyState'
 import { Section, SectionHeader } from '@/components/ui/Section'
 import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
+import { sanityFetch } from '@/lib/sanity/client'
+import { GOVERNANCE_DOCUMENTS_QUERY, POLICIES_QUERY } from '@/lib/sanity/queries'
 import { SITE } from '@/lib/site'
+import type { GovernanceDocumentCard, PolicyCard } from '@/types/sanity'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Governance',
@@ -53,16 +57,37 @@ const GOVERNANCE_AREAS = [
   },
 ]
 
-const DOCUMENT_TYPES = [
-  'Organisational policies',
-  'Governance documents',
-  'Annual or periodic reports',
-  'Programme briefs',
-  'Partnership records',
-  'Responsible communication guidelines',
-]
+function getDocumentTypeLabel(type?: string): string {
+  if (!type) return 'Document'
 
-export default function GovernancePage() {
+  return type
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+function formatDate(date?: string): string {
+  if (!date) return ''
+
+  return new Intl.DateTimeFormat('en', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(date))
+}
+
+export default async function GovernancePage() {
+  const [documents, policies] = await Promise.all([
+    sanityFetch<GovernanceDocumentCard[]>({
+      query: GOVERNANCE_DOCUMENTS_QUERY,
+      tags: ['governanceDocument'],
+    }),
+    sanityFetch<PolicyCard[]>({
+      query: POLICIES_QUERY,
+      tags: ['policy'],
+    }),
+  ])
+
   return (
     <>
       <script
@@ -114,16 +139,72 @@ export default function GovernancePage() {
 
         <section className="bg-earth-100/70">
           <Container className="py-16 md:py-20">
+            <SectionHeader
+              eyebrow="Governance documents"
+              title="Published governance documents"
+              description="Governance documents are now managed through Sanity CMS and appear here when published."
+            />
+
+            {documents.length > 0 ? (
+              <div className="grid gap-5 md:grid-cols-2">
+                {documents.map((document) => (
+                  <Card key={document._id}>
+                    <CardContent>
+                      <p className="section-label mb-2">
+                        {getDocumentTypeLabel(document.documentType)}
+                      </p>
+                      <h2 className="font-serif text-2xl text-earth-950">
+                        {document.title}
+                      </h2>
+
+                      {document.summary && (
+                        <p className="mt-3 text-body-sm text-earth-700">
+                          {document.summary}
+                        </p>
+                      )}
+
+                      {document.publishedAt && (
+                        <p className="mt-3 text-caption text-earth-500">
+                          Published: {formatDate(document.publishedAt)}
+                        </p>
+                      )}
+
+                      {document.fileUrl && (
+                        <a
+                          href={document.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-4 inline-flex text-sm font-semibold text-forest-700 hover:text-forest-900"
+                        >
+                          Open document →
+                        </a>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                title="No governance documents published yet"
+                description="Policies, governance notes, and accountability documents will appear here after they are published in Sanity Studio."
+                actionLabel="Contact DESCF"
+                actionHref="/contact"
+              />
+            )}
+          </Container>
+        </section>
+
+        <Section>
+          <Container>
             <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr]">
               <div>
-                <p className="section-label mb-3">Documentation</p>
+                <p className="section-label mb-3">Policies</p>
                 <h2 className="font-serif text-h2 text-earth-950">
-                  Governance documents should eventually be CMS-managed.
+                  Active policies and institutional standards
                 </h2>
                 <p className="mt-5 text-body text-earth-700">
-                  This page is prepared for a future governance document library. As DESCF’s
-                  institutional system grows, policies, reports, programme documents, and
-                  accountability materials should be added through Sanity CMS rather than hardcoded pages.
+                  As DESCF grows, policies should be published and maintained through the CMS.
+                  This makes governance easier to update without changing code.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-3">
@@ -139,22 +220,47 @@ export default function GovernancePage() {
               <Card>
                 <CardContent>
                   <h3 className="font-serif text-2xl text-earth-950">
-                    Future document library
+                    Active policy records
                   </h3>
 
-                  <ul className="mt-5 space-y-3">
-                    {DOCUMENT_TYPES.map((item) => (
-                      <li key={item} className="flex gap-3 text-body-sm text-earth-700">
-                        <span className="mt-2 h-2 w-2 rounded-full bg-forest-700" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {policies.length > 0 ? (
+                    <div className="mt-5 space-y-5">
+                      {policies.map((policy) => (
+                        <div key={policy._id} className="border-t border-earth-100 pt-4 first:border-t-0 first:pt-0">
+                          <p className="section-label mb-1">
+                            {getDocumentTypeLabel(policy.policyArea)}
+                          </p>
+                          <h4 className="font-serif text-xl text-earth-950">
+                            {policy.title}
+                          </h4>
+                          {policy.summary && (
+                            <p className="mt-2 text-body-sm text-earth-700">
+                              {policy.summary}
+                            </p>
+                          )}
+                          {policy.fileUrl && (
+                            <a
+                              href={policy.fileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-3 inline-flex text-sm font-semibold text-forest-700 hover:text-forest-900"
+                            >
+                              Open policy →
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mt-3 text-body-sm text-earth-700">
+                      No active policy records have been published yet.
+                    </p>
+                  )}
                 </CardContent>
               </Card>
             </div>
           </Container>
-        </section>
+        </Section>
 
         <Section>
           <Container>

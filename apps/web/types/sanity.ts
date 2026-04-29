@@ -334,3 +334,149 @@ export interface PageSEO {
   ogImage?: SanityImage
   canonicalUrl?: string
 }
+// --- DESCF institutional CMS types --------------------------------------------
+
+export type PartnerType =
+  | 'research'
+  | 'education'
+  | 'conservation'
+  | 'media'
+  | 'donor'
+  | 'community'
+  | 'other'
+
+export type PartnerRelationshipStatus =
+  | 'current'
+  | 'past'
+  | 'prospective'
+
+export interface Partner {
+  _id: string
+  _type: 'partner'
+  name: string
+  slug: SanitySlug
+  logo?: SanityImage
+  website?: string
+  summary?: string
+  partnerType?: PartnerType
+  relationshipStatus?: PartnerRelationshipStatus
+  featured?: boolean
+  order?: number
+  seoTitle?: string
+  seoDescription?: string
+}
+
+export interface PartnerCard
+  extends Pick<
+    Partner,
+    | '_id'
+    | '_type'
+    | 'name'
+    | 'slug'
+    | 'logo'
+    | 'website'
+    | 'summary'
+    | 'partnerType'
+    | 'relationshipStatus'
+    | 'featured'
+    | 'order'
+  > {}
+
+export type GovernanceDocumentType =
+  | 'policy'
+  | 'guideline'
+  | 'governance-note'
+  | 'annual-report'
+  | 'audit-compliance'
+  | 'other'
+
+export type GovernanceDocumentStatus =
+  | 'draft'
+  | 'published'
+  | 'archived'
+
+export interface GovernanceDocument {
+  _id: string
+  _type: 'governanceDocument'
+  title: string
+  slug: SanitySlug
+  summary?: string
+  documentType?: GovernanceDocumentType
+  fileUrl?: string
+  publishedAt?: string
+  status?: GovernanceDocumentStatus
+  order?: number
+}
+
+export interface GovernanceDocumentCard
+  extends Pick<
+    GovernanceDocument,
+    | '_id'
+    | '_type'
+    | 'title'
+    | 'slug'
+    | 'summary'
+    | 'documentType'
+    | 'fileUrl'
+    | 'publishedAt'
+    | 'status'
+    | 'order'
+  > {}
+
+export type PolicyArea =
+  | 'safeguarding'
+  | 'child-protection'
+  | 'wildlife-ethics'
+  | 'media-communication'
+  | 'data-privacy'
+  | 'governance'
+  | 'other'
+
+export type PolicyStatus =
+  | 'draft'
+  | 'active'
+  | 'archived'
+
+export interface Policy {
+  _id: string
+  _type: 'policy'
+  title: string
+  slug: SanitySlug
+  summary?: string
+  body?: PortableTextBlock[]
+  fileUrl?: string
+  policyArea?: PolicyArea
+  effectiveDate?: string
+  reviewDate?: string
+  status?: PolicyStatus
+}
+
+export interface PolicyCard
+  extends Pick<
+    Policy,
+    | '_id'
+    | '_type'
+    | 'title'
+    | 'slug'
+    | 'summary'
+    | 'fileUrl'
+    | 'policyArea'
+    | 'effectiveDate'
+    | 'reviewDate'
+    | 'status'
+  > {}
+
+export interface HomepageCuration {
+  _id: string
+  _type: 'homepageCuration'
+  title: string
+  heroEyebrow?: string
+  heroTitle?: string
+  heroDescription?: string
+  heroImage?: SanityImage
+  primaryCta?: NavLink
+  secondaryCta?: NavLink
+  featuredProgrammes?: ProgrammeCard[]
+  featuredPosts?: PostCard[]
+  featuredResources?: ResourceCard[]
+}
