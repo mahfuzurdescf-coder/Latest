@@ -12,6 +12,44 @@ export const eventRegistration = defineType({
     { name: 'system', title: 'System' },
   ],
   fields: [
+    {
+      name: "workflowStatus",
+      title: "Workflow Status",
+      type: "string",
+      initialValue: "new",
+      options: {
+        list: [
+          { title: "New", value: "new" },
+          { title: "In Review", value: "inReview" },
+          { title: "Contacted", value: "contacted" },
+          { title: "Confirmed", value: "confirmed" },
+          { title: "Rejected / Not Eligible", value: "rejected" },
+          { title: "Needs Follow-up", value: "needsFollowUp" },
+          { title: "Archived", value: "archived" },
+        ],
+        layout: "dropdown",
+      },
+    },
+    {
+      name: "assignedTo",
+      title: "Assigned To",
+      type: "string",
+      description: "Name of the person responsible for reviewing this submission.",
+    },
+    {
+      name: "internalNotes",
+      title: "Internal Notes",
+      type: "text",
+      rows: 4,
+      description: "Private notes for admin or submission reviewers. Do not publish publicly.",
+    },
+    {
+      name: "lastReviewedAt",
+      title: "Last Reviewed At",
+      type: "datetime",
+      description: "Update this when the submission is reviewed or followed up.",
+    },
+
     defineField({
       name: 'registrantName',
       title: 'Registrant name',
