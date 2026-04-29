@@ -152,13 +152,6 @@ export const eventRegistration = defineType({
       },
     }),
     defineField({
-      name: 'internalNotes',
-      title: 'Internal notes',
-      type: 'text',
-      rows: 4,
-      group: 'management',
-    }),
-    defineField({
       name: 'submittedAt',
       title: 'Submitted at',
       type: 'datetime',

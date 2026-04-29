@@ -115,20 +115,6 @@ export const contactSubmission = defineType({
       },
     }),
     defineField({
-      name: 'assignedTo',
-      title: 'Assigned to',
-      type: 'reference',
-      group: 'management',
-      to: [{ type: 'teamMember' }, { type: 'author' }],
-    }),
-    defineField({
-      name: 'internalNotes',
-      title: 'Internal notes',
-      type: 'text',
-      rows: 4,
-      group: 'management',
-    }),
-    defineField({
       name: 'submittedAt',
       title: 'Submitted at',
       type: 'datetime',
