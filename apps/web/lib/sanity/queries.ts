@@ -292,3 +292,38 @@ export const POLICIES_QUERY = /* groq */ `
     status
   }
 `
+
+// --- Homepage curation query --------------------------------------------------
+
+export const HOMEPAGE_CURATION_QUERY = /* groq */ `
+  *[_type == "homepageCuration"][0] {
+    _id,
+    _type,
+    title,
+    heroEyebrow,
+    heroTitle,
+    heroDescription,
+    heroImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    primaryCta,
+    secondaryCta,
+    featuredProgrammes[]->{
+      ${PROGRAMME_CARD_FRAGMENT}
+    },
+    featuredPosts[]->{
+      ${POST_CARD_FRAGMENT}
+    },
+    featuredResources[]->{
+      ${RESOURCE_CARD_FRAGMENT}
+    }
+  }
+`

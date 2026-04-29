@@ -24,6 +24,7 @@ export interface SanityImage {
   asset?: SanityImageAsset
   alt?: string
   caption?: string
+  credit?: string
   hotspot?: {
     x: number
     y: number
@@ -302,9 +303,10 @@ export interface TeamMember {
 // ─── NavLink ──────────────────────────────────────────────────────────────────
 
 export interface NavLink {
-  _key: string
+  _key?: string
   label: string
   href: string
+  isExternal?: boolean
 }
 
 // ─── SiteSettings ─────────────────────────────────────────────────────────────
@@ -334,7 +336,8 @@ export interface PageSEO {
   ogImage?: SanityImage
   canonicalUrl?: string
 }
-// --- DESCF institutional CMS types --------------------------------------------
+
+// ─── DESCF institutional CMS types ────────────────────────────────────────────
 
 export type PartnerType =
   | 'research'

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 
 import { HomeCTA } from '@/components/sections/HomeCTA'
 import { HomeHero } from '@/components/sections/HomeHero'
@@ -8,8 +8,9 @@ import { HomeResources } from '@/components/sections/HomeResources'
 import { buildOrganizationJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
-import { HOME_PAGE_QUERY } from '@/lib/sanity/queries'
+import { HOME_PAGE_QUERY, HOMEPAGE_CURATION_QUERY } from '@/lib/sanity/queries'
 import type {
+  HomepageCuration,
   PostCard,
   ProgrammeCard,
   ResourceCard,
@@ -34,27 +35,44 @@ export const metadata: Metadata = buildMetadata({
 })
 
 export default async function HomePage() {
-  const data = await sanityFetch<HomePageData>({
-    query: HOME_PAGE_QUERY,
-    tags: ['siteSettings', 'post', 'programme', 'resource'],
-  })
+  const [data, curation] = await Promise.all([
+    sanityFetch<HomePageData>({
+      query: HOME_PAGE_QUERY,
+      tags: ['siteSettings', 'post', 'programme', 'resource'],
+    }),
+    sanityFetch<HomepageCuration | null>({
+      query: HOMEPAGE_CURATION_QUERY,
+      tags: ['homepageCuration', 'post', 'programme', 'resource'],
+    }),
+  ])
 
   const programmes =
-    data.currentProgrammes && data.currentProgrammes.length > 0
-      ? data.currentProgrammes
-      : data.allProgrammes ?? []
+    curation?.featuredProgrammes && curation.featuredProgrammes.length > 0
+      ? curation.featuredProgrammes
+      : data.currentProgrammes && data.currentProgrammes.length > 0
+        ? data.currentProgrammes
+        : data.allProgrammes ?? []
 
-  const posts = [
+  const fallbackPosts = [
     ...(data.featuredPosts ?? []),
     ...(data.editorPicks ?? []),
     ...(data.latestPosts ?? []),
   ]
 
+  const posts =
+    curation?.featuredPosts && curation.featuredPosts.length > 0
+      ? curation.featuredPosts
+      : fallbackPosts
+
   const uniquePosts = Array.from(
     new Map(posts.map((post) => [post._id, post])).values(),
   )
 
-  const resources = data.latestResources ?? []
+  const resources =
+    curation?.featuredResources && curation.featuredResources.length > 0
+      ? curation.featuredResources
+      : data.latestResources ?? []
+
   const organizationJsonLd = buildOrganizationJSONLD()
 
   return (
@@ -65,7 +83,7 @@ export default async function HomePage() {
       />
 
       <main id="main-content">
-        <HomeHero />
+        <HomeHero curation={curation} />
         <HomeProgrammes programmes={programmes} />
         <HomeNewsroom posts={uniquePosts} />
         <HomeResources resources={resources} />
