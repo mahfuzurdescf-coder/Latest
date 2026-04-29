@@ -1,13 +1,34 @@
 import { defineField, defineType } from 'sanity'
 
+const POST_CONTENT_TYPES = [
+  { title: 'Article', value: 'article' },
+  { title: 'Field note', value: 'field-note' },
+  { title: 'News', value: 'news' },
+  { title: 'Report', value: 'report' },
+  { title: 'Briefing', value: 'briefing' },
+  { title: 'Interview', value: 'interview' },
+  { title: 'Event update', value: 'event-update' },
+]
+
+const POST_STATUSES = [
+  { title: 'Draft', value: 'draft' },
+  { title: 'Assigned', value: 'assigned' },
+  { title: 'In review', value: 'inReview' },
+  { title: 'Fact check', value: 'factCheck' },
+  { title: 'Ready to publish', value: 'ready' },
+  { title: 'Published', value: 'published' },
+  { title: 'Archived', value: 'archived' },
+]
+
 export const post = defineType({
   name: 'post',
-  title: 'Post / Article',
+  title: 'Newsroom Post',
   type: 'document',
   groups: [
-    { name: 'content',  title: 'Content',   default: true },
-    { name: 'meta',     title: 'Metadata' },
-    { name: 'seo',      title: 'SEO' },
+    { name: 'content', title: 'Content', default: true },
+    { name: 'taxonomy', title: 'Taxonomy' },
+    { name: 'editorial', title: 'Editorial workflow' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     defineField({
@@ -15,222 +36,263 @@ export const post = defineType({
       title: 'Title',
       type: 'string',
       group: 'content',
-      validation: (Rule) => Rule.required().min(10).max(120),
+      validation: (Rule) => Rule.required().min(8).max(120),
     }),
+
     defineField({
       name: 'slug',
-      title: 'Slug (URL)',
+      title: 'Slug',
       type: 'slug',
       group: 'content',
-      options: { source: 'title', maxLength: 96 },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'status',
-      title: 'Publication status',
-      type: 'string',
-      group: 'meta',
       options: {
-        list: [
-          { value: 'draft',     title: '📝 Draft' },
-          { value: 'review',    title: '🔍 In review' },
-          { value: 'published', title: '✅ Published' },
-        ],
-        layout: 'radio',
+        source: 'title',
+        maxLength: 96,
       },
-      initialValue: 'draft',
       validation: (Rule) => Rule.required(),
     }),
+
     defineField({
-      name: 'contentType',
-      title: 'Content type',
-      type: 'string',
-      group: 'meta',
-      options: {
-        list: [
-          { value: 'article',      title: 'Article' },
-          { value: 'field-note',   title: 'Field Note' },
-          { value: 'news',         title: 'News' },
-          { value: 'report',       title: 'Report' },
-          { value: 'briefing',     title: 'Briefing' },
-          { value: 'interview',    title: 'Interview' },
-          { value: 'event-update', title: 'Event Update' },
-        ],
-      },
-      initialValue: 'article',
-      validation: (Rule) => Rule.required(),
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'text',
+      rows: 3,
+      group: 'content',
+      validation: (Rule) =>
+        Rule.max(220).warning('Keep excerpts concise. Aim under 220 characters.'),
     }),
+
     defineField({
       name: 'language',
       title: 'Language',
       type: 'string',
-      group: 'meta',
-      options: {
-        list: [
-          { value: 'en', title: '🇬🇧 English' },
-          { value: 'bn', title: '🇧🇩 Bengali' },
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'en',
-    }),
-    defineField({
-      name: 'excerpt',
-      title: 'Excerpt / Summary',
-      type: 'text',
       group: 'content',
-      rows: 3,
-      description: 'Shown in article cards and SEO description fallback. Keep under 160 characters.',
-      validation: (Rule) => Rule.max(300),
+      initialValue: 'en',
+      options: {
+        layout: 'radio',
+        list: [
+          { title: 'English', value: 'en' },
+          { title: 'Bangla', value: 'bn' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
     }),
+
+    defineField({
+      name: 'contentType',
+      title: 'Content type',
+      type: 'string',
+      group: 'content',
+      initialValue: 'article',
+      options: {
+        layout: 'dropdown',
+        list: POST_CONTENT_TYPES,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+
     defineField({
       name: 'coverImage',
       title: 'Cover image',
-      type: 'image',
+      type: 'imageWithAltCredit',
       group: 'content',
-      options: { hotspot: true },
-      fields: [
-        defineField({ name: 'alt', type: 'string', title: 'Alt text', validation: (Rule) => Rule.required() }),
-        defineField({ name: 'caption', type: 'string', title: 'Caption (optional)' }),
-      ],
+      description:
+        'Use a strong, relevant image. Alt text is required for accessibility.',
     }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      group: 'meta',
-      to: [{ type: 'author' }],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'coAuthors',
-      title: 'Co-authors',
-      type: 'array',
-      group: 'meta',
-      of: [{ type: 'reference', to: [{ type: 'author' }] }],
-    }),
-    defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'reference',
-      group: 'meta',
-      to: [{ type: 'category' }],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      group: 'meta',
-      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
-    }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
-      group: 'meta',
-      initialValue: () => new Date().toISOString(),
-    }),
-    defineField({
-      name: 'updatedAt',
-      title: 'Last updated at',
-      type: 'datetime',
-      group: 'meta',
-    }),
-    defineField({
-      name: 'readingTime',
-      title: 'Reading time (minutes)',
-      type: 'number',
-      group: 'meta',
-      description: 'Leave blank to auto-calculate from body.',
-    }),
-    defineField({
-      name: 'featured',
-      title: 'Featured article',
-      type: 'boolean',
-      group: 'meta',
-      initialValue: false,
-      description: 'Show in homepage featured section.',
-    }),
-    defineField({
-      name: 'editorPick',
-      title: "Editor's pick",
-      type: 'boolean',
-      group: 'meta',
-      initialValue: false,
-    }),
+
     defineField({
       name: 'body',
-      title: 'Body content',
+      title: 'Body',
       type: 'array',
       group: 'content',
       of: [
         { type: 'block' },
-        {
-          type: 'image',
-          options: { hotspot: true },
-          fields: [
-            defineField({ name: 'alt', type: 'string', title: 'Alt text', validation: (Rule) => Rule.required() }),
-            defineField({ name: 'caption', type: 'string', title: 'Caption' }),
-          ],
-        },
-        {
-          name: 'pullQuote',
-          title: 'Pull quote',
-          type: 'object',
-          fields: [
-            defineField({ name: 'quote', type: 'string', title: 'Quote text', validation: (Rule) => Rule.required() }),
-            defineField({ name: 'attribution', type: 'string', title: 'Attribution (optional)' }),
-          ],
-          preview: { select: { title: 'quote' } },
-        },
+        { type: 'imageWithAltCredit' },
       ],
     }),
+
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      group: 'taxonomy',
+      to: [{ type: 'category' }],
+    }),
+
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      group: 'taxonomy',
+      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
+    }),
+
+    defineField({
+      name: 'author',
+      title: 'Primary author',
+      type: 'reference',
+      group: 'taxonomy',
+      to: [{ type: 'author' }],
+    }),
+
+    defineField({
+      name: 'coAuthors',
+      title: 'Co-authors',
+      type: 'array',
+      group: 'taxonomy',
+      of: [{ type: 'reference', to: [{ type: 'author' }] }],
+    }),
+
+    defineField({
+      name: 'publishedAt',
+      title: 'Published date',
+      type: 'datetime',
+      group: 'editorial',
+      description:
+        'Set this when the post is ready to appear publicly. Frontend sorting uses this field.',
+    }),
+
+    defineField({
+      name: 'updatedAt',
+      title: 'Updated date',
+      type: 'datetime',
+      group: 'editorial',
+      description:
+        'Optional. Use this if the article has been meaningfully revised after publication.',
+    }),
+
+    defineField({
+      name: 'status',
+      title: 'Publication status',
+      type: 'string',
+      group: 'editorial',
+      initialValue: 'draft',
+      options: {
+        layout: 'dropdown',
+        list: POST_STATUSES,
+      },
+      validation: (Rule) => Rule.required(),
+      description:
+        'Important: frontend only shows posts where status is Published.',
+    }),
+
+    defineField({
+      name: 'workflow',
+      title: 'Editorial workflow details',
+      type: 'editorialWorkflow',
+      group: 'editorial',
+      description:
+        'Use this for internal editorial tracking, review notes, and fact-check notes.',
+    }),
+
+    defineField({
+      name: 'featured',
+      title: 'Featured post',
+      type: 'boolean',
+      group: 'editorial',
+      initialValue: false,
+    }),
+
+    defineField({
+      name: 'editorPick',
+      title: "Editor's pick",
+      type: 'boolean',
+      group: 'editorial',
+      initialValue: false,
+    }),
+
+    defineField({
+      name: 'readingTime',
+      title: 'Reading time',
+      type: 'number',
+      group: 'editorial',
+      description: 'Estimated reading time in minutes.',
+      validation: (Rule) => Rule.min(1).max(60),
+    }),
+
+    defineField({
+      name: 'sensitiveWildlifeLocation',
+      title: 'Sensitive wildlife location?',
+      type: 'boolean',
+      group: 'editorial',
+      initialValue: false,
+      description:
+        'Enable this if the post includes location details that could put wildlife, habitat, or field sites at risk.',
+    }),
+
+    defineField({
+      name: 'reviewNotes',
+      title: 'Review notes',
+      type: 'text',
+      rows: 4,
+      group: 'editorial',
+    }),
+
+    defineField({
+      name: 'factCheckNotes',
+      title: 'Fact-check notes',
+      type: 'text',
+      rows: 4,
+      group: 'editorial',
+    }),
+
     defineField({
       name: 'seoTitle',
       title: 'SEO title',
       type: 'string',
       group: 'seo',
-      description: 'Defaults to post title if blank. Keep under 60 characters.',
-      validation: (Rule) => Rule.max(60),
+      validation: (Rule) =>
+        Rule.max(70).warning('SEO titles usually perform best under 70 characters.'),
     }),
+
     defineField({
       name: 'seoDescription',
       title: 'SEO description',
       type: 'text',
+      rows: 3,
       group: 'seo',
-      rows: 2,
-      description: 'Defaults to excerpt if blank. Keep under 160 characters.',
-      validation: (Rule) => Rule.max(160),
+      validation: (Rule) =>
+        Rule.max(170).warning('SEO descriptions are usually best under 170 characters.'),
     }),
+
     defineField({
       name: 'ogImage',
       title: 'Open Graph image',
-      type: 'image',
+      type: 'imageWithAltCredit',
       group: 'seo',
-      description: 'Social share image. Defaults to cover image. Ideal size: 1200×630px.',
-      options: { hotspot: true },
+      description:
+        'Recommended size: 1200 × 630 px. Used for social sharing if provided.',
+    }),
+
+    defineField({
+      name: 'canonicalUrl',
+      title: 'Canonical URL override',
+      type: 'url',
+      group: 'seo',
+      description:
+        'Only use this if the canonical URL should be different from the generated article URL.',
+    }),
+
+    defineField({
+      name: 'noIndex',
+      title: 'No index',
+      type: 'boolean',
+      group: 'seo',
+      initialValue: false,
+      description: 'Prevent search engines from indexing this post.',
     }),
   ],
   preview: {
     select: {
-      title:    'title',
-      author:   'author.name',
-      media:    'coverImage',
-      status:   'status',
-      language: 'language',
+      title: 'title',
+      subtitle: 'status',
+      media: 'coverImage',
     },
-    prepare({ title, author, media, status, language }) {
-      const statusIcon = status === 'published' ? '✅' : status === 'review' ? '🔍' : '📝'
+    prepare({ title, subtitle, media }) {
       return {
-        title: `${statusIcon} ${title}`,
-        subtitle: `${author ?? 'No author'} · ${language?.toUpperCase()}`,
+        title,
+        subtitle: subtitle ? `Status: ${subtitle}` : 'No status set',
         media,
       }
     },
   },
-  orderings: [
-    { title: 'Published (newest)',  name: 'publishedAtDesc', by: [{ field: 'publishedAt', direction: 'desc' }] },
-    { title: 'Published (oldest)',  name: 'publishedAtAsc',  by: [{ field: 'publishedAt', direction: 'asc' }] },
-  ],
 })

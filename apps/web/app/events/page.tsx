@@ -1,68 +1,129 @@
-// apps/web/app/events/page.tsx
 import type { Metadata } from 'next'
+
+import { EventCard } from '@/components/cards'
+import { Button } from '@/components/ui/Button'
+import { Card, CardContent } from '@/components/ui/Card'
+import { Container } from '@/components/ui/Container'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { Section, SectionHeader } from '@/components/ui/Section'
+import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
+import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import { EVENTS_PAGE_QUERY } from '@/lib/sanity/queries'
-import { EventCard } from '@/components/cards'
-import { SectionHeader } from '@/components/ui'
 import type { EventCard as EventCardType } from '@/types/sanity'
 
-export const metadata: Metadata = {
-  title: 'Events & Seminars',
-  description: 'Upcoming and past events, seminars, and talks by DESCF — the Deep Ecology and Snake Conservation Foundation.',
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'Events',
+  description:
+    'DESCF events, awareness activities, workshops, public programmes, and conservation communication activities.',
+  canonicalUrl: 'https://descf.org/events',
+})
 
-interface EventsData {
-  upcoming: EventCardType[]
-  past: EventCardType[]
+const eventsJsonLd = buildBreadcrumbJSONLD([
+  { name: 'Home', url: 'https://descf.org' },
+  { name: 'Events', url: 'https://descf.org/events' },
+])
+
+type EventsPageData = {
+  upcoming?: EventCardType[]
+  past?: EventCardType[]
 }
 
 export default async function EventsPage() {
-  const data = await sanityFetch<EventsData>({
+  const data = await sanityFetch<EventsPageData>({
     query: EVENTS_PAGE_QUERY,
     tags: ['event'],
   })
 
-  const upcoming = data?.upcoming ?? []
-  const past     = data?.past     ?? []
+  const upcoming = data.upcoming ?? []
+  const past = data.past ?? []
 
   return (
     <>
-      <section className="bg-forest-900 text-forest-50 section-padding-sm">
-        <div className="container-site">
-          <p className="section-label text-forest-500 mb-3">Calendar</p>
-          <h1 className="text-display-md font-serif text-forest-50 mb-3">Events &amp; Seminars</h1>
-          <p className="text-body-lg text-forest-300 max-w-prose leading-relaxed">
-            Conservation talks, field seminars, and public education events from DESCF.
-          </p>
-        </div>
-      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventsJsonLd) }}
+      />
 
-      <section className="section-padding container-site space-y-14">
-        {upcoming.length > 0 && (
-          <div>
-            <SectionHeader label="What's coming" title="Upcoming events" />
-            <div className="grid md:grid-cols-2 gap-5 max-w-prose-lg">
-              {upcoming.map(e => <EventCard key={e._id} event={e} />)}
+      <main id="main-content">
+        <section className="border-b border-earth-200 bg-earth-50">
+          <Container className="section-padding-sm">
+            <div className="max-w-3xl">
+              <p className="section-label mb-4">Events</p>
+              <h1 className="font-serif text-h1 text-earth-950">
+                Events, workshops, and awareness activities
+              </h1>
+              <p className="mt-5 text-body-lg text-earth-700">
+                DESCF events can include awareness sessions, institutional discussions,
+                education activities, conservation communication programmes, and field-related learning.
+              </p>
             </div>
-          </div>
-        )}
+          </Container>
+        </section>
 
-        {past.length > 0 && (
-          <div>
-            <SectionHeader label="Archive" title="Past events" />
-            <div className="grid md:grid-cols-2 gap-4 max-w-prose-lg">
-              {past.map(e => <EventCard key={e._id} event={e} />)}
+        <Section>
+          <Container>
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <SectionHeader
+                eyebrow="Upcoming"
+                title="Upcoming events"
+                description="Published upcoming events from Sanity CMS appear here."
+                className="mb-0"
+              />
+
+              <Button href="/contact" variant="secondary">
+                Enquire about events
+              </Button>
             </div>
-          </div>
-        )}
 
-        {upcoming.length === 0 && past.length === 0 && (
-          <div className="py-20 text-center text-earth-500">
-            <p className="text-h4 font-serif mb-2">No events listed yet</p>
-            <p className="text-body-sm">DESCF events will appear here when published.</p>
-          </div>
-        )}
-      </section>
+            <div className="mt-10">
+              {upcoming.length > 0 ? (
+                <div className="grid gap-5 md:grid-cols-2">
+                  {upcoming.map((event) => (
+                    <EventCard key={event._id} event={event} />
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title="No upcoming events published"
+                  description="Upcoming DESCF events will appear here after they are added in Sanity CMS."
+                  actionLabel="Contact DESCF"
+                  actionHref="/contact"
+                />
+              )}
+            </div>
+          </Container>
+        </Section>
+
+        <section className="bg-earth-100/70">
+          <Container className="py-16 md:py-20">
+            <SectionHeader
+              eyebrow="Past events"
+              title="Completed activities and event records"
+              description="Past events help build institutional memory and public trust when documented clearly."
+            />
+
+            {past.length > 0 ? (
+              <div className="grid gap-5 md:grid-cols-2">
+                {past.map((event) => (
+                  <EventCard key={event._id} event={event} />
+                ))}
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="p-8">
+                  <h2 className="font-serif text-2xl text-earth-950">
+                    No past event records published yet
+                  </h2>
+                  <p className="mt-3 text-body text-earth-700">
+                    Completed event records will appear here after they are added through Sanity CMS.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+          </Container>
+        </section>
+      </main>
     </>
   )
 }

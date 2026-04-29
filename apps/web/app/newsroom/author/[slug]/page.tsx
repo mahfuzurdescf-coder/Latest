@@ -7,6 +7,8 @@ import { ArticleCard } from '@/components/cards'
 import { PortableText } from '@/components/portable-text/PortableText'
 import { urlForImage } from '@/lib/sanity/image'
 import type { Author, PostCard } from '@/types/sanity'
+import { buildMetadata } from '@/lib/seo'
+import { buildArticleJSONLD } from '@/lib/json-ld'
 
 interface Props { params: { slug: string } }
 
@@ -22,11 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     tags: ['author'],
   })
   const author = data?.author
-  if (!author) return { title: 'Author not found' }
-  return {
+  if (!author) return buildMetadata({ title: 'Author not found' })
+
+  return buildMetadata({
     title: `${author.name} — DESCF`,
     description: `Articles and field notes by ${author.name}, ${author.role ?? ''} at DESCF.`,
-  }
+  })
 }
 
 export default async function AuthorProfilePage({ params }: Props) {
@@ -43,8 +46,24 @@ export default async function AuthorProfilePage({ params }: Props) {
     ? urlForImage(author.photo)?.width(200).height(200).url()
     : null
 
+  // JSON-LD structured data for Google Rich Results
+  const jsonLd = buildArticleJSONLD({
+    title: author.name,
+    description: author.bio ? author.bio[0]?.children?.map(c => c.text).join(' ') : undefined,
+    url: `https://descf.org/newsroom/author/${params.slug}`,
+    authorName: author.name,
+    datePublished: posts[0]?._createdAt,
+    dateModified: posts[0]?._updatedAt,
+  })
+
   return (
     <>
+      {/* Inject JSON-LD */}
+      <script type="application/ld+json">
+        {JSON.stringify(jsonLd)}
+      </script>
+
+      {/* Author Header Section */}
       <section className="bg-earth-50 border-b border-earth-200 section-padding-sm">
         <div className="container-site">
           <div className="flex items-center gap-6">
@@ -75,6 +94,7 @@ export default async function AuthorProfilePage({ params }: Props) {
               )}
             </div>
           </div>
+
           {author.bio && (
             <div className="mt-6 max-w-prose text-body text-earth-700 leading-relaxed">
               <PortableText value={author.bio} />
@@ -83,6 +103,7 @@ export default async function AuthorProfilePage({ params }: Props) {
         </div>
       </section>
 
+      {/* Articles Section */}
       <section className="section-padding container-site">
         <p className="section-label text-earth-500 mb-6">
           {posts.length} article{posts.length !== 1 ? 's' : ''} by {author.name}

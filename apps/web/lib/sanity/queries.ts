@@ -18,8 +18,8 @@ const POST_CARD_FRAGMENT = `
   _id, _type, title, slug, excerpt, publishedAt, updatedAt,
   readingTime, featured, editorPick, contentType, language, status,
   coverImage{${IMAGE_FRAGMENT}},
-  category{${CATEGORY_FRAGMENT}},
-  tags[]{${TAG_FRAGMENT}},
+  category->{${CATEGORY_FRAGMENT}},
+  tags[]->{${TAG_FRAGMENT}},
   author->{${AUTHOR_CARD_FRAGMENT}}
 `
 
@@ -124,7 +124,7 @@ export const TAG_BY_SLUG_QUERY = `{
   "tag": *[_type == "tag" && slug.current == $slug][0]{${TAG_FRAGMENT}},
   "posts": *[
     _type == "post" && status == "published"
-    && $slug in tags[].slug.current
+    && $slug in tags[]->slug.current
     && language == "en"
   ] | order(publishedAt desc){${POST_CARD_FRAGMENT}}
 }`
@@ -222,6 +222,108 @@ export const SITEMAP_QUERY = `{
   "programmes": *[_type == "programme"]{
     "slug": slug.current, _updatedAt
   },
-  "categories": *[_type == "category"]{"slug": slug.current},
-  "events": *[_type == "event"]{"slug": slug.current, _updatedAt}
+  "categories": *[_type == "category"]{
+    "slug": slug.current
+  },
+  "tags": *[_type == "tag"]{
+    "slug": slug.current
+  },
+  "authors": *[_type == "author"]{
+    "slug": slug.current
+  },
+  "events": *[_type == "event"]{
+    "slug": slug.current, _updatedAt
+  }
 }`
+// --- DESCF institutional CMS queries ------------------------------------------
+
+export const PARTNERS_QUERY = /* groq */ `
+  *[_type == "partner" && relationshipStatus in ["current", "past"]] | order(featured desc, order asc, name asc) {
+    _id,
+    _type,
+    name,
+    slug,
+    logo{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    website,
+    summary,
+    partnerType,
+    relationshipStatus,
+    featured,
+    order
+  }
+`
+
+export const GOVERNANCE_DOCUMENTS_QUERY = /* groq */ `
+  *[_type == "governanceDocument" && status == "published"] | order(order asc, publishedAt desc) {
+    _id,
+    _type,
+    title,
+    slug,
+    summary,
+    documentType,
+    fileUrl,
+    publishedAt,
+    status,
+    order
+  }
+`
+
+export const POLICIES_QUERY = /* groq */ `
+  *[_type == "policy" && status == "active"] | order(effectiveDate desc, title asc) {
+    _id,
+    _type,
+    title,
+    slug,
+    summary,
+    fileUrl,
+    policyArea,
+    effectiveDate,
+    reviewDate,
+    status
+  }
+`
+
+// --- Homepage curation query --------------------------------------------------
+
+export const HOMEPAGE_CURATION_QUERY = /* groq */ `
+  *[_type == "homepageCuration"][0] {
+    _id,
+    _type,
+    title,
+    heroEyebrow,
+    heroTitle,
+    heroDescription,
+    heroImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    primaryCta,
+    secondaryCta,
+    featuredProgrammes[]->{
+      ${PROGRAMME_CARD_FRAGMENT}
+    },
+    featuredPosts[]->{
+      ${POST_CARD_FRAGMENT}
+    },
+    featuredResources[]->{
+      ${RESOURCE_CARD_FRAGMENT}
+    }
+  }
+`

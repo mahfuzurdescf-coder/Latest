@@ -1,82 +1,172 @@
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Mission, Vision & Values',
-  description: "DESCF's mission, vision, and organisational values — our guiding commitments for conservation in Bangladesh.",
-}
+import { Button } from '@/components/ui/Button'
+import { Card, CardContent } from '@/components/ui/Card'
+import { Container } from '@/components/ui/Container'
+import { Section, SectionHeader } from '@/components/ui/Section'
+import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
+import { buildMetadata } from '@/lib/seo'
+import { SITE } from '@/lib/site'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Mission and Vision',
+  description:
+    'DESCF’s mission and vision focus on biodiversity conservation, snake awareness, ecological education, research communication, and human-wildlife coexistence in Bangladesh.',
+  canonicalUrl: 'https://descf.org/mission',
+})
+
+const missionJsonLd = buildBreadcrumbJSONLD([
+  { name: 'Home', url: 'https://descf.org' },
+  { name: 'Mission and Vision', url: 'https://descf.org/mission' },
+])
 
 const VALUES = [
   {
-    title: 'Honesty before ambition',
-    body: 'We do not present ambition as achievement. We are transparent about what we have done, what we are working toward, and where we are still in early stages.',
+    title: 'Respect for life systems',
+    description:
+      'DESCF’s conservation outlook values ecosystems, species, habitats, and the relationships that sustain life.',
   },
   {
-    title: 'Field-first orientation',
-    body: 'Conservation work happens on the ground, in communities, and in ecosystems. Our decisions are shaped by field realities, not by what looks good in reports.',
+    title: 'Knowledge before fear',
+    description:
+      'Snake conservation requires replacing panic and misinformation with practical awareness and ecological understanding.',
   },
   {
-    title: 'Coexistence as a conservation goal',
-    body: 'We believe humans and wildlife — including species that generate fear — can share space safely. Building coexistence is not a secondary objective: it is our primary lens.',
+    title: 'Community-facing conservation',
+    description:
+      'Awareness must be understandable, locally relevant, and useful for people living near wildlife.',
   },
   {
-    title: 'Accessible science',
-    body: 'Conservation knowledge should be accessible to communities, students, and the public — not locked behind institutional language. We work to communicate ecology clearly and without condescension.',
-  },
-  {
-    title: 'Long-term thinking',
-    body: 'Conservation outcomes take time. We do not overstate short-term impact, and we invest in methodological capacity, institutional learning, and evidence quality even when it yields no immediate result.',
-  },
-  {
-    title: 'Institutional integrity',
-    body: 'We maintain governance standards, keep our records accurate, and hold ourselves accountable to the communities and wildlife we serve — before any external audience.',
+    title: 'Responsible communication',
+    description:
+      'Conservation storytelling should inform the public without sensationalising wildlife or exposing sensitive locations.',
   },
 ]
 
 export default function MissionPage() {
   return (
     <>
-      <section className="bg-forest-900 text-forest-50 section-padding">
-        <div className="container-site">
-          <p className="section-label text-forest-500 mb-4">Foundation</p>
-          <h1 className="text-display-md font-serif text-forest-50 mb-4 max-w-[600px]">
-            Mission, Vision &amp; Values
-          </h1>
-        </div>
-      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(missionJsonLd) }}
+      />
 
-      <section className="section-padding bg-white">
-        <div className="container-site max-w-prose-lg">
-          <div className="grid md:grid-cols-2 gap-10 mb-16">
-            <div>
-              <p className="section-label text-forest-700 mb-4">Mission</p>
-              <p className="text-h3 font-serif text-earth-900 leading-snug">
-                To protect herpetofauna and build a culture of coexistence between people and
-                wildlife in Bangladesh — through field work, awareness, documentation, and honest
-                conservation practice.
+      <main id="main-content">
+        <section className="border-b border-earth-200 bg-earth-50">
+          <Container className="section-padding-sm">
+            <div className="max-w-3xl">
+              <p className="section-label mb-4">Mission and vision</p>
+              <h1 className="font-serif text-h1 text-earth-950">
+                Building a society that understands, respects, and coexists with wildlife.
+              </h1>
+              <p className="mt-5 text-body-lg text-earth-700">
+                DESCF’s institutional purpose is to strengthen conservation awareness,
+                biodiversity learning, snake conservation, and human-wildlife coexistence
+                through responsible communication and field-informed work.
               </p>
             </div>
-            <div>
-              <p className="section-label text-forest-700 mb-4">Vision</p>
-              <p className="text-h3 font-serif text-earth-900 leading-snug">
-                A Bangladesh where snakes, amphibians, and reptiles are understood and protected —
-                and where communities have the knowledge and confidence to coexist with wildlife safely.
-              </p>
-            </div>
-          </div>
+          </Container>
+        </section>
 
-          <div>
-            <p className="section-label text-forest-700 mb-8">Our values</p>
-            <div className="grid md:grid-cols-2 gap-6">
-              {VALUES.map((v) => (
-                <div key={v.title} className="bg-earth-50 rounded-xl border border-earth-200 p-6">
-                  <h3 className="text-h5 font-medium text-earth-900 mb-2">{v.title}</h3>
-                  <p className="text-body-sm text-earth-600 leading-relaxed">{v.body}</p>
-                </div>
+        <Section>
+          <Container>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <Card>
+                <CardContent className="p-8">
+                  <p className="section-label mb-3">Mission</p>
+                  <h2 className="font-serif text-h2 text-earth-950">
+                    To advance conservation awareness and coexistence through education, documentation, and public communication.
+                  </h2>
+                  <p className="mt-5 text-body text-earth-700">
+                    DESCF works to support biodiversity conservation by improving how people
+                    understand wildlife, especially snakes and other misunderstood species.
+                    Its mission combines awareness, ecological learning, field documentation,
+                    and institutional collaboration.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-8">
+                  <p className="section-label mb-3">Vision</p>
+                  <h2 className="font-serif text-h2 text-earth-950">
+                    A Bangladesh where people and wildlife can coexist through knowledge, responsibility, and ecological respect.
+                  </h2>
+                  <p className="mt-5 text-body text-earth-700">
+                    DESCF envisions a society where wildlife is not treated only through fear
+                    or conflict, but through awareness, conservation ethics, public education,
+                    and informed community responses.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </Container>
+        </Section>
+
+        <section className="bg-earth-100/70">
+          <Container className="py-16 md:py-20">
+            <SectionHeader
+              eyebrow="Values"
+              title="The values behind DESCF’s conservation work"
+              description="These values should guide DESCF’s communication, programmes, partnerships, and public-facing materials."
+            />
+
+            <div className="grid gap-5 md:grid-cols-2">
+              {VALUES.map((value) => (
+                <Card key={value.title}>
+                  <CardContent>
+                    <h3 className="font-serif text-2xl text-earth-950">
+                      {value.title}
+                    </h3>
+                    <p className="mt-3 text-body-sm text-earth-700">
+                      {value.description}
+                    </p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
+          </Container>
+        </section>
+
+        <Section>
+          <Container>
+            <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-start">
+              <div>
+                <p className="section-label mb-3">Strategic direction</p>
+                <h2 className="font-serif text-h2 text-earth-950">
+                  DESCF should grow as a credible conservation communication institution.
+                </h2>
+                <p className="mt-5 text-body text-earth-700">
+                  The next stage of DESCF should avoid scattered activities and instead build
+                  a disciplined institutional portfolio: clear programmes, documented resources,
+                  responsible media outputs, partnership records, and CMS-driven content that can
+                  be maintained without developer dependency.
+                </p>
+              </div>
+
+              <Card>
+                <CardContent>
+                  <h3 className="font-serif text-2xl text-earth-950">
+                    Work with DESCF
+                  </h3>
+                  <p className="mt-3 text-body-sm text-earth-700">
+                    Institutions, educators, researchers, media professionals, and conservation
+                    partners can contact DESCF for collaboration.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Button href="/partner" variant="primary">
+                      Partner with us
+                    </Button>
+                    <Button href={`mailto:${SITE.contactEmail}`} variant="secondary">
+                      Email DESCF
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </Container>
+        </Section>
+      </main>
     </>
   )
 }

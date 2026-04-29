@@ -1,0 +1,130 @@
+﻿import { defineField, defineType } from 'sanity'
+
+export const partner = defineType({
+  name: 'partner',
+  title: 'Partner',
+  type: 'document',
+  groups: [
+    { name: 'profile', title: 'Profile', default: true },
+    { name: 'relationship', title: 'Relationship' },
+    { name: 'seo', title: 'SEO' },
+  ],
+  fields: [
+    defineField({
+      name: 'name',
+      title: 'Partner name',
+      type: 'string',
+      group: 'profile',
+      validation: (Rule) => Rule.required().min(2).max(140),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'profile',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'logo',
+      title: 'Logo',
+      type: 'imageWithAltCredit',
+      group: 'profile',
+    }),
+    defineField({
+      name: 'website',
+      title: 'Website',
+      type: 'url',
+      group: 'profile',
+    }),
+    defineField({
+      name: 'summary',
+      title: 'Short summary',
+      type: 'text',
+      rows: 3,
+      group: 'profile',
+      validation: (Rule) => Rule.max(240),
+    }),
+    defineField({
+      name: 'partnerType',
+      title: 'Partner type',
+      type: 'string',
+      group: 'relationship',
+      options: {
+        layout: 'dropdown',
+        list: [
+          { title: 'Research partner', value: 'research' },
+          { title: 'Education partner', value: 'education' },
+          { title: 'Conservation partner', value: 'conservation' },
+          { title: 'Media partner', value: 'media' },
+          { title: 'Donor / supporter', value: 'donor' },
+          { title: 'Community partner', value: 'community' },
+          { title: 'Other', value: 'other' },
+        ],
+      },
+      initialValue: 'other',
+    }),
+    defineField({
+      name: 'relationshipStatus',
+      title: 'Relationship status',
+      type: 'string',
+      group: 'relationship',
+      options: {
+        layout: 'radio',
+        list: [
+          { title: 'Current', value: 'current' },
+          { title: 'Past', value: 'past' },
+          { title: 'Prospective', value: 'prospective' },
+        ],
+      },
+      initialValue: 'current',
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured partner',
+      type: 'boolean',
+      group: 'relationship',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'order',
+      title: 'Display order',
+      type: 'number',
+      group: 'relationship',
+      initialValue: 100,
+    }),
+    defineField({
+      name: 'notes',
+      title: 'Internal notes',
+      type: 'text',
+      rows: 4,
+      group: 'relationship',
+      description: 'Internal notes only. Do not use this for public content.',
+    }),
+    defineField({
+      name: 'seoTitle',
+      title: 'SEO title',
+      type: 'string',
+      group: 'seo',
+      validation: (Rule) => Rule.max(70),
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'SEO description',
+      type: 'text',
+      rows: 3,
+      group: 'seo',
+      validation: (Rule) => Rule.max(170),
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'partnerType',
+      media: 'logo',
+    },
+  },
+})
