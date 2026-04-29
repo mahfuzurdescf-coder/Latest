@@ -60,12 +60,80 @@ export const deskStructure: StructureResolver = (S) =>
                 ),
 
               S.listItem()
+                .title('Registration Forms')
+                .schemaType('registrationForm')
+                .child(
+                  S.documentTypeList('registrationForm')
+                    .title('Registration Forms')
+                    .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
+                ),
+
+              S.listItem()
                 .title('Team Members')
                 .schemaType('teamMember')
                 .child(
                   S.documentTypeList('teamMember')
                     .title('Team Members')
                     .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Submissions')
+        .child(
+          S.list()
+            .title('Submissions')
+            .items([
+              S.listItem()
+                .title('Contact Submissions')
+                .schemaType('contactSubmission')
+                .child(
+                  S.documentTypeList('contactSubmission')
+                    .title('Contact Submissions')
+                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
+                ),
+
+              S.listItem()
+                .title('New Contact Submissions')
+                .schemaType('contactSubmission')
+                .child(
+                  S.documentTypeList('contactSubmission')
+                    .title('New Contact Submissions')
+                    .filter('_type == "contactSubmission" && status == "new"')
+                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title('Event Registrations')
+                .schemaType('eventRegistration')
+                .child(
+                  S.documentTypeList('eventRegistration')
+                    .title('Event Registrations')
+                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
+                ),
+
+              S.listItem()
+                .title('New Event Registrations')
+                .schemaType('eventRegistration')
+                .child(
+                  S.documentTypeList('eventRegistration')
+                    .title('New Event Registrations')
+                    .filter('_type == "eventRegistration" && status == "new"')
+                    .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title('Registration Forms')
+                .schemaType('registrationForm')
+                .child(
+                  S.documentTypeList('registrationForm')
+                    .title('Registration Forms')
+                    .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
                 ),
             ]),
         ),
