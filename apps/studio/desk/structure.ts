@@ -20,6 +20,16 @@ export const deskStructure: StructureResolver = (S) =>
                     .title('Site Settings'),
                 ),
 
+              S.listItem()
+                .title('Homepage Curation')
+                .schemaType('homepageCuration')
+                .child(
+                  S.document()
+                    .schemaType('homepageCuration')
+                    .documentId('homepageCuration')
+                    .title('Homepage Curation'),
+                ),
+
               S.divider(),
 
               S.listItem()
@@ -29,6 +39,15 @@ export const deskStructure: StructureResolver = (S) =>
                   S.documentTypeList('programme')
                     .title('Programmes')
                     .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
+                ),
+
+              S.listItem()
+                .title('Partners')
+                .schemaType('partner')
+                .child(
+                  S.documentTypeList('partner')
+                    .title('Partners')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
                 ),
 
               S.listItem()
@@ -163,6 +182,54 @@ export const deskStructure: StructureResolver = (S) =>
         ),
 
       S.listItem()
+        .title('Governance')
+        .child(
+          S.list()
+            .title('Governance')
+            .items([
+              S.listItem()
+                .title('Governance Documents')
+                .schemaType('governanceDocument')
+                .child(
+                  S.documentTypeList('governanceDocument')
+                    .title('Governance Documents')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+
+              S.listItem()
+                .title('Published Governance Documents')
+                .schemaType('governanceDocument')
+                .child(
+                  S.documentTypeList('governanceDocument')
+                    .title('Published Governance Documents')
+                    .filter('_type == "governanceDocument" && status == "published"')
+                    .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title('Policies')
+                .schemaType('policy')
+                .child(
+                  S.documentTypeList('policy')
+                    .title('Policies')
+                    .defaultOrdering([{ field: 'effectiveDate', direction: 'desc' }]),
+                ),
+
+              S.listItem()
+                .title('Active Policies')
+                .schemaType('policy')
+                .child(
+                  S.documentTypeList('policy')
+                    .title('Active Policies')
+                    .filter('_type == "policy" && status == "active"')
+                    .defaultOrdering([{ field: 'effectiveDate', direction: 'desc' }]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
         .title('People')
         .child(
           S.list()
@@ -181,6 +248,44 @@ export const deskStructure: StructureResolver = (S) =>
                     .title('Team Members')
                     .defaultOrdering([{ field: 'order', direction: 'asc' }]),
                 ),
+
+              S.listItem()
+                .title('Partners')
+                .schemaType('partner')
+                .child(
+                  S.documentTypeList('partner')
+                    .title('Partners')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Operations')
+        .child(
+          S.list()
+            .title('Operations')
+            .items([
+              S.listItem()
+                .title('Redirects')
+                .schemaType('redirect')
+                .child(
+                  S.documentTypeList('redirect')
+                    .title('Redirects')
+                    .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title('Categories')
+                .schemaType('category')
+                .child(S.documentTypeList('category').title('Categories')),
+
+              S.listItem()
+                .title('Tags')
+                .schemaType('tag')
+                .child(S.documentTypeList('tag').title('Tags')),
             ]),
         ),
 
@@ -200,17 +305,15 @@ export const deskStructure: StructureResolver = (S) =>
                     .title('Site Settings'),
                 ),
 
-              S.divider(),
-
               S.listItem()
-                .title('Categories')
-                .schemaType('category')
-                .child(S.documentTypeList('category').title('Categories')),
-
-              S.listItem()
-                .title('Tags')
-                .schemaType('tag')
-                .child(S.documentTypeList('tag').title('Tags')),
+                .title('Homepage Curation')
+                .schemaType('homepageCuration')
+                .child(
+                  S.document()
+                    .schemaType('homepageCuration')
+                    .documentId('homepageCuration')
+                    .title('Homepage Curation'),
+                ),
             ]),
         ),
     ])
