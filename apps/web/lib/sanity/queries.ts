@@ -377,3 +377,472 @@ export const EVENT_DETAIL_WITH_REGISTRATION_QUERY = /* groq */ `
     }
   }
 `
+
+// --- Bangladesh Wildlife / Species Database queries --------------------------
+
+export const wildlifeGroupsQuery = `*[
+  _type == "wildlifeGroup" &&
+  status == "active"
+] | order(order asc, title asc) {
+  _id,
+  _type,
+  title,
+  slug,
+  description,
+  heroImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  status,
+  order,
+  seoTitle,
+  seoDescription
+}`
+
+export const speciesZonesQuery = `*[
+  _type == "speciesZone"
+] | order(order asc, title asc) {
+  _id,
+  _type,
+  title,
+  slug,
+  description,
+  mapColor,
+  order
+}`
+
+export const speciesDistrictsQuery = `*[
+  _type == "speciesDistrict"
+] | order(division asc, title asc) {
+  _id,
+  _type,
+  title,
+  slug,
+  division,
+  zone->{
+    _id,
+    _type,
+    title,
+    slug,
+    description,
+    mapColor,
+    order
+  },
+  lat,
+  lng,
+  order
+}`
+
+export const snakeSpeciesQuery = `*[
+  _type == "speciesProfile" &&
+  publishedStatus == "published" &&
+  group->slug.current == "snakes"
+] | order(englishName asc) {
+  _id,
+  _type,
+  banglaName,
+  englishName,
+  scientificName,
+  slug,
+  shortDescription,
+  family,
+  venomStatus,
+  medicalImportance,
+  iucnGlobalStatus,
+  bangladeshStatus,
+  primaryImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  publishedStatus,
+  group->{
+    _id,
+    title,
+    slug
+  }
+}`
+
+export const speciesProfileBySlugQuery = `*[
+  _type == "speciesProfile" &&
+  slug.current == $slug &&
+  publishedStatus == "published"
+][0] {
+  _id,
+  _type,
+  _createdAt,
+  _updatedAt,
+  group->{
+    _id,
+    _type,
+    title,
+    slug,
+    description,
+    heroImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    status,
+    order
+  },
+  banglaName,
+  englishName,
+  scientificName,
+  slug,
+  localNames,
+  shortDescription,
+  family,
+  order,
+  venomStatus,
+  medicalImportance,
+  iucnGlobalStatus,
+  bangladeshStatus,
+  statusSource,
+  identification,
+  scaleDescription,
+  behaviour,
+  habitat,
+  diet,
+  distributionText,
+  ecologicalRole,
+  mythsAndFacts,
+  safetyNote,
+  similarSpecies[]->{
+    _id,
+    _type,
+    banglaName,
+    englishName,
+    scientificName,
+    slug,
+    shortDescription,
+    family,
+    venomStatus,
+    medicalImportance,
+    iucnGlobalStatus,
+    bangladeshStatus,
+    primaryImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    publishedStatus
+  },
+  primaryImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  images[]{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  zones[]->{
+    _id,
+    _type,
+    title,
+    slug,
+    description,
+    mapColor,
+    order
+  },
+  districts[]->{
+    _id,
+    _type,
+    title,
+    slug,
+    division,
+    lat,
+    lng,
+    order,
+    zone->{
+      _id,
+      _type,
+      title,
+      slug,
+      description,
+      mapColor,
+      order
+    }
+  },
+  occurrencePoints[]{
+    _key,
+    lat,
+    lng,
+    accuracy,
+    date,
+    source,
+    verified,
+    publicPrecision
+  },
+  sourceReferences[]{
+    _key,
+    title,
+    url,
+    note
+  },
+  reviewedBy,
+  publishedStatus,
+  seoTitle,
+  seoDescription
+}`
+
+// --- Prokriti Kotha editorial queries ---------------------------------------
+
+export const prokritiKothaArticlesQuery = `*[
+  _type == "prokritiKothaArticle" &&
+  status == "published"
+] | order(publishedAt desc) {
+  _id,
+  _type,
+  _createdAt,
+  _updatedAt,
+  title,
+  slug,
+  excerpt,
+  coverImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  category,
+  language,
+  publishedAt,
+  readingTime,
+  status,
+  featured,
+  author->{
+    _id,
+    name,
+    slug,
+    role,
+    orgRole,
+    photo{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    }
+  }
+}`
+
+export const featuredProkritiKothaArticlesQuery = `*[
+  _type == "prokritiKothaArticle" &&
+  status == "published" &&
+  featured == true
+] | order(publishedAt desc)[0...3] {
+  _id,
+  _type,
+  _createdAt,
+  _updatedAt,
+  title,
+  slug,
+  excerpt,
+  coverImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  category,
+  language,
+  publishedAt,
+  readingTime,
+  status,
+  featured,
+  author->{
+    _id,
+    name,
+    slug,
+    role,
+    orgRole,
+    photo{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    }
+  }
+}`
+
+export const prokritiKothaArticleBySlugQuery = `*[
+  _type == "prokritiKothaArticle" &&
+  slug.current == $slug &&
+  status == "published"
+][0] {
+  _id,
+  _type,
+  _createdAt,
+  _updatedAt,
+  title,
+  slug,
+  excerpt,
+  coverImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  },
+  body,
+  category,
+  language,
+  publishedAt,
+  readingTime,
+  status,
+  featured,
+  author->{
+    _id,
+    _type,
+    name,
+    slug,
+    role,
+    orgRole,
+    expertise,
+    photo{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    bio
+  },
+  relatedSpecies[]->{
+    _id,
+    _type,
+    banglaName,
+    englishName,
+    scientificName,
+    slug,
+    shortDescription,
+    family,
+    venomStatus,
+    medicalImportance,
+    iucnGlobalStatus,
+    bangladeshStatus,
+    primaryImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    publishedStatus,
+    group->{
+      _id,
+      title,
+      slug
+    }
+  },
+  relatedArticles[]->{
+    _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    title,
+    slug,
+    excerpt,
+    coverImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    category,
+    language,
+    publishedAt,
+    readingTime,
+    status,
+    featured
+  },
+  seoTitle,
+  seoDescription,
+  ogImage{
+    ...,
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions,
+        lqip
+      }
+    }
+  }
+}`
