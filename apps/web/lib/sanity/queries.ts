@@ -846,3 +846,9 @@ export const prokritiKothaArticleBySlugQuery = `*[
     }
   }
 }`
+
+export const prokritiKothaArticleSlugsQuery = `*[
+  _type == "prokritiKothaArticle" &&
+  status == "published" &&
+  defined(slug.current)
+].slug.current`
