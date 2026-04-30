@@ -2,6 +2,7 @@
 
 import { HomeCTA } from '@/components/sections/HomeCTA'
 import { HomeHero } from '@/components/sections/HomeHero'
+import { HomeTrustStrip } from '@/components/sections/HomeTrustStrip'
 import { HomeNewsroom } from '@/components/sections/HomeNewsroom'
 import { HomeProgrammes } from '@/components/sections/HomeProgrammes'
 import { HomeResources } from '@/components/sections/HomeResources'
@@ -84,6 +85,7 @@ export default async function HomePage() {
 
       <main id="main-content">
         <HomeHero curation={curation} />
+        <HomeTrustStrip />
         <HomeProgrammes programmes={programmes} />
         <HomeNewsroom posts={uniquePosts} />
         <HomeResources resources={resources} />
