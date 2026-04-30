@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+﻿import { cn } from '@/lib/utils'
 
 interface SectionProps {
   children: React.ReactNode
@@ -35,12 +35,18 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={cn('mb-10 max-w-3xl', className)}>
-      {eyebrow && <p className="section-label mb-3">{eyebrow}</p>}
-      <h2 className="font-serif text-h2 text-earth-950 text-balance">
+      {eyebrow && (
+        <p className="section-label mb-3 text-forest-700">
+          {eyebrow}
+        </p>
+      )}
+
+      <h2 className="font-serif text-h2 leading-tight tracking-[-0.02em] text-earth-950 text-balance">
         {title}
       </h2>
+
       {description && (
-        <p className="mt-4 text-body text-earth-600">
+        <p className="mt-4 max-w-2xl text-body leading-7 text-earth-600">
           {description}
         </p>
       )}

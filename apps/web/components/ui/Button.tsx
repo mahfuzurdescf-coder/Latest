@@ -1,4 +1,5 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
+
 import { cn } from '@/lib/utils'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'cta'
@@ -6,13 +7,13 @@ type ButtonSize = 'sm' | 'md' | 'lg'
 
 const variantClass: Record<ButtonVariant, string> = {
   primary:
-    'bg-forest-700 text-white hover:bg-forest-800 focus-visible:ring-forest-700',
+    'bg-forest-700 text-white shadow-sm hover:bg-forest-800 focus-visible:ring-forest-700',
   secondary:
-    'border border-forest-700 text-forest-800 hover:bg-forest-50 focus-visible:ring-forest-700',
+    'border border-forest-700/70 bg-white/70 text-forest-900 hover:bg-forest-50 focus-visible:ring-forest-700',
   ghost:
     'text-earth-700 hover:bg-earth-100 hover:text-earth-950 focus-visible:ring-earth-500',
   cta:
-    'bg-bark-500 text-white hover:bg-bark-600 focus-visible:ring-bark-500',
+    'bg-earth-50 text-forest-950 shadow-sm hover:bg-white focus-visible:ring-earth-100',
 }
 
 const sizeClass: Record<ButtonSize, string> = {
@@ -39,7 +40,7 @@ export function Button({
   className,
 }: ButtonProps) {
   const classes = cn(
-    'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-earth-50',
+    'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-earth-50 active:translate-y-px',
     variantClass[variant],
     sizeClass[size],
     className,
