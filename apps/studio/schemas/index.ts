@@ -25,3 +25,5 @@ export { redirect } from './descf/redirect'
 export { registrationForm } from './descf/registrationForm'
 export { contactSubmission } from './descf/contactSubmission'
 export { eventRegistration } from './descf/eventRegistration'
+
+export { wildlifeGroup } from './wildlife/wildlifeGroup'
