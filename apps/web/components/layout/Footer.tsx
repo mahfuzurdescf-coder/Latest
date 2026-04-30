@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 import { LogoMark } from '@/components/brand/LogoMark'
 import type { SiteSettings } from '@/types/sanity'
@@ -30,6 +30,9 @@ const FOOTER_SECTIONS = [
     title: 'Resources',
     links: [
       { label: 'Newsroom', href: '/newsroom' },
+      { label: 'Prokriti Kotha', href: '/prokriti-kotha' },
+      { label: 'Bangladesh Wildlife', href: '/bangladesh-wildlife' },
+      { label: 'Snake Field Guide', href: '/bangladesh-wildlife/snakes' },
       { label: 'Reports & Publications', href: '/reports' },
       { label: 'Evidence & Resources', href: '/evidence-resources' },
       { label: 'Media', href: '/media' },
@@ -172,3 +175,4 @@ export function Footer({ settings }: FooterProps) {
     </footer>
   )
 }
+
