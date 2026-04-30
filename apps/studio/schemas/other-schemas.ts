@@ -315,7 +315,7 @@ export const programme = defineType({
               name: 'value',
               title: 'Value',
               type: 'string',
-              description: 'Use text so values like â€œ1,000+â€ or â€œIn progressâ€ are possible.',
+              description: 'Use text so values like 1,000+ or 25 households can be entered safely.',
               validation: (Rule) => Rule.required().max(40),
             }),
             defineField({
