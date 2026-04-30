@@ -211,6 +211,101 @@ export const deskStructure: StructureResolver = (S) =>
         ),
 
       S.listItem()
+        .title('Nature Editorial')
+        .child(
+          S.list()
+            .title('Nature Editorial')
+            .items([
+              S.listItem()
+                .title('Prokriti Kotha Articles')
+                .schemaType('prokritiKothaArticle')
+                .child(
+                  S.documentTypeList('prokritiKothaArticle')
+                    .title('Prokriti Kotha Articles')
+                    .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+                ),
+
+              S.listItem()
+                .title('Published Articles')
+                .schemaType('prokritiKothaArticle')
+                .child(
+                  S.documentTypeList('prokritiKothaArticle')
+                    .title('Published Prokriti Kotha Articles')
+                    .filter('_type == "prokritiKothaArticle" && status == "published"')
+                    .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+                ),
+
+              S.listItem()
+                .title('Draft Articles')
+                .schemaType('prokritiKothaArticle')
+                .child(
+                  S.documentTypeList('prokritiKothaArticle')
+                    .title('Draft Prokriti Kotha Articles')
+                    .filter('_type == "prokritiKothaArticle" && status == "draft"')
+                    .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Bangladesh Wildlife')
+        .child(
+          S.list()
+            .title('Bangladesh Wildlife')
+            .items([
+              S.listItem()
+                .title('Wildlife Groups')
+                .schemaType('wildlifeGroup')
+                .child(
+                  S.documentTypeList('wildlifeGroup')
+                    .title('Wildlife Groups')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+
+              S.listItem()
+                .title('Species Profiles')
+                .schemaType('speciesProfile')
+                .child(
+                  S.documentTypeList('speciesProfile')
+                    .title('Species Profiles')
+                    .defaultOrdering([{ field: 'englishName', direction: 'asc' }]),
+                ),
+
+              S.listItem()
+                .title('Published Species Profiles')
+                .schemaType('speciesProfile')
+                .child(
+                  S.documentTypeList('speciesProfile')
+                    .title('Published Species Profiles')
+                    .filter('_type == "speciesProfile" && publishedStatus == "published"')
+                    .defaultOrdering([{ field: 'englishName', direction: 'asc' }]),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title('Species Zones')
+                .schemaType('speciesZone')
+                .child(
+                  S.documentTypeList('speciesZone')
+                    .title('Species Zones')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+
+              S.listItem()
+                .title('Species Districts')
+                .schemaType('speciesDistrict')
+                .child(
+                  S.documentTypeList('speciesDistrict')
+                    .title('Species Districts')
+                    .defaultOrdering([
+                      { field: 'division', direction: 'asc' },
+                      { field: 'title', direction: 'asc' },
+                    ]),
+                ),
+            ]),
+        ),
+      S.listItem()
         .title('Submissions & Exports')
         .child(
           S.list()
@@ -359,3 +454,4 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
     ])
+
