@@ -1,4 +1,5 @@
 import { ProgrammeCard } from '@/components/cards'
+import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Section, SectionHeader } from '@/components/ui/Section'
@@ -10,27 +11,36 @@ interface HomeProgrammesProps {
 
 export function HomeProgrammes({ programmes }: HomeProgrammesProps) {
   return (
-    <Section>
+    <Section className="bg-white">
       <Container>
-        <SectionHeader
-          eyebrow="Programmes"
-          title="Conservation work with institutional purpose"
-          description="DESCF programmes bring together field learning, public awareness, research, and practical conservation communication."
-        />
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <SectionHeader
+            eyebrow="Programmes"
+            title="Conservation work with institutional purpose"
+            description="DESCF programmes bring together field learning, public awareness, research, and practical conservation communication."
+            className="mb-0"
+          />
+
+          <Button href="/programmes" variant="secondary">
+            View all programmes
+          </Button>
+        </div>
 
         {programmes.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {programmes.slice(0, 6).map((programme) => (
               <ProgrammeCard key={programme._id} programme={programme} />
             ))}
           </div>
         ) : (
-          <EmptyState
-            title="Programme information is being prepared"
-            description="Published programme details will appear here after they are added in the CMS."
-            actionLabel="Contact DESCF"
-            actionHref="/contact"
-          />
+          <div className="mt-10">
+            <EmptyState
+              title="Programme information is being prepared"
+              description="Published programme details will appear here after they are added in the CMS."
+              actionLabel="Contact DESCF"
+              actionHref="/contact"
+            />
+          </div>
         )}
       </Container>
     </Section>

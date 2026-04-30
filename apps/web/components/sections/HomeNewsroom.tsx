@@ -13,13 +13,13 @@ interface HomeNewsroomProps {
 
 export function HomeNewsroom({ posts }: HomeNewsroomProps) {
   return (
-    <Section className="bg-earth-100/60">
+    <Section className="bg-[#f8f4eb]">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
             eyebrow="Newsroom"
             title="Updates, field notes, and conservation stories"
-            description="Read selected updates and insights from DESCF’s conservation communication work."
+            description="Read selected updates and insights from DESCF conservation communication work."
             className="mb-0"
           />
 
@@ -37,8 +37,8 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
         ) : (
           <div className="mt-10">
             <EmptyState
-              title="No newsroom stories published yet"
-              description="DESCF articles, updates, and field notes will appear here once published."
+              title="Stories are being prepared"
+              description="DESCF articles, updates, and field notes will appear here once they are added in the CMS."
               actionLabel="Browse newsroom"
               actionHref="/newsroom"
             />
