@@ -28,3 +28,4 @@ export { eventRegistration } from './descf/eventRegistration'
 
 export { wildlifeGroup } from './wildlife/wildlifeGroup'
 export { speciesZone } from './wildlife/speciesZone'
+export { speciesDistrict } from './wildlife/speciesDistrict'
