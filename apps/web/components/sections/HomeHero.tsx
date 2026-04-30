@@ -43,23 +43,23 @@ export function HomeHero({ curation }: HomeHeroProps) {
     : null
 
   return (
-    <section className="relative overflow-hidden border-b border-earth-200 bg-earth-50">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(64,96,52,0.16),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(173,125,37,0.14),transparent_32%)]" />
+    <section className="relative overflow-hidden border-b border-earth-200 bg-[#f7f4ec]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(58,94,49,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(173,125,37,0.12),transparent_30%)]" />
 
       <Container className="relative section-padding">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="max-w-3xl">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(420px,0.86fr)] lg:items-center xl:gap-16">
+          <div className="max-w-[680px]">
             <p className="section-label mb-4">{eyebrow}</p>
 
-            <h1 className="font-serif text-h1 text-earth-950 text-balance">
+            <h1 className="font-serif text-[clamp(3.25rem,5.6vw,5.35rem)] leading-[0.96] tracking-[-0.035em] text-earth-950 text-balance">
               {title}
             </h1>
 
-            <p className="mt-6 max-w-2xl text-body-lg text-earth-700">
+            <p className="mt-6 max-w-xl text-[1.08rem] leading-8 text-earth-700 sm:text-[1.12rem]">
               {description}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-9 flex flex-wrap gap-3.5">
               <Button href={primaryCta.href} variant="primary" size="lg">
                 {primaryCta.label}
               </Button>
@@ -69,19 +69,19 @@ export function HomeHero({ curation }: HomeHeroProps) {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-card">
+          <div className="mx-auto w-full max-w-[560px] rounded-[2rem] border border-earth-200/80 bg-white/80 p-4 shadow-card backdrop-blur-sm lg:justify-self-end lg:p-5">
             {heroImageUrl ? (
-              <figure className="overflow-hidden rounded-2xl bg-earth-100">
+              <figure className="overflow-hidden rounded-[1.45rem] bg-earth-100">
                 <Image
                   src={heroImageUrl}
                   alt={curation?.heroImage?.alt ?? 'DESCF conservation work'}
                   width={900}
                   height={700}
                   priority
-                  className="h-auto w-full object-cover"
+                  className="aspect-[4/3] h-full w-full object-cover object-center"
                 />
                 {(curation?.heroImage?.caption || curation?.heroImage?.credit) && (
-                  <figcaption className="border-t border-earth-100 bg-white px-4 py-3 text-sm text-earth-500">
+                  <figcaption className="border-t border-earth-100 bg-[#fffaf2]/95 px-4 py-3 text-sm leading-6 text-earth-600">
                     {curation.heroImage.caption}
                     {curation.heroImage.credit && (
                       <span>
