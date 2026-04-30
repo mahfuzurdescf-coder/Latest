@@ -16,7 +16,7 @@ export function LogoMark({
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>
       <span
-        className="relative inline-flex shrink-0 overflow-hidden rounded-xl bg-white ring-1 ring-slate-200"
+        className="relative inline-flex shrink-0 overflow-hidden rounded-lg bg-transparent"
         style={{ width: size, height: size }}
         aria-hidden="true"
       >
@@ -26,7 +26,7 @@ export function LogoMark({
           fill
           sizes={`${size}px`}
           priority={priority}
-          className="object-contain p-0.5"
+          className="object-contain"
         />
       </span>
 
