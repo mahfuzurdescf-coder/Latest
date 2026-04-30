@@ -26,6 +26,11 @@ import {
   registrationForm,
   contactSubmission,
   eventRegistration,
+  wildlifeGroup,
+  speciesZone,
+  speciesDistrict,
+  speciesProfile,
+  prokritiKothaArticle,
 } from './schemas'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || '7guoe2i2'
@@ -73,6 +78,13 @@ export default defineConfig({
       registrationForm,
       contactSubmission,
       eventRegistration,
+
+      wildlifeGroup,
+      speciesZone,
+      speciesDistrict,
+      speciesProfile,
+      prokritiKothaArticle,
     ],
   },
 })
+
