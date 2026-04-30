@@ -755,3 +755,4 @@ export const siteSettings = defineType({
     },
   },
 })
+
