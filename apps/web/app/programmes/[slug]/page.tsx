@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -34,12 +34,37 @@ function getProgrammeUrl(slug: string): string {
 }
 
 export async function generateStaticParams() {
-  const slugs = await sanityFetch<string[]>({
+  const items = await sanityFetch<unknown[]>({
     query: PROGRAMME_SLUGS_QUERY,
     tags: ['programme'],
   })
 
-  return (slugs ?? []).map((slug) => ({ slug }))
+  return (items ?? [])
+    .map((item) => {
+      if (!item) return null
+      if (typeof item === 'string') return item
+      if (typeof item !== 'object') return null
+
+      if ('current' in item) {
+        const current = (item as { current?: unknown }).current
+        if (typeof current === 'string') return current
+      }
+
+      if ('slug' in item) {
+        const slugValue = (item as { slug?: unknown }).slug
+
+        if (typeof slugValue === 'string') return slugValue
+
+        if (slugValue && typeof slugValue === 'object' && 'current' in slugValue) {
+          const current = (slugValue as { current?: unknown }).current
+          if (typeof current === 'string') return current
+        }
+      }
+
+      return null
+    })
+    .filter((slug): slug is string => typeof slug === 'string' && slug.length > 0)
+    .map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -295,3 +320,4 @@ export default async function ProgrammeDetailPage({ params }: Props) {
     </>
   )
 }
+

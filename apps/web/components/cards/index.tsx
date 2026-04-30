@@ -134,6 +134,12 @@ interface ProgrammeCardProps {
 }
 
 export function ProgrammeCard({ programme, className }: ProgrammeCardProps) {
+  const programmeSlug = programme.slug?.current
+
+  if (!programmeSlug) {
+    return null
+  }
+
   const imageUrl = programme.heroImage
     ? urlForImage(programme.heroImage)?.width(700).height(420).url()
     : null
@@ -372,3 +378,4 @@ export function AuthorCard({ author, showLink = true, className }: AuthorCardPro
 
   return inner
 }
+
