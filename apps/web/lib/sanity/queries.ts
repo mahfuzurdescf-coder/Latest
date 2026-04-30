@@ -852,3 +852,22 @@ export const prokritiKothaArticleSlugsQuery = `*[
   status == "published" &&
   defined(slug.current)
 ].slug.current`
+
+export const PROKRITI_KOTHA_SITEMAP_QUERY = `*[
+  _type == "prokritiKothaArticle" &&
+  status == "published" &&
+  defined(slug.current)
+] {
+  "slug": slug.current,
+  _updatedAt
+}`
+
+export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
+  _type == "speciesProfile" &&
+  publishedStatus == "published" &&
+  group->slug.current == "snakes" &&
+  defined(slug.current)
+] {
+  "slug": slug.current,
+  _updatedAt
+}`
