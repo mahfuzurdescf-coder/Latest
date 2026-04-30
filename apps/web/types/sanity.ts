@@ -523,3 +523,237 @@ export interface RegistrationFormPublic {
 export interface EventDetail extends Event {
   registrationForm?: RegistrationFormPublic | null
 }
+
+// --- Bangladesh Wildlife / Species Database types ----------------------------
+
+export type WildlifeGroupStatus =
+  | 'active'
+  | 'planned'
+  | 'archived'
+
+export interface WildlifeGroup {
+  _id: string
+  _type: 'wildlifeGroup'
+  title: string
+  slug: SanitySlug
+  description?: string
+  heroImage?: SanityImage
+  status?: WildlifeGroupStatus
+  order?: number
+  seoTitle?: string
+  seoDescription?: string
+}
+
+export interface WildlifeGroupCard
+  extends Pick<
+    WildlifeGroup,
+    | '_id'
+    | '_type'
+    | 'title'
+    | 'slug'
+    | 'description'
+    | 'heroImage'
+    | 'status'
+    | 'order'
+  > {}
+
+export interface SpeciesZone {
+  _id: string
+  _type: 'speciesZone'
+  title: string
+  slug: SanitySlug
+  description?: string
+  mapColor?: string
+  order?: number
+}
+
+export interface SpeciesDistrict {
+  _id: string
+  _type: 'speciesDistrict'
+  title: string
+  slug: SanitySlug
+  division: string
+  zone?: SpeciesZone
+  lat?: number
+  lng?: number
+  order?: number
+}
+
+export type VenomStatus =
+  | 'non-venomous'
+  | 'mildly-venomous'
+  | 'venomous'
+  | 'highly-venomous'
+  | 'unknown'
+
+export type MedicalImportance =
+  | 'medically-important'
+  | 'not-medically-important'
+  | 'uncertain'
+
+export type ConservationStatus =
+  | 'NE'
+  | 'DD'
+  | 'LC'
+  | 'NT'
+  | 'VU'
+  | 'EN'
+  | 'CR'
+  | 'EW'
+  | 'EX'
+
+export type SpeciesPublishedStatus =
+  | 'draft'
+  | 'review'
+  | 'published'
+  | 'archived'
+
+export type OccurrencePublicPrecision =
+  | 'hidden'
+  | 'district-only'
+  | 'approximate'
+  | 'exact'
+
+export interface SpeciesOccurrencePoint {
+  _key?: string
+  lat?: number
+  lng?: number
+  accuracy?: string
+  date?: string
+  source?: string
+  verified?: boolean
+  publicPrecision?: OccurrencePublicPrecision
+}
+
+export interface SpeciesSourceReference {
+  _key?: string
+  title: string
+  url?: string
+  note?: string
+}
+
+export interface SpeciesProfile {
+  _id: string
+  _type: 'speciesProfile'
+  _createdAt?: string
+  _updatedAt?: string
+  group?: WildlifeGroupCard
+  banglaName: string
+  englishName: string
+  scientificName: string
+  slug: SanitySlug
+  localNames?: string[]
+  shortDescription?: string
+  family?: string
+  order?: string
+  venomStatus: VenomStatus
+  medicalImportance?: MedicalImportance
+  iucnGlobalStatus?: ConservationStatus
+  bangladeshStatus?: ConservationStatus
+  statusSource?: string
+  identification?: string
+  scaleDescription?: string
+  behaviour?: string
+  habitat?: string
+  diet?: string
+  distributionText?: string
+  ecologicalRole?: string
+  mythsAndFacts?: string
+  safetyNote?: string
+  similarSpecies?: SpeciesProfileCard[]
+  primaryImage?: SanityImage
+  images?: SanityImage[]
+  zones?: SpeciesZone[]
+  districts?: SpeciesDistrict[]
+  occurrencePoints?: SpeciesOccurrencePoint[]
+  sourceReferences?: SpeciesSourceReference[]
+  reviewedBy?: string
+  publishedStatus?: SpeciesPublishedStatus
+  seoTitle?: string
+  seoDescription?: string
+}
+
+export interface SpeciesProfileCard
+  extends Pick<
+    SpeciesProfile,
+    | '_id'
+    | '_type'
+    | 'banglaName'
+    | 'englishName'
+    | 'scientificName'
+    | 'slug'
+    | 'shortDescription'
+    | 'family'
+    | 'venomStatus'
+    | 'medicalImportance'
+    | 'iucnGlobalStatus'
+    | 'bangladeshStatus'
+    | 'primaryImage'
+    | 'publishedStatus'
+  > {
+  group?: Pick<WildlifeGroup, '_id' | 'title' | 'slug'>
+}
+
+// --- Prokriti Kotha editorial types -----------------------------------------
+
+export type ProkritiKothaCategory =
+  | 'nature-essay'
+  | 'field-note'
+  | 'conservation-story'
+  | 'rescue-experience'
+  | 'myth-busting'
+  | 'community-writing'
+  | 'opinion-feature'
+
+export type ProkritiKothaStatus =
+  | 'draft'
+  | 'review'
+  | 'published'
+  | 'archived'
+
+export type ProkritiKothaLanguage = 'bn' | 'en'
+
+export interface ProkritiKothaArticle {
+  _id: string
+  _type: 'prokritiKothaArticle'
+  _createdAt?: string
+  _updatedAt?: string
+  title: string
+  slug: SanitySlug
+  excerpt?: string
+  coverImage?: SanityImage
+  body?: PortableTextBlock[]
+  category: ProkritiKothaCategory
+  language: ProkritiKothaLanguage
+  author?: Author
+  publishedAt?: string
+  readingTime?: number
+  status?: ProkritiKothaStatus
+  featured?: boolean
+  relatedSpecies?: SpeciesProfileCard[]
+  relatedArticles?: ProkritiKothaArticleCard[]
+  seoTitle?: string
+  seoDescription?: string
+  ogImage?: SanityImage
+}
+
+export interface ProkritiKothaArticleCard
+  extends Pick<
+    ProkritiKothaArticle,
+    | '_id'
+    | '_type'
+    | '_createdAt'
+    | '_updatedAt'
+    | 'title'
+    | 'slug'
+    | 'excerpt'
+    | 'coverImage'
+    | 'category'
+    | 'language'
+    | 'publishedAt'
+    | 'readingTime'
+    | 'status'
+    | 'featured'
+  > {
+  author?: Pick<Author, '_id' | 'name' | 'slug' | 'photo' | 'role' | 'orgRole'>
+}
