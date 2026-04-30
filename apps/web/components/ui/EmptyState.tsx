@@ -19,20 +19,22 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-earth-200 bg-white p-8 text-center shadow-card',
+        'rounded-[1.75rem] border border-earth-200/80 bg-white/80 p-8 text-center shadow-sm backdrop-blur-sm',
         className,
       )}
     >
-      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-forest-50 text-forest-700">
-        <span aria-hidden="true" className="text-xl">—</span>
+      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-forest-100 bg-forest-50 text-forest-700">
+        <span aria-hidden="true" className="text-lg font-semibold">
+          —
+        </span>
       </div>
 
-      <h2 className="font-serif text-2xl text-earth-950">
+      <h2 className="font-serif text-2xl leading-tight text-earth-950">
         {title}
       </h2>
 
       {description && (
-        <p className="mx-auto mt-3 max-w-xl text-body text-earth-600">
+        <p className="mx-auto mt-3 max-w-xl text-body leading-7 text-earth-600">
           {description}
         </p>
       )}
