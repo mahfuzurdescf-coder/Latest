@@ -46,12 +46,12 @@ export function HomeHero({ curation }: HomeHeroProps) {
     <section className="relative overflow-hidden border-b border-earth-200 bg-[#f7f4ec]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(58,94,49,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(173,125,37,0.12),transparent_30%)]" />
 
-      <Container className="relative section-padding">
+      <Container className="relative py-16 sm:py-20 lg:py-24">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(420px,0.86fr)] lg:items-center xl:gap-16">
           <div className="max-w-[680px]">
             <p className="section-label mb-4">{eyebrow}</p>
 
-            <h1 className="font-serif text-[clamp(3.25rem,5.6vw,5.35rem)] leading-[0.96] tracking-[-0.035em] text-earth-950 text-balance">
+            <h1 className="font-serif text-[clamp(3rem,5.15vw,5rem)] leading-[0.97] tracking-[-0.035em] text-earth-950 text-balance">
               {title}
             </h1>
 

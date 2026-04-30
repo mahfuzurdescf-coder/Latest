@@ -28,7 +28,7 @@ export function HomeProgrammes({ programmes }: HomeProgrammesProps) {
 
         {programmes.length > 0 ? (
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {programmes.slice(0, 6).map((programme) => (
+            {programmes.slice(0, 3).map((programme) => (
               <ProgrammeCard key={programme._id} programme={programme} />
             ))}
           </div>
