@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+﻿import { defineField, defineType } from 'sanity'
 
 const PROGRAMME_STATUSES = [
   { title: 'Current', value: 'current' },
@@ -315,7 +315,7 @@ export const programme = defineType({
               name: 'value',
               title: 'Value',
               type: 'string',
-              description: 'Use text so values like “1,000+” or “In progress” are possible.',
+              description: 'Use text so values like â€œ1,000+â€ or â€œIn progressâ€ are possible.',
               validation: (Rule) => Rule.required().max(40),
             }),
             defineField({
@@ -529,7 +529,7 @@ export const event = defineType({
       title: 'Time',
       type: 'string',
       group: 'details',
-      description: 'Example: 10:00 AM – 1:00 PM',
+      description: 'Example: 10:00 AM â€“ 1:00 PM',
       validation: (Rule) => Rule.max(80),
     }),
     defineField({
