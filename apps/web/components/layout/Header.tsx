@@ -50,7 +50,13 @@ export function Header({ settings }: HeaderProps) {
     <header className="sticky top-0 z-50 border-b border-earth-200 bg-white/95 backdrop-blur">
       <div className="container-site">
         <div className="flex h-18 min-h-16 items-center gap-6 py-3">
-          <LogoMark showText />
+          <Link
+              href="/"
+              aria-label="Go to DESCF homepage"
+              className="inline-flex items-center rounded-xl transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+            >
+              <LogoMark showText />
+            </Link>
 
           <nav
             className="ml-3 hidden items-center gap-1 lg:flex"
