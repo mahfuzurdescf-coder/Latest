@@ -7,6 +7,8 @@ import { urlForImage } from '@/lib/sanity/image'
 import { prokritiKothaArticlesQuery } from '@/lib/sanity/queries'
 import type { ProkritiKothaArticleCard } from '@/types/sanity'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'প্রকৃতি কথা | DESCF',
   description:
@@ -245,3 +247,4 @@ export default async function ProkritiKothaPage() {
     </main>
   )
 }
+

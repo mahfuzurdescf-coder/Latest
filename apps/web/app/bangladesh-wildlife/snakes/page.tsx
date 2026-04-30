@@ -6,6 +6,8 @@ import { sanityFetch } from '@/lib/sanity/client'
 import { snakeSpeciesQuery } from '@/lib/sanity/queries'
 import type { SpeciesProfileCard } from '@/types/sanity'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'বাংলাদেশের সাপ | DESCF',
   description:
@@ -120,3 +122,4 @@ export default async function BangladeshSnakesPage() {
     </main>
   )
 }
+

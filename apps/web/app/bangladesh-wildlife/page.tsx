@@ -7,6 +7,8 @@ import { urlForImage } from '@/lib/sanity/image'
 import { wildlifeGroupsQuery } from '@/lib/sanity/queries'
 import type { WildlifeGroupCard } from '@/types/sanity'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'বাংলাদেশের বন্যপ্রাণী | DESCF',
   description:
@@ -199,3 +201,4 @@ export default async function BangladeshWildlifePage() {
     </main>
   )
 }
+

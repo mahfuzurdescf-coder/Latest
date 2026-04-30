@@ -511,3 +511,4 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     </main>
   )
 }
+
