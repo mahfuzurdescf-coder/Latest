@@ -1,39 +1,73 @@
 ﻿import type { StructureResolver } from 'sanity/structure'
+
 import { ExportSubmissionsTool } from '../components/ExportSubmissionsTool'
-import { submissionWorkflowListItem } from "./submissionWorkflowItems"
+
+const workflowStatuses = [
+  { title: 'New', value: 'new' },
+  { title: 'In Review', value: 'inReview' },
+  { title: 'Contacted', value: 'contacted' },
+  { title: 'Confirmed', value: 'confirmed' },
+  { title: 'Rejected / Not Eligible', value: 'rejected' },
+  { title: 'Needs Follow-up', value: 'needsFollowUp' },
+  { title: 'Archived', value: 'archived' },
+]
+
+const submissionWorkflowItems = (S: any, type: string, titlePrefix: string) =>
+  workflowStatuses.map((status) =>
+    S.listItem()
+      .title(status.title)
+      .child(
+        S.documentList()
+          .title(titlePrefix + ' - ' + status.title)
+          .filter('_type == $type && workflowStatus == $status')
+          .params({ type, status: status.value })
+          .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
+      ),
+  )
+
+const singletonItem = (
+  S: any,
+  title: string,
+  schemaType: string,
+  documentId: string,
+) =>
+  S.listItem()
+    .title(title)
+    .schemaType(schemaType)
+    .child(
+      S.document()
+        .schemaType(schemaType)
+        .documentId(documentId)
+        .title(title),
+    )
 
 export const deskStructure: StructureResolver = (S) =>
   S.list()
     .title('DESCF Studio')
     .items([
       S.listItem()
-        .title('DESCF Website')
+        .title('Website Management')
         .child(
           S.list()
-            .title('DESCF Website')
+            .title('Website Management')
             .items([
-              S.listItem()
-                .title('Site Settings')
-                .schemaType('siteSettings')
-                .child(
-                  S.document()
-                    .schemaType('siteSettings')
-                    .documentId('siteSettings')
-                    .title('Site Settings'),
-                ),
+              singletonItem(S, 'Site Settings', 'siteSettings', 'siteSettings'),
 
-              S.listItem()
-                .title('Homepage Curation')
-                .schemaType('homepageCuration')
-                .child(
-                  S.document()
-                    .schemaType('homepageCuration')
-                    .documentId('homepageCuration')
-                    .title('Homepage Curation'),
-                ),
+              singletonItem(
+                S,
+                'Homepage Curation',
+                'homepageCuration',
+                'homepageCuration',
+              ),
+            ]),
+        ),
 
-              S.divider(),
-
+      S.listItem()
+        .title('Content')
+        .child(
+          S.list()
+            .title('Content')
+            .items([
               S.listItem()
                 .title('Programmes')
                 .schemaType('programme')
@@ -41,15 +75,6 @@ export const deskStructure: StructureResolver = (S) =>
                   S.documentTypeList('programme')
                     .title('Programmes')
                     .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('Partners')
-                .schemaType('partner')
-                .child(
-                  S.documentTypeList('partner')
-                    .title('Partners')
-                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
                 ),
 
               S.listItem()
@@ -70,6 +95,200 @@ export const deskStructure: StructureResolver = (S) =>
                     .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
                 ),
 
+              S.divider(),
+
+              S.listItem()
+                .title('Newsroom')
+                .child(
+                  S.list()
+                    .title('Newsroom')
+                    .items([
+                      S.listItem()
+                        .title('All Posts')
+                        .schemaType('post')
+                        .child(
+                          S.documentTypeList('post')
+                            .title('All Posts')
+                            .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+                        ),
+
+                      S.listItem()
+                        .title('Published Posts')
+                        .schemaType('post')
+                        .child(
+                          S.documentTypeList('post')
+                            .title('Published Posts')
+                            .filter('_type == "post" && status == "published"')
+                            .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+                        ),
+
+                      S.listItem()
+                        .title('Draft Posts')
+                        .schemaType('post')
+                        .child(
+                          S.documentTypeList('post')
+                            .title('Draft Posts')
+                            .filter('_type == "post" && status == "draft"')
+                            .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }]),
+                        ),
+
+                      S.listItem()
+                        .title('Posts in Review')
+                        .schemaType('post')
+                        .child(
+                          S.documentTypeList('post')
+                            .title('Posts in Review')
+                            .filter('_type == "post" && status in ["assigned", "inReview", "factCheck", "ready"]')
+                            .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }]),
+                        ),
+
+                      S.divider(),
+
+                      S.listItem()
+                        .title('Authors')
+                        .schemaType('author')
+                        .child(S.documentTypeList('author').title('Authors')),
+
+                      S.listItem()
+                        .title('Categories')
+                        .schemaType('category')
+                        .child(S.documentTypeList('category').title('Categories')),
+
+                      S.listItem()
+                        .title('Tags')
+                        .schemaType('tag')
+                        .child(S.documentTypeList('tag').title('Tags')),
+                    ]),
+                ),
+
+              S.listItem()
+                .title('Evidence & Resources')
+                .child(
+                  S.list()
+                    .title('Evidence & Resources')
+                    .items([
+                      S.listItem()
+                        .title('All Resources')
+                        .schemaType('resource')
+                        .child(
+                          S.documentTypeList('resource')
+                            .title('All Resources')
+                            .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
+                        ),
+
+                      S.listItem()
+                        .title('Reports')
+                        .schemaType('resource')
+                        .child(
+                          S.documentTypeList('resource')
+                            .title('Reports')
+                            .filter('_type == "resource" && type == "report"')
+                            .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
+                        ),
+
+                      S.listItem()
+                        .title('Briefs and Concept Notes')
+                        .schemaType('resource')
+                        .child(
+                          S.documentTypeList('resource')
+                            .title('Briefs and Concept Notes')
+                            .filter('_type == "resource" && type in ["brief", "concept-note"]')
+                            .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
+                        ),
+
+                      S.listItem()
+                        .title('Governance Resources')
+                        .schemaType('resource')
+                        .child(
+                          S.documentTypeList('resource')
+                            .title('Governance Resources')
+                            .filter('_type == "resource" && type == "governance"')
+                            .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
+                        ),
+                    ]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Submissions & Exports')
+        .child(
+          S.list()
+            .title('Submissions & Exports')
+            .items([
+              S.listItem()
+                .title('Contact Submissions')
+                .child(
+                  S.list()
+                    .title('Contact Submissions')
+                    .items([
+                      S.listItem()
+                        .title('All Contact Submissions')
+                        .child(
+                          S.documentList()
+                            .title('All Contact Submissions')
+                            .filter('_type == "contactSubmission"')
+                            .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
+                        ),
+
+                      S.divider(),
+
+                      ...submissionWorkflowItems(
+                        S,
+                        'contactSubmission',
+                        'Contact Submissions',
+                      ),
+                    ]),
+                ),
+
+              S.listItem()
+                .title('Event Registrations')
+                .child(
+                  S.list()
+                    .title('Event Registrations')
+                    .items([
+                      S.listItem()
+                        .title('All Event Registrations')
+                        .child(
+                          S.documentList()
+                            .title('All Event Registrations')
+                            .filter('_type == "eventRegistration"')
+                            .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
+                        ),
+
+                      S.divider(),
+
+                      ...submissionWorkflowItems(
+                        S,
+                        'eventRegistration',
+                        'Event Registrations',
+                      ),
+                    ]),
+                ),
+
+              S.divider(),
+
+              S.listItem()
+                .title('Export CSV')
+                .child(S.component(ExportSubmissionsTool).title('Export CSV')),
+            ]),
+        ),
+
+      S.listItem()
+        .title('Institutional')
+        .child(
+          S.list()
+            .title('Institutional')
+            .items([
+              S.listItem()
+                .title('Partners')
+                .schemaType('partner')
+                .child(
+                  S.documentTypeList('partner')
+                    .title('Partners')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+
               S.listItem()
                 .title('Team Members')
                 .schemaType('teamMember')
@@ -78,131 +297,9 @@ export const deskStructure: StructureResolver = (S) =>
                     .title('Team Members')
                     .defaultOrdering([{ field: 'order', direction: 'asc' }]),
                 ),
-            ]),
-        ),
-
-      submissionWorkflowListItem(S),
-      S.listItem()
-        .title('Export CSV')
-        .child(S.component(ExportSubmissionsTool).title('Export CSV')),
-
-      S.listItem()
-        .title('Newsroom')
-        .child(
-          S.list()
-            .title('Newsroom')
-            .items([
-              S.listItem()
-                .title('All Posts')
-                .schemaType('post')
-                .child(
-                  S.documentTypeList('post')
-                    .title('All Posts')
-                    .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('Published Posts')
-                .schemaType('post')
-                .child(
-                  S.documentTypeList('post')
-                    .title('Published Posts')
-                    .filter('_type == "post" && status == "published"')
-                    .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('Drafts')
-                .schemaType('post')
-                .child(
-                  S.documentTypeList('post')
-                    .title('Draft Posts')
-                    .filter('_type == "post" && status == "draft"')
-                    .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('In Review')
-                .schemaType('post')
-                .child(
-                  S.documentTypeList('post')
-                    .title('Posts in Review')
-                    .filter('_type == "post" && status in ["assigned", "inReview", "factCheck", "ready"]')
-                    .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }]),
-                ),
 
               S.divider(),
 
-              S.listItem()
-                .title('Authors')
-                .schemaType('author')
-                .child(S.documentTypeList('author').title('Authors')),
-
-              S.listItem()
-                .title('Categories')
-                .schemaType('category')
-                .child(S.documentTypeList('category').title('Categories')),
-
-              S.listItem()
-                .title('Tags')
-                .schemaType('tag')
-                .child(S.documentTypeList('tag').title('Tags')),
-            ]),
-        ),
-
-      S.listItem()
-        .title('Resources')
-        .child(
-          S.list()
-            .title('Resources')
-            .items([
-              S.listItem()
-                .title('All Resources')
-                .schemaType('resource')
-                .child(
-                  S.documentTypeList('resource')
-                    .title('All Resources')
-                    .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('Reports')
-                .schemaType('resource')
-                .child(
-                  S.documentTypeList('resource')
-                    .title('Reports')
-                    .filter('_type == "resource" && type == "report"')
-                    .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('Briefs and Concept Notes')
-                .schemaType('resource')
-                .child(
-                  S.documentTypeList('resource')
-                    .title('Briefs and Concept Notes')
-                    .filter('_type == "resource" && type in ["brief", "concept-note"]')
-                    .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
-                ),
-
-              S.listItem()
-                .title('Governance Resources')
-                .schemaType('resource')
-                .child(
-                  S.documentTypeList('resource')
-                    .title('Governance Resources')
-                    .filter('_type == "resource" && type == "governance"')
-                    .defaultOrdering([{ field: 'pubDate', direction: 'desc' }]),
-                ),
-            ]),
-        ),
-
-      S.listItem()
-        .title('Governance')
-        .child(
-          S.list()
-            .title('Governance')
-            .items([
               S.listItem()
                 .title('Governance Documents')
                 .schemaType('governanceDocument')
@@ -246,41 +343,10 @@ export const deskStructure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title('People')
+        .title('Advanced / System')
         .child(
           S.list()
-            .title('People')
-            .items([
-              S.listItem()
-                .title('Authors')
-                .schemaType('author')
-                .child(S.documentTypeList('author').title('Authors')),
-
-              S.listItem()
-                .title('Team Members')
-                .schemaType('teamMember')
-                .child(
-                  S.documentTypeList('teamMember')
-                    .title('Team Members')
-                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
-                ),
-
-              S.listItem()
-                .title('Partners')
-                .schemaType('partner')
-                .child(
-                  S.documentTypeList('partner')
-                    .title('Partners')
-                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
-                ),
-            ]),
-        ),
-
-      S.listItem()
-        .title('Operations')
-        .child(
-          S.list()
-            .title('Operations')
+            .title('Advanced / System')
             .items([
               S.listItem()
                 .title('Redirects')
@@ -290,47 +356,6 @@ export const deskStructure: StructureResolver = (S) =>
                     .title('Redirects')
                     .defaultOrdering([{ field: '_createdAt', direction: 'desc' }]),
                 ),
-
-              S.divider(),
-
-              S.listItem()
-                .title('Categories')
-                .schemaType('category')
-                .child(S.documentTypeList('category').title('Categories')),
-
-              S.listItem()
-                .title('Tags')
-                .schemaType('tag')
-                .child(S.documentTypeList('tag').title('Tags')),
-            ]),
-        ),
-
-      S.listItem()
-        .title('Settings')
-        .child(
-          S.list()
-            .title('Settings')
-            .items([
-              S.listItem()
-                .title('Site Settings')
-                .schemaType('siteSettings')
-                .child(
-                  S.document()
-                    .schemaType('siteSettings')
-                    .documentId('siteSettings')
-                    .title('Site Settings'),
-                ),
-
-              S.listItem()
-                .title('Homepage Curation')
-                .schemaType('homepageCuration')
-                .child(
-                  S.document()
-                    .schemaType('homepageCuration')
-                    .documentId('homepageCuration')
-                    .title('Homepage Curation'),
-                ),
             ]),
         ),
     ])
-
