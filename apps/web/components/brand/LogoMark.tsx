@@ -32,10 +32,10 @@ export function LogoMark({
 
       {showText ? (
         <span className="min-w-0 leading-tight">
-          <span className="block text-sm font-semibold tracking-wide text-slate-950">
+          <span className="block text-sm font-semibold tracking-wide text-current">
             DESCF
           </span>
-          <span className="hidden text-xs font-medium text-slate-600 sm:block">
+          <span className="hidden text-xs font-medium text-current opacity-75 sm:block">
             Deep Ecology & Snake Conservation Foundation
           </span>
         </span>
