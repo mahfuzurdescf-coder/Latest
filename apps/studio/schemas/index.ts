@@ -27,3 +27,4 @@ export { contactSubmission } from './descf/contactSubmission'
 export { eventRegistration } from './descf/eventRegistration'
 
 export { wildlifeGroup } from './wildlife/wildlifeGroup'
+export { speciesZone } from './wildlife/speciesZone'
