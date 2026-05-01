@@ -1,7 +1,5 @@
 ﻿import type { Metadata } from 'next'
 
-import { absoluteUrl } from '@/lib/utils'
-
 interface BuildMetadataInput {
   title: string
   description?: string
@@ -9,10 +7,12 @@ interface BuildMetadataInput {
   canonicalUrl?: string
 }
 
+const SITE_URL = 'https://www.descf.org'
+
 const DEFAULT_DESCRIPTION =
   'A Bangladesh-based wildlife conservation organization working on biodiversity, snake conservation, public awareness, research, and human-wildlife coexistence.'
 
-const DEFAULT_OG_IMAGE = absoluteUrl('/og-default.png')
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.png`
 
 function buildTitle(title: string): string {
   const cleanTitle = title.trim()
@@ -27,6 +27,20 @@ function buildTitle(title: string): string {
   return `${cleanTitle} | DESCF`
 }
 
+function normalizeUrl(url?: string | null): string {
+  if (!url) return DEFAULT_OG_IMAGE
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url
+  }
+
+  if (url.startsWith('/')) {
+    return `${SITE_URL}${url}`
+  }
+
+  return DEFAULT_OG_IMAGE
+}
+
 export function buildMetadata({
   title,
   description,
@@ -35,8 +49,8 @@ export function buildMetadata({
 }: BuildMetadataInput): Metadata {
   const pageTitle = buildTitle(title)
   const metaDescription = description || DEFAULT_DESCRIPTION
-  const pageUrl = canonicalUrl || absoluteUrl('/')
-  const imageUrl = ogImage || DEFAULT_OG_IMAGE
+  const pageUrl = canonicalUrl || SITE_URL
+  const imageUrl = normalizeUrl(ogImage)
 
   return {
     title: {
