@@ -12,7 +12,7 @@ const SITE_URL = 'https://www.descf.org'
 const DEFAULT_DESCRIPTION =
   'A Bangladesh-based wildlife conservation organization working on biodiversity, snake conservation, public awareness, research, and human-wildlife coexistence.'
 
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.png`
+const DEFAULT_OG_IMAGE = 'https://www.descf.org/og-descf-default.png'
 
 function buildTitle(title: string): string {
   const cleanTitle = title.trim()
