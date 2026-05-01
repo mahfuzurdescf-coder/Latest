@@ -500,7 +500,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
 
               <aside className="space-y-6">
                 <ShareButtons
-                  title={${species.banglaName} / }
+                  title={species.banglaName + ' / ' + species.englishName}
                   description={getSpeciesDescription(species)}
                   label="Share this species profile"
                 />
@@ -693,4 +693,5 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     </main>
   )
 }
+
 
