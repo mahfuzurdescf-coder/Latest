@@ -252,6 +252,14 @@ export const speciesProfile = defineType({
     }),
 
     defineField({
+      name: 'relatedProkritiKothaArticles',
+      title: 'Related Prokriti Kotha articles',
+      type: 'array',
+      group: 'content',
+      description: 'Connect this species profile to relevant Prokriti Kotha articles, field notes, rescue experiences, or myth-busting writings.',
+      of: [{ type: 'reference', to: [{ type: 'prokritiKothaArticle' }] }],
+    }),
+    defineField({
       name: 'primaryImage',
       title: 'Primary image',
       type: 'imageWithAltCredit',
@@ -389,5 +397,7 @@ export const speciesProfile = defineType({
     },
   },
 })
+
+
 
 
