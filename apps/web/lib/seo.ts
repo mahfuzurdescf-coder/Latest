@@ -12,7 +12,7 @@ interface BuildMetadataInput {
 const DEFAULT_DESCRIPTION =
   'Deep Ecology and Snake Conservation Foundation works on biodiversity conservation, snake conservation, public awareness, research, and coexistence in Bangladesh.'
 
-const DEFAULT_OG_IMAGE = absoluteUrl('/opengraph-image')
+const DEFAULT_OG_IMAGE = absoluteUrl('/og-default.png')
 
 export function buildMetadata({
   title,
@@ -53,3 +53,4 @@ export function buildMetadata({
     },
   }
 }
+
