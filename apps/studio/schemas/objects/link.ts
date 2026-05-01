@@ -1,11 +1,13 @@
 ﻿import { defineField, defineType } from 'sanity'
 
+type LinkParent = {
+  isExternal?: boolean
+}
+
 export const link = defineType({
   name: 'link',
   title: 'Link',
   type: 'object',
-  description:
-    'Reusable link field for navigation menus, buttons, CTAs, and footer links.',
   fields: [
     defineField({
       name: 'label',
@@ -15,26 +17,30 @@ export const link = defineType({
         'Visible link/button text. Keep it short and action-oriented. Example: Explore our work, Contact DESCF, Partner with us.',
       validation: (Rule) => Rule.required().min(2).max(80),
     }),
-
     defineField({
       name: 'href',
       title: 'URL / path',
       type: 'string',
       description:
-        'Use internal paths like /about, /programmes, /contact or full external URLs like https://example.org.',
+        'Use internal paths like /about, /programmes, /prokriti-kotha, /bangladesh-wildlife or full external URLs like https://example.org.',
       validation: (Rule) =>
-        Rule.required().custom((value) => {
-          if (!value) return true
+        Rule.required().custom((value, context) => {
+          const parent = context.parent as LinkParent | undefined
+          const isExternal = Boolean(parent?.isExternal)
 
-          const isInternal = value.startsWith('/')
-          const isExternal = value.startsWith('https://') || value.startsWith('http://')
+          if (!value) return 'URL / path is required.'
 
-          if (isInternal || isExternal) return true
+          if (isExternal) {
+            return /^https?:\/\//.test(value)
+              ? true
+              : 'External links must start with http:// or https://.'
+          }
 
-          return 'Use an internal path starting with / or a full URL starting with https://'
+          return value.startsWith('/')
+            ? true
+            : 'Internal links must start with /. Example: /prokriti-kotha'
         }),
     }),
-
     defineField({
       name: 'isExternal',
       title: 'External link?',
@@ -49,12 +55,10 @@ export const link = defineType({
       title: 'label',
       subtitle: 'href',
     },
-    prepare(selection) {
-      const { title, subtitle } = selection
-
+    prepare({ title, subtitle }) {
       return {
         title: title || 'Untitled link',
-        subtitle: subtitle || 'No URL/path set',
+        subtitle,
       }
     },
   },
