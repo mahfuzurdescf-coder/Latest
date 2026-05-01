@@ -10,7 +10,11 @@ import {
   snakeSpeciesQuery,
   speciesProfileBySlugQuery,
 } from '@/lib/sanity/queries'
-import type { SpeciesProfile, SpeciesProfileCard } from '@/types/sanity'
+import type {
+  ProkritiKothaArticleCard,
+  SpeciesProfile,
+  SpeciesProfileCard,
+} from '@/types/sanity'
 
 interface Props {
   params: {
@@ -90,6 +94,46 @@ function TextSection({
   )
 }
 
+
+function RelatedProkritiArticleCard({
+  article,
+}: {
+  article: ProkritiKothaArticleCard
+}) {
+  const imageUrl = article.coverImage
+    ? urlForImage(article.coverImage)?.width(700).height(450).url()
+    : null
+
+  return (
+    <article className="overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
+      <Link href={`/prokriti-kotha/${article.slug.current}`} className="block">
+        {imageUrl && (
+          <div className="relative aspect-[4/3] bg-earth-100">
+            <Image
+              src={imageUrl}
+              alt={article.coverImage?.alt || article.title}
+              fill
+              sizes="(min-width: 1024px) 33vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        )}
+
+        <div className="p-5">
+          <p className="section-label mb-2">Prokriti Kotha</p>
+          <h3 className="font-serif text-xl leading-tight text-earth-900">
+            {article.title}
+          </h3>
+          {article.excerpt && (
+            <p className="mt-2 line-clamp-3 text-sm leading-6 text-earth-600">
+              {article.excerpt}
+            </p>
+          )}
+        </div>
+      </Link>
+    </article>
+  )
+}
 function SimilarSpeciesCard({ species }: { species: SpeciesProfileCard }) {
   const imageUrl = species.primaryImage
     ? urlForImage(species.primaryImage)?.width(700).height(450).url()
@@ -444,6 +488,31 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
           </section>
         )}
 
+
+        {species.relatedProkritiKothaArticles &&
+          species.relatedProkritiKothaArticles.length > 0 && (
+            <section className="border-t border-earth-200 bg-white">
+              <div className="container-site section-padding-sm">
+                <div className="mb-8">
+                  <p className="section-label mb-3">Related reading</p>
+                  <h2 className="font-serif text-h2 text-earth-900">
+                    Prokriti Kotha articles about this species
+                  </h2>
+                </div>
+
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {species.relatedProkritiKothaArticles
+                    .filter((article) => article.slug?.current)
+                    .map((article) => (
+                      <RelatedProkritiArticleCard
+                        key={article._id}
+                        article={article}
+                      />
+                    ))}
+                </div>
+              </div>
+            </section>
+          )}
         {species.similarSpecies && species.similarSpecies.length > 0 && (
           <section className="border-t border-earth-200 bg-earth-50">
             <div className="container-site section-padding-sm">
@@ -511,6 +580,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     </main>
   )
 }
+
 
 
 

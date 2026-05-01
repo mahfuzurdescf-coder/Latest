@@ -553,6 +553,50 @@ export const speciesProfileBySlugQuery = `*[
     },
     publishedStatus
   },
+  relatedProkritiKothaArticles[]->{
+    _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    title,
+    slug,
+    excerpt,
+    coverImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    category,
+    language,
+    publishedAt,
+    readingTime,
+    status,
+    featured,
+    author->{
+      _id,
+      name,
+      slug,
+      role,
+      orgRole,
+      photo{
+        ...,
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions,
+            lqip
+          }
+        }
+      }
+    }
+  },
   primaryImage{
     ...,
     asset->{
@@ -871,3 +915,4 @@ export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
   "slug": slug.current,
   _updatedAt
 }`
+

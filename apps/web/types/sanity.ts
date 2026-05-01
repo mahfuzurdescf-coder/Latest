@@ -1,6 +1,6 @@
-import type { PortableTextBlock } from '@portabletext/react'
+﻿import type { PortableTextBlock } from '@portabletext/react'
 
-// ─── Shared primitives ────────────────────────────────────────────────────────
+// â”€â”€â”€ Shared primitives â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SanitySlug {
   current: string
@@ -48,7 +48,7 @@ export interface SocialLinks {
   website?: string
 }
 
-// ─── Programme status & content types ─────────────────────────────────────────
+// â”€â”€â”€ Programme status & content types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type ProgrammeStatus =
   | 'current'
@@ -88,7 +88,7 @@ export type ResourceType =
 
 export type EventStatus = 'upcoming' | 'completed'
 
-// ─── Category ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Category â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Category {
   _id: string
@@ -99,7 +99,7 @@ export interface Category {
   colorLabel?: string
 }
 
-// ─── Tag ──────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Tag â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Tag {
   _id: string
@@ -108,7 +108,7 @@ export interface Tag {
   slug: SanitySlug
 }
 
-// ─── Author ───────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Author â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Author {
   _id: string
@@ -124,7 +124,7 @@ export interface Author {
   expertise?: string[]
 }
 
-// ─── Post ─────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Post â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Post {
   _id: string
@@ -154,7 +154,7 @@ export interface Post {
   relatedPosts?: PostCard[]
 }
 
-// Lightweight card version — used in lists, grids
+// Lightweight card version â€” used in lists, grids
 export interface PostCard
   extends Pick<
     Post,
@@ -180,7 +180,7 @@ export interface PostCard
   tags?: Pick<Tag, '_id' | 'title' | 'slug'>[]
 }
 
-// ─── Impact metric ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Impact metric â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface ImpactMetric {
   _key: string
@@ -189,7 +189,7 @@ export interface ImpactMetric {
   description?: string
 }
 
-// ─── Programme ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Programme â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Programme {
   _id: string
@@ -222,7 +222,7 @@ export interface ProgrammeCard
     | 'heroImage'
   > {}
 
-// ─── Resource ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Resource â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Resource {
   _id: string
@@ -253,7 +253,7 @@ export interface ResourceCard
     | 'summary'
   > {}
 
-// ─── Event ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Event â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface Event {
   _id: string
@@ -284,7 +284,7 @@ export interface EventCard
     | 'status'
   > {}
 
-// ─── TeamMember ───────────────────────────────────────────────────────────────
+// â”€â”€â”€ TeamMember â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface TeamMember {
   _id: string
@@ -300,7 +300,7 @@ export interface TeamMember {
   social?: SocialLinks
 }
 
-// ─── NavLink ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ NavLink â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface NavLink {
   _key?: string
@@ -309,7 +309,7 @@ export interface NavLink {
   isExternal?: boolean
 }
 
-// ─── SiteSettings ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ SiteSettings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SiteSettings {
   _id?: string
@@ -328,7 +328,7 @@ export interface SiteSettings {
   defaultOgImage?: SanityImage
 }
 
-// ─── Page metadata ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Page metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface PageSEO {
   title: string
@@ -337,7 +337,7 @@ export interface PageSEO {
   canonicalUrl?: string
 }
 
-// ─── DESCF institutional CMS types ────────────────────────────────────────────
+// â”€â”€â”€ DESCF institutional CMS types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type PartnerType =
   | 'research'
@@ -661,6 +661,7 @@ export interface SpeciesProfile {
   mythsAndFacts?: string
   safetyNote?: string
   similarSpecies?: SpeciesProfileCard[]
+  relatedProkritiKothaArticles?: ProkritiKothaArticleCard[]
   primaryImage?: SanityImage
   images?: SanityImage[]
   zones?: SpeciesZone[]
@@ -757,3 +758,4 @@ export interface ProkritiKothaArticleCard
   > {
   author?: Pick<Author, '_id' | 'name' | 'slug' | 'photo' | 'role' | 'orgRole'>
 }
+
