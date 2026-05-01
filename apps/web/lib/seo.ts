@@ -10,9 +10,22 @@ interface BuildMetadataInput {
 }
 
 const DEFAULT_DESCRIPTION =
-  'Deep Ecology and Snake Conservation Foundation works on biodiversity conservation, snake conservation, public awareness, research, and coexistence in Bangladesh.'
+  'A Bangladesh-based wildlife conservation organization working on biodiversity, snake conservation, public awareness, research, and human-wildlife coexistence.'
 
 const DEFAULT_OG_IMAGE = absoluteUrl('/og-default.png')
+
+function buildTitle(title: string): string {
+  const cleanTitle = title.trim()
+
+  if (
+    cleanTitle.includes('DESCF') ||
+    cleanTitle.includes('Deep Ecology and Snake Conservation Foundation')
+  ) {
+    return cleanTitle
+  }
+
+  return `${cleanTitle} | DESCF`
+}
 
 export function buildMetadata({
   title,
@@ -20,12 +33,15 @@ export function buildMetadata({
   ogImage,
   canonicalUrl,
 }: BuildMetadataInput): Metadata {
+  const pageTitle = buildTitle(title)
   const metaDescription = description || DEFAULT_DESCRIPTION
   const pageUrl = canonicalUrl || absoluteUrl('/')
   const imageUrl = ogImage || DEFAULT_OG_IMAGE
 
   return {
-    title,
+    title: {
+      absolute: pageTitle,
+    },
     description: metaDescription,
     alternates: {
       canonical: pageUrl,
@@ -33,7 +49,7 @@ export function buildMetadata({
     openGraph: {
       type: 'website',
       siteName: 'DESCF',
-      title,
+      title: pageTitle,
       description: metaDescription,
       url: pageUrl,
       images: [
@@ -41,16 +57,15 @@ export function buildMetadata({
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: pageTitle,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: pageTitle,
       description: metaDescription,
       images: [imageUrl],
     },
   }
 }
-

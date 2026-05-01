@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 
 import './globals.css'
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.shortName} — ${SITE.name}`,
+    default: `${SITE.shortName} â€” ${SITE.name}`,
     template: `%s | ${SITE.shortName}`,
   },
   description: SITE.description,
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: SITE.url,
     siteName: SITE.shortName,
-    title: `${SITE.shortName} — ${SITE.name}`,
+    title: `${SITE.shortName} â€” ${SITE.name}`,
     description: SITE.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE.shortName} — ${SITE.name}`,
+    title: `${SITE.shortName} â€” ${SITE.name}`,
     description: SITE.description,
   },
   robots: {
