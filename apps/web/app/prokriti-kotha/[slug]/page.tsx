@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { PortableText } from '@/components/portable-text/PortableText'
+import { ShareButtons } from '@/components/share/ShareButtons'
 import { buildArticleJSONLD, buildBreadcrumbJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
@@ -349,6 +350,11 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
               </div>
 
               <aside className="space-y-6">
+                <ShareButtons
+                  title={article.title}
+                  description={getArticleDescription(article)}
+                  label="Share this article"
+                />
                 <div className="rounded-xl border border-earth-200 bg-white p-5">
                   <h2 className="font-serif text-xl text-earth-900">
                     Article details
@@ -446,6 +452,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
     </>
   )
 }
+
 
 
 

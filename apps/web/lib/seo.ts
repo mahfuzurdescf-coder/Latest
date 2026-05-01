@@ -1,49 +1,55 @@
-import { SITE } from './site'
+﻿import type { Metadata } from 'next'
 
-export type SEOProps = {
-  title?: string
+import { absoluteUrl } from '@/lib/utils'
+
+interface BuildMetadataInput {
+  title: string
   description?: string
-  ogImage?: string
+  ogImage?: string | null
   canonicalUrl?: string
-  twitterCard?: 'summary' | 'summary_large_image' | 'app' | 'player'
 }
+
+const DEFAULT_DESCRIPTION =
+  'Deep Ecology and Snake Conservation Foundation works on biodiversity conservation, snake conservation, public awareness, research, and coexistence in Bangladesh.'
+
+const DEFAULT_OG_IMAGE = absoluteUrl('/opengraph-image')
 
 export function buildMetadata({
   title,
   description,
   ogImage,
   canonicalUrl,
-  twitterCard = 'summary_large_image',
-}: SEOProps) {
-  const metaTitle = title ? `${title} | ${SITE.name}` : SITE.name
-  const metaDescription = description || SITE.description
-  const metaOgImage = ogImage || SITE.ogImage
-  const metaCanonical = canonicalUrl || SITE.url
+}: BuildMetadataInput): Metadata {
+  const metaDescription = description || DEFAULT_DESCRIPTION
+  const pageUrl = canonicalUrl || absoluteUrl('/')
+  const imageUrl = ogImage || DEFAULT_OG_IMAGE
 
   return {
-    title: metaTitle,
+    title,
     description: metaDescription,
-    canonical: metaCanonical,
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
       type: 'website',
-      title: metaTitle,
+      siteName: 'DESCF',
+      title,
       description: metaDescription,
-      url: metaCanonical,
+      url: pageUrl,
       images: [
         {
-          url: metaOgImage,
+          url: imageUrl,
           width: 1200,
           height: 630,
-          alt: metaTitle,
+          alt: title,
         },
       ],
     },
     twitter: {
-      card: twitterCard,
-      site: SITE.shortName,
-      title: metaTitle,
+      card: 'summary_large_image',
+      title,
       description: metaDescription,
-      images: [metaOgImage],
+      images: [imageUrl],
     },
   }
 }

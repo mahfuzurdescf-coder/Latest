@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { ArticleCard } from '@/components/cards'
 import { PortableText } from '@/components/portable-text/PortableText'
+import { ShareButtons } from '@/components/share/ShareButtons'
 import { buildArticleJSONLD, buildBreadcrumbJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
@@ -270,6 +271,11 @@ export default async function NewsroomArticlePage({ params }: Props) {
               </div>
 
               <aside className="space-y-6">
+                <ShareButtons
+                  title={post.title}
+                  description={getPostDescription(post)}
+                  label="Share this article"
+                />
                 <div className="rounded-xl border border-earth-200 bg-white p-5">
                   <h2 className="font-serif text-xl text-earth-900">
                     Article details

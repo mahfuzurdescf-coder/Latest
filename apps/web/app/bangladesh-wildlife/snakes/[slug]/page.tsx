@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { ShareButtons } from '@/components/share/ShareButtons'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import { urlForImage } from '@/lib/sanity/image'
@@ -498,6 +499,11 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
               </div>
 
               <aside className="space-y-6">
+                <ShareButtons
+                  title={${species.banglaName} / }
+                  description={getSpeciesDescription(species)}
+                  label="Share this species profile"
+                />
                 {districts.length > 0 && (
                   <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
                     <p className="section-label mb-3">Distribution</p>
@@ -687,3 +693,4 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     </main>
   )
 }
+
