@@ -1,8 +1,9 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PortableText } from '@portabletext/react'
 
 import { EventRegistrationForm } from '@/components/forms/EventRegistrationForm'
+import { ShareButtons } from '@/components/share/ShareButtons'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Container } from '@/components/ui/Container'
@@ -37,6 +38,14 @@ function getStatusLabel(status?: string): string {
   return 'Upcoming'
 }
 
+
+function getEventDescription(event: EventDetail): string {
+  return `${event.title} - ${formatDate(event.date)}${event.location ? `, ${event.location}` : ''}.`
+}
+
+function getEventCanonicalUrl(slug: string): string {
+  return `https://www.descf.org/events/${slug}`
+}
 export async function generateStaticParams() {
   const slugs = await sanityFetch<Array<{ slug: string }>>({
     query: EVENT_SLUGS_QUERY,
@@ -65,14 +74,14 @@ export async function generateMetadata({
     return buildMetadata({
       title: 'Event not found',
       description: 'The requested DESCF event could not be found.',
-      canonicalUrl: `https://descf.org/events/${params.slug}`,
+      canonicalUrl: `https://www.descf.org/events/${params.slug}`,
     })
   }
 
   return buildMetadata({
     title: event.title,
     description: `${event.title} - ${formatDate(event.date)}${event.location ? `, ${event.location}` : ''}.`,
-    canonicalUrl: `https://descf.org/events/${event.slug.current}`,
+    canonicalUrl: `https://www.descf.org/events/${event.slug.current}`,
   })
 }
 
@@ -90,11 +99,11 @@ export default async function EventDetailPage({ params }: PageProps) {
   }
 
   const eventJsonLd = buildBreadcrumbJSONLD([
-    { name: 'Home', url: 'https://descf.org' },
-    { name: 'Events', url: 'https://descf.org/events' },
+    { name: 'Home', url: 'https://www.descf.org' },
+    { name: 'Events', url: 'https://www.descf.org/events' },
     {
       name: event.title,
-      url: `https://descf.org/events/${event.slug.current}`,
+      url: `https://www.descf.org/events/${event.slug.current}`,
     },
   ])
 
@@ -205,6 +214,12 @@ export default async function EventDetailPage({ params }: PageProps) {
                     </CardContent>
                   </Card>
                 )}
+
+                <ShareButtons
+                  title={event.title}
+                  description={getEventDescription(event)}
+                  label="Share this event"
+                />
 
                 <Card>
                   <CardContent>
