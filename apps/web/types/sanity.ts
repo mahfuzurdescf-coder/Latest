@@ -643,6 +643,8 @@ export interface SpeciesProfile {
   scientificName: string
   slug: SanitySlug
   localNames?: string[]
+  slugAliases?: string[]
+  searchKeywords?: string[]
   shortDescription?: string
   family?: string
   order?: string
@@ -684,6 +686,9 @@ export interface SpeciesProfileCard
     | 'scientificName'
     | 'slug'
     | 'shortDescription'
+    | 'localNames'
+    | 'slugAliases'
+    | 'searchKeywords'
     | 'family'
     | 'venomStatus'
     | 'medicalImportance'
@@ -758,4 +763,5 @@ export interface ProkritiKothaArticleCard
   > {
   author?: Pick<Author, '_id' | 'name' | 'slug' | 'photo' | 'role' | 'orgRole'>
 }
+
 

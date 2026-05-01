@@ -104,6 +104,24 @@ export const speciesProfile = defineType({
       options: { layout: 'tags' },
     }),
     defineField({
+      name: 'slugAliases',
+      title: 'Slug aliases',
+      type: 'array',
+      group: 'identity',
+      description: 'Alternative URL slugs that should open this same species page. Example: oriental-ratsnake, darash, daraj. Use lowercase English letters, numbers, and hyphens only.',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+    }),
+    defineField({
+      name: 'searchKeywords',
+      title: 'Search keywords',
+      type: 'array',
+      group: 'identity',
+      description: 'Extra searchable names: local names, spelling variants, alternative English names, transliterations, and common mistakes.',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+    }),
+    defineField({
       name: 'shortDescription',
       title: 'Short description',
       type: 'text',
@@ -397,6 +415,7 @@ export const speciesProfile = defineType({
     },
   },
 })
+
 
 
 

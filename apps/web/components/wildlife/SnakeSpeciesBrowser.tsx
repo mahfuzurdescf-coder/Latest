@@ -133,6 +133,9 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
         item.scientificName,
         item.family,
         item.shortDescription,
+        ...(item.localNames ?? []),
+        ...(item.slugAliases ?? []),
+        ...(item.searchKeywords ?? []),
       ]
         .filter(Boolean)
         .join(' ')
@@ -225,3 +228,4 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
     </div>
   )
 }
+

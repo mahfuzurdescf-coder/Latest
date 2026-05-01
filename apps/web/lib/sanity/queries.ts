@@ -451,6 +451,9 @@ export const snakeSpeciesQuery = `*[
   englishName,
   scientificName,
   slug,
+  localNames,
+  slugAliases,
+  searchKeywords,
   shortDescription,
   family,
   venomStatus,
@@ -478,7 +481,7 @@ export const snakeSpeciesQuery = `*[
 
 export const speciesProfileBySlugQuery = `*[
   _type == "speciesProfile" &&
-  slug.current == $slug &&
+  (slug.current == $slug || $slug in slugAliases[]) &&
   publishedStatus == "published"
 ][0] {
   _id,
@@ -510,6 +513,8 @@ export const speciesProfileBySlugQuery = `*[
   scientificName,
   slug,
   localNames,
+  slugAliases,
+  searchKeywords,
   shortDescription,
   family,
   order,
@@ -915,4 +920,5 @@ export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
   "slug": slug.current,
   _updatedAt
 }`
+
 
