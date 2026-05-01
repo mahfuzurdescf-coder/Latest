@@ -16,6 +16,8 @@ import type {
   SpeciesProfileCard,
 } from '@/types/sanity'
 
+export const revalidate = 60
+
 interface Props {
   params: {
     slug: string
@@ -56,76 +58,91 @@ function getSpeciesDescription(species: SpeciesProfile): string {
   )
 }
 
-function StatusBadge({
+function InfoCard({
   label,
   value,
+  tone = 'default',
 }: {
   label: string
   value?: string
+  tone?: 'default' | 'forest' | 'amber'
 }) {
+  const toneClass =
+    tone === 'forest'
+      ? 'border-forest-200 bg-forest-50'
+      : tone === 'amber'
+        ? 'border-amber-200 bg-amber-50'
+        : 'border-earth-200 bg-white'
+
   return (
-    <div className="rounded-2xl border border-earth-200 bg-white p-4">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-earth-500">
+    <div className={`rounded-2xl border p-5 ${toneClass}`}>
+      <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-earth-500">
         {label}
       </dt>
-      <dd className="mt-2 font-serif text-xl text-earth-900">
+      <dd className="mt-2 font-serif text-xl leading-tight text-earth-900">
         {value || 'Not specified'}
       </dd>
     </div>
   )
 }
 
-function TextSection({
+function ContentSection({
   title,
+  eyebrow,
   children,
 }: {
   title: string
+  eyebrow?: string
   children?: string
 }) {
   if (!children) return null
 
   return (
-    <section className="rounded-2xl border border-earth-200 bg-white p-6 shadow-sm">
-      <h2 className="font-serif text-2xl text-earth-900">{title}</h2>
-      <p className="mt-4 whitespace-pre-line text-body leading-8 text-earth-700">
+    <section className="rounded-3xl border border-earth-200 bg-white p-7 shadow-sm">
+      {eyebrow && <p className="section-label mb-3">{eyebrow}</p>}
+      <h2 className="font-serif text-3xl leading-tight text-earth-900">
+        {title}
+      </h2>
+      <p className="mt-5 whitespace-pre-line text-body leading-8 text-earth-700">
         {children}
       </p>
     </section>
   )
 }
 
-
-function RelatedProkritiArticleCard({
-  article,
-}: {
-  article: ProkritiKothaArticleCard
-}) {
+function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) {
   const imageUrl = article.coverImage
-    ? urlForImage(article.coverImage)?.width(700).height(450).url()
+    ? urlForImage(article.coverImage)?.width(720).height(480).url()
     : null
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
+    <article className="group overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
       <Link href={`/prokriti-kotha/${article.slug.current}`} className="block">
-        {imageUrl && (
-          <div className="relative aspect-[4/3] bg-earth-100">
+        {imageUrl ? (
+          <div className="relative aspect-[4/3] overflow-hidden bg-earth-100">
             <Image
               src={imageUrl}
               alt={article.coverImage?.alt || article.title}
               fill
               sizes="(min-width: 1024px) 33vw, 100vw"
-              className="object-cover"
+              className="object-cover transition duration-300 group-hover:scale-105"
             />
+          </div>
+        ) : (
+          <div className="flex aspect-[4/3] items-center justify-center bg-forest-50 px-6 text-center">
+            <span className="font-serif text-2xl text-forest-800">
+              প্রকৃতি কথা
+            </span>
           </div>
         )}
 
         <div className="p-5">
-          <p className="section-label mb-2">Prokriti Kotha</p>
-          <h3 className="font-serif text-xl leading-tight text-earth-900">
+          <p className="section-label mb-2">Related reading</p>
+          <h3 className="font-serif text-xl leading-tight text-earth-900 group-hover:text-forest-900">
             {article.title}
           </h3>
           {article.excerpt && (
-            <p className="mt-2 line-clamp-3 text-sm leading-6 text-earth-600">
+            <p className="mt-3 line-clamp-3 text-sm leading-6 text-earth-600">
               {article.excerpt}
             </p>
           )}
@@ -134,23 +151,30 @@ function RelatedProkritiArticleCard({
     </article>
   )
 }
+
 function SimilarSpeciesCard({ species }: { species: SpeciesProfileCard }) {
   const imageUrl = species.primaryImage
-    ? urlForImage(species.primaryImage)?.width(700).height(450).url()
+    ? urlForImage(species.primaryImage)?.width(720).height(480).url()
     : null
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
+    <article className="group overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
       <Link href={`/bangladesh-wildlife/snakes/${species.slug.current}`} className="block">
-        {imageUrl && (
-          <div className="relative aspect-[4/3] bg-earth-100">
+        {imageUrl ? (
+          <div className="relative aspect-[4/3] overflow-hidden bg-earth-100">
             <Image
               src={imageUrl}
               alt={species.primaryImage?.alt || species.englishName}
               fill
               sizes="(min-width: 1024px) 33vw, 100vw"
-              className="object-cover"
+              className="object-cover transition duration-300 group-hover:scale-105"
             />
+          </div>
+        ) : (
+          <div className="flex aspect-[4/3] items-center justify-center bg-forest-50 px-6 text-center">
+            <span className="font-serif text-2xl text-forest-800">
+              {species.banglaName || species.englishName}
+            </span>
           </div>
         )}
 
@@ -158,7 +182,7 @@ function SimilarSpeciesCard({ species }: { species: SpeciesProfileCard }) {
           <p className="text-sm font-medium text-forest-800">
             {species.banglaName}
           </p>
-          <h3 className="mt-2 font-serif text-xl leading-tight text-earth-900">
+          <h3 className="mt-2 font-serif text-xl leading-tight text-earth-900 group-hover:text-forest-900">
             {species.englishName}
           </h3>
           <p className="mt-1 text-sm italic text-earth-500">
@@ -219,7 +243,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
   if (!species || species.group?.slug?.current !== 'snakes') notFound()
 
   const primaryImageUrl = species.primaryImage
-    ? urlForImage(species.primaryImage)?.width(1600).height(1000).url()
+    ? urlForImage(species.primaryImage)?.width(1600).height(1100).url()
     : null
 
   const galleryImages = (species.images ?? [])
@@ -233,11 +257,15 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
   const zones = species.zones?.filter((zone) => zone.title) ?? []
   const districts = species.districts?.filter((district) => district.title) ?? []
   const references = species.sourceReferences?.filter((reference) => reference.title) ?? []
+  const relatedArticles =
+    species.relatedProkritiKothaArticles?.filter((article) => article.slug?.current) ?? []
+  const similarSpecies =
+    species.similarSpecies?.filter((item) => item.slug?.current) ?? []
 
   return (
     <main id="main-content">
       <article>
-        <header className="border-b border-earth-200 bg-earth-50">
+        <header className="border-b border-earth-200 bg-gradient-to-br from-earth-50 via-white to-forest-50">
           <div className="container-site section-padding-sm">
             <nav aria-label="Breadcrumb" className="mb-8 text-sm text-earth-500">
               <ol className="flex flex-wrap items-center gap-2">
@@ -265,11 +293,11 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
               </ol>
             </nav>
 
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center">
               <div>
-                <p className="section-label mb-4">Snake species profile</p>
+                <p className="section-label mb-5">বাংলাদেশের সাপ · Species profile</p>
 
-                <p className="text-xl font-medium text-forest-800">
+                <p className="text-2xl font-medium text-forest-800">
                   {species.banglaName}
                 </p>
 
@@ -277,12 +305,25 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                   {species.englishName}
                 </h1>
 
-                <p className="mt-4 text-xl italic text-earth-600">
+                <p className="mt-4 text-2xl italic text-earth-600">
                   {species.scientificName}
                 </p>
 
+                {localNames.length > 0 && (
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {localNames.map((name) => (
+                      <span
+                        key={name}
+                        className="rounded-full border border-earth-200 bg-white px-3 py-1 text-sm text-earth-700"
+                      >
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 {species.shortDescription && (
-                  <p className="mt-6 max-w-3xl text-lg leading-8 text-earth-700">
+                  <p className="mt-7 max-w-3xl text-lg leading-8 text-earth-700">
                     {species.shortDescription}
                   </p>
                 )}
@@ -291,6 +332,12 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                   <span className="rounded-full border border-forest-200 bg-forest-50 px-4 py-2 text-sm font-semibold text-forest-800">
                     {formatVenomStatus(species.venomStatus)}
                   </span>
+
+                  {species.medicalImportance && (
+                    <span className="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-earth-800">
+                      {formatMedicalImportance(species.medicalImportance)}
+                    </span>
+                  )}
 
                   {species.iucnGlobalStatus && (
                     <span className="rounded-full border border-earth-200 bg-white px-4 py-2 text-sm font-semibold text-earth-700">
@@ -306,117 +353,154 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                 </div>
               </div>
 
-              <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
-                <h2 className="font-serif text-2xl text-earth-900">
-                  Safety boundary
-                </h2>
-                <p className="mt-4 text-body leading-7 text-earth-700">
-                  This profile is for education and conservation awareness. It is
-                  not a snake catching, handling, or rescue manual. Keep a safe
-                  distance and contact trained rescuers or relevant authorities
-                  when needed.
-                </p>
-              </aside>
+              <div>
+                {primaryImageUrl ? (
+                  <figure className="overflow-hidden rounded-3xl border border-earth-200 bg-white shadow-lg">
+                    <div className="relative aspect-[4/3] bg-earth-100">
+                      <Image
+                        src={primaryImageUrl}
+                        alt={species.primaryImage?.alt || species.englishName}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 420px, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {(species.primaryImage?.caption || species.primaryImage?.credit) && (
+                      <figcaption className="border-t border-earth-100 px-5 py-3 text-sm text-earth-500">
+                        {species.primaryImage.caption}
+                        {species.primaryImage.caption && species.primaryImage.credit ? ' — ' : ''}
+                        {species.primaryImage.credit}
+                      </figcaption>
+                    )}
+                  </figure>
+                ) : (
+                  <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border border-earth-200 bg-forest-50 px-8 text-center shadow-sm">
+                    <span className="font-serif text-3xl text-forest-800">
+                      {species.banglaName || species.englishName}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </header>
 
-        {primaryImageUrl && (
-          <div className="container-site pt-10">
-            <figure className="overflow-hidden rounded-3xl border border-earth-200 bg-white">
-              <Image
-                src={primaryImageUrl}
-                alt={species.primaryImage?.alt || species.englishName}
-                width={1600}
-                height={1000}
-                priority
-                className="h-auto w-full object-cover"
+        <section className="bg-white">
+          <div className="container-site section-padding-sm">
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              <InfoCard
+                label="Venom status"
+                value={formatVenomStatus(species.venomStatus)}
+                tone="forest"
               />
-              {(species.primaryImage?.caption || species.primaryImage?.credit) && (
-                <figcaption className="border-t border-earth-100 px-5 py-3 text-sm text-earth-500">
-                  {species.primaryImage.caption}
-                  {species.primaryImage.caption && species.primaryImage.credit ? ' — ' : ''}
-                  {species.primaryImage.credit}
-                </figcaption>
-              )}
-            </figure>
-          </div>
-        )}
+              <InfoCard
+                label="Medical importance"
+                value={formatMedicalImportance(species.medicalImportance)}
+                tone="amber"
+              />
+              <InfoCard label="Family" value={species.family} />
+              <InfoCard label="Order" value={species.order} />
+            </div>
 
-        <section className="container-site section-padding-sm">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <StatusBadge label="Venom status" value={formatVenomStatus(species.venomStatus)} />
-            <StatusBadge label="Medical importance" value={formatMedicalImportance(species.medicalImportance)} />
-            <StatusBadge label="Family" value={species.family} />
-            <StatusBadge label="Order" value={species.order} />
-          </div>
+            <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              <InfoCard label="Global IUCN" value={species.iucnGlobalStatus} />
+              <InfoCard label="Bangladesh status" value={species.bangladeshStatus} />
+              <InfoCard
+                label="Known zones"
+                value={zones.length > 0 ? zones.map((zone) => zone.title).join(', ') : undefined}
+              />
+              <InfoCard
+                label="Known districts"
+                value={
+                  districts.length > 0
+                    ? `${districts.length} district${districts.length > 1 ? 's' : ''}`
+                    : undefined
+                }
+              />
+            </div>
 
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            <StatusBadge label="Global IUCN status" value={species.iucnGlobalStatus} />
-            <StatusBadge label="Bangladesh status" value={species.bangladeshStatus} />
+            {species.statusSource && (
+              <p className="mt-4 text-sm leading-6 text-earth-500">
+                Status source note: {species.statusSource}
+              </p>
+            )}
           </div>
-
-          {species.statusSource && (
-            <p className="mt-4 text-sm leading-6 text-earth-500">
-              Status source note: {species.statusSource}
-            </p>
-          )}
         </section>
 
-        <section className="border-t border-earth-200 bg-earth-50">
+        <section className="border-y border-earth-200 bg-amber-50">
+          <div className="container-site py-8">
+            <div className="max-w-4xl">
+              <p className="section-label mb-3">Public safety note</p>
+              <h2 className="font-serif text-3xl text-earth-900">
+                Observe from a safe distance
+              </h2>
+              <p className="mt-4 text-body leading-8 text-earth-700">
+                This page is for education, conservation awareness, and field
+                identification support. It is not a snake handling, catching, or
+                rescue manual. If a snake is found near people, keep distance and
+                contact trained rescuers or relevant authorities.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-earth-50">
           <div className="container-site section-padding-sm">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
               <div className="space-y-6">
-                <TextSection title="Identification" children={species.identification} />
-                <TextSection title="Scale and body description" children={species.scaleDescription} />
-                <TextSection title="Behaviour" children={species.behaviour} />
-                <TextSection title="Habitat" children={species.habitat} />
-                <TextSection title="Diet" children={species.diet} />
-                <TextSection title="Distribution" children={species.distributionText} />
-                <TextSection title="Ecological role" children={species.ecologicalRole} />
-                <TextSection title="Myths and facts" children={species.mythsAndFacts} />
-                <TextSection title="Safety note" children={species.safetyNote} />
+                <ContentSection
+                  eyebrow="Field identification"
+                  title="Identification"
+                  children={species.identification}
+                />
+                <ContentSection
+                  eyebrow="Morphology"
+                  title="Scale and body description"
+                  children={species.scaleDescription}
+                />
+                <ContentSection
+                  eyebrow="Natural history"
+                  title="Behaviour"
+                  children={species.behaviour}
+                />
+                <ContentSection
+                  eyebrow="Habitat"
+                  title="Habitat"
+                  children={species.habitat}
+                />
+                <ContentSection
+                  eyebrow="Ecology"
+                  title="Diet"
+                  children={species.diet}
+                />
+                <ContentSection
+                  eyebrow="Range"
+                  title="Distribution"
+                  children={species.distributionText}
+                />
+                <ContentSection
+                  eyebrow="Conservation value"
+                  title="Ecological role"
+                  children={species.ecologicalRole}
+                />
+                <ContentSection
+                  eyebrow="Public awareness"
+                  title="Myths and facts"
+                  children={species.mythsAndFacts}
+                />
+                <ContentSection
+                  eyebrow="Safety"
+                  title="Species-specific safety note"
+                  children={species.safetyNote}
+                />
               </div>
 
               <aside className="space-y-6">
-                {localNames.length > 0 && (
-                  <div className="rounded-2xl border border-earth-200 bg-white p-6">
-                    <h2 className="font-serif text-2xl text-earth-900">
-                      Local names
-                    </h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {localNames.map((name) => (
-                        <span
-                          key={name}
-                          className="rounded-full border border-earth-200 bg-earth-50 px-3 py-1 text-sm text-earth-700"
-                        >
-                          {name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {zones.length > 0 && (
-                  <div className="rounded-2xl border border-earth-200 bg-white p-6">
-                    <h2 className="font-serif text-2xl text-earth-900">
-                      Wildlife zones
-                    </h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {zones.map((zone) => (
-                        <span
-                          key={zone._id}
-                          className="rounded-full border border-forest-200 bg-forest-50 px-3 py-1 text-sm text-forest-800"
-                        >
-                          {zone.title}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
                 {districts.length > 0 && (
-                  <div className="rounded-2xl border border-earth-200 bg-white p-6">
+                  <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
+                    <p className="section-label mb-3">Distribution</p>
                     <h2 className="font-serif text-2xl text-earth-900">
                       Known districts
                     </h2>
@@ -433,16 +517,47 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                   </div>
                 )}
 
-                {species.reviewedBy && (
-                  <div className="rounded-2xl border border-earth-200 bg-white p-6">
+                {zones.length > 0 && (
+                  <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
+                    <p className="section-label mb-3">Landscape</p>
                     <h2 className="font-serif text-2xl text-earth-900">
-                      Review
+                      Wildlife zones
+                    </h2>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {zones.map((zone) => (
+                        <span
+                          key={zone._id}
+                          className="rounded-full border border-forest-200 bg-forest-50 px-3 py-1 text-sm text-forest-800"
+                        >
+                          {zone.title}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {species.reviewedBy && (
+                  <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
+                    <p className="section-label mb-3">Review</p>
+                    <h2 className="font-serif text-2xl text-earth-900">
+                      Reviewed record
                     </h2>
                     <p className="mt-3 text-body text-earth-700">
                       Reviewed by {species.reviewedBy}
                     </p>
                   </div>
                 )}
+
+                <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
+                  <p className="section-label mb-3">Data caution</p>
+                  <h2 className="font-serif text-2xl text-earth-900">
+                    Location privacy
+                  </h2>
+                  <p className="mt-3 text-sm leading-7 text-earth-600">
+                    Exact occurrence locations may be withheld or generalized to
+                    protect sensitive species, habitats, and local communities.
+                  </p>
+                </div>
               </aside>
             </div>
           </div>
@@ -454,7 +569,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
               <div className="mb-8">
                 <p className="section-label mb-3">Gallery</p>
                 <h2 className="font-serif text-h2 text-earth-900">
-                  Species images
+                  Images for visual reference
                 </h2>
               </div>
 
@@ -462,7 +577,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                 {galleryImages.map(({ image, url }) => (
                   <figure
                     key={image.asset?._id || image.alt || url}
-                    className="overflow-hidden rounded-2xl border border-earth-200 bg-white"
+                    className="overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm"
                   >
                     <div className="relative aspect-[4/3] bg-earth-100">
                       <Image
@@ -488,33 +603,27 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
           </section>
         )}
 
-
-        {species.relatedProkritiKothaArticles &&
-          species.relatedProkritiKothaArticles.length > 0 && (
-            <section className="border-t border-earth-200 bg-white">
-              <div className="container-site section-padding-sm">
-                <div className="mb-8">
-                  <p className="section-label mb-3">Related reading</p>
-                  <h2 className="font-serif text-h2 text-earth-900">
-                    Prokriti Kotha articles about this species
-                  </h2>
-                </div>
-
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {species.relatedProkritiKothaArticles
-                    .filter((article) => article.slug?.current)
-                    .map((article) => (
-                      <RelatedProkritiArticleCard
-                        key={article._id}
-                        article={article}
-                      />
-                    ))}
-                </div>
-              </div>
-            </section>
-          )}
-        {species.similarSpecies && species.similarSpecies.length > 0 && (
+        {relatedArticles.length > 0 && (
           <section className="border-t border-earth-200 bg-earth-50">
+            <div className="container-site section-padding-sm">
+              <div className="mb-8">
+                <p className="section-label mb-3">Related reading</p>
+                <h2 className="font-serif text-h2 text-earth-900">
+                  Prokriti Kotha articles about this species
+                </h2>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedArticles.map((article) => (
+                  <RelatedArticleCard key={article._id} article={article} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {similarSpecies.length > 0 && (
+          <section className="border-t border-earth-200 bg-white">
             <div className="container-site section-padding-sm">
               <div className="mb-8">
                 <p className="section-label mb-3">Similar species</p>
@@ -524,11 +633,9 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
               </div>
 
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {species.similarSpecies
-                  .filter((item) => item.slug?.current)
-                  .map((item) => (
-                    <SimilarSpeciesCard key={item._id} species={item} />
-                  ))}
+                {similarSpecies.map((item) => (
+                  <SimilarSpeciesCard key={item._id} species={item} />
+                ))}
               </div>
             </div>
           </section>
@@ -580,7 +687,3 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     </main>
   )
 }
-
-
-
-
