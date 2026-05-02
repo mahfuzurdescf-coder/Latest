@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 
 import { LogoMark } from '@/components/brand/LogoMark'
 import type { SiteSettings } from '@/types/sanity'
@@ -27,12 +27,12 @@ const FOOTER_SECTIONS = [
     ],
   },
   {
-    title: 'Resources',
+    title: 'Sections',
     links: [
       { label: 'Newsroom', href: '/newsroom' },
-      { label: 'Prokriti Kotha', href: '/prokriti-kotha' },
+      { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
       { label: 'Bangladesh Wildlife', href: '/bangladesh-wildlife' },
-      { label: 'Snake Field Guide', href: '/bangladesh-wildlife/snakes' },
+      { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
       { label: 'Reports & Publications', href: '/reports' },
       { label: 'Evidence & Resources', href: '/evidence-resources' },
       { label: 'Media', href: '/media' },
@@ -73,7 +73,7 @@ export function Footer({ settings }: FooterProps) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="mt-auto bg-[#1f1712] text-earth-300">
+    <footer className="mt-auto bg-forest-950 text-earth-100">
       <div className="container-site py-14 md:py-16">
         <div className="grid gap-10 lg:grid-cols-[1.25fr_2fr]">
           <div>
@@ -131,7 +131,7 @@ export function Footer({ settings }: FooterProps) {
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <h3 className="mb-4 text-label uppercase tracking-widest text-bark-300">
+                <h3 className="mb-4 text-label uppercase tracking-widest text-forest-300">
                   {section.title}
                 </h3>
 
@@ -140,7 +140,7 @@ export function Footer({ settings }: FooterProps) {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-earth-300/85 transition-colors hover:text-white"
+                        className="text-sm text-earth-100/80 transition-colors hover:text-white"
                       >
                         {link.label}
                       </Link>
