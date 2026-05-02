@@ -1,9 +1,11 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { ShareButtons } from '@/components/share/ShareButtons'
+import { SpeciesDistributionMap } from '@/components/wildlife/SpeciesDistributionMap'
+import { SpeciesImageGallery, type SpeciesGalleryImage } from '@/components/wildlife/SpeciesImageGallery'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import { urlForImage } from '@/lib/sanity/image'
@@ -13,9 +15,12 @@ import {
 } from '@/lib/sanity/queries'
 import type {
   ProkritiKothaArticleCard,
+  SanityImage,
   SpeciesProfile,
   SpeciesProfileCard,
 } from '@/types/sanity'
+
+const BD_SNAKES = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
 
 export const revalidate = 60
 
@@ -48,15 +53,27 @@ function formatMedicalImportance(status?: string): string {
 }
 
 function getCanonicalUrl(slug: string): string {
-  return `https://descf.org/bangladesh-wildlife/snakes/${slug}`
+  return 'https://descf.org/bangladesh-wildlife/snakes/' + slug
 }
 
 function getSpeciesDescription(species: SpeciesProfile): string {
   return (
     species.seoDescription ||
     species.shortDescription ||
-    `${species.englishName} (${species.scientificName}) species profile from DESCF Bangladesh wildlife field guide.`
+    species.englishName + ' (' + species.scientificName + ') species profile from DESCF Bangladesh wildlife field guide.'
   )
+}
+
+function imageToGalleryItem(image: SanityImage | undefined, fallbackAlt: string): SpeciesGalleryImage | null {
+  const url = image ? urlForImage(image)?.width(1400).height(1000).url() : null
+  if (!url) return null
+
+  return {
+    url,
+    alt: image?.alt || fallbackAlt,
+    caption: image?.caption,
+    credit: image?.credit,
+  }
 }
 
 function InfoCard({
@@ -72,40 +89,40 @@ function InfoCard({
     tone === 'forest'
       ? 'border-forest-200 bg-forest-50'
       : tone === 'amber'
-        ? 'border-amber-200 bg-amber-50'
+        ? 'border-bark-200 bg-bark-50'
         : 'border-earth-200 bg-white'
 
   return (
-    <div className={`rounded-2xl border p-5 ${toneClass}`}>
-      <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-earth-500">
+    <div className={'rounded-2xl border p-5 shadow-card ' + toneClass}>
+      <dt className="text-label font-semibold uppercase tracking-[0.18em] text-earth-500">
         {label}
       </dt>
-      <dd className="mt-2 font-serif text-xl leading-tight text-earth-900">
+      <dd className="mt-2 font-serif text-xl leading-tight text-earth-950">
         {value || 'Not specified'}
       </dd>
     </div>
   )
 }
 
-function ContentSection({
+function DetailSection({
   title,
   eyebrow,
-  children,
+  body,
 }: {
   title: string
   eyebrow?: string
-  children?: string
+  body?: string
 }) {
-  if (!children) return null
+  if (!body) return null
 
   return (
-    <section className="rounded-3xl border border-earth-200 bg-white p-7 shadow-sm">
+    <section className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card">
       {eyebrow && <p className="section-label mb-3">{eyebrow}</p>}
-      <h2 className="font-serif text-3xl leading-tight text-earth-900">
+      <h2 className="font-serif text-3xl leading-tight text-earth-950">
         {title}
       </h2>
       <p className="mt-5 whitespace-pre-line text-body leading-8 text-earth-700">
-        {children}
+        {body}
       </p>
     </section>
   )
@@ -117,8 +134,8 @@ function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) 
     : null
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
-      <Link href={`/prokriti-kotha/${article.slug.current}`} className="block">
+    <article className="group overflow-hidden rounded-[1.5rem] border border-earth-200 bg-white shadow-card transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-card-lg">
+      <Link href={'/prokriti-kotha/' + article.slug.current} className="block">
         {imageUrl ? (
           <div className="relative aspect-[4/3] overflow-hidden bg-earth-100">
             <Image
@@ -132,14 +149,14 @@ function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) 
         ) : (
           <div className="flex aspect-[4/3] items-center justify-center bg-forest-50 px-6 text-center">
             <span className="font-serif text-2xl text-forest-800">
-              প্রকৃতি কথা
+              Prokriti Kotha
             </span>
           </div>
         )}
 
         <div className="p-5">
           <p className="section-label mb-2">Related reading</p>
-          <h3 className="font-serif text-xl leading-tight text-earth-900 group-hover:text-forest-900">
+          <h3 className="font-serif text-xl leading-tight text-earth-950 group-hover:text-forest-900">
             {article.title}
           </h3>
           {article.excerpt && (
@@ -159,8 +176,8 @@ function SimilarSpeciesCard({ species }: { species: SpeciesProfileCard }) {
     : null
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-md">
-      <Link href={`/bangladesh-wildlife/snakes/${species.slug.current}`} className="block">
+    <article className="group overflow-hidden rounded-[1.5rem] border border-earth-200 bg-white shadow-card transition hover:-translate-y-1 hover:border-forest-300 hover:shadow-card-lg">
+      <Link href={'/bangladesh-wildlife/snakes/' + species.slug.current} className="block">
         {imageUrl ? (
           <div className="relative aspect-[4/3] overflow-hidden bg-earth-100">
             <Image
@@ -180,10 +197,10 @@ function SimilarSpeciesCard({ species }: { species: SpeciesProfileCard }) {
         )}
 
         <div className="p-5">
-          <p className="text-sm font-medium text-forest-800">
+          <p className="text-sm font-semibold text-forest-800">
             {species.banglaName}
           </p>
-          <h3 className="mt-2 font-serif text-xl leading-tight text-earth-900 group-hover:text-forest-900">
+          <h3 className="mt-2 font-serif text-xl leading-tight text-earth-950 group-hover:text-forest-900">
             {species.englishName}
           </h3>
           <p className="mt-1 text-sm italic text-earth-500">
@@ -227,7 +244,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : undefined
 
   return buildMetadata({
-    title: species.seoTitle || `${species.englishName} | বাংলাদেশের সাপ`,
+    title: species.seoTitle || species.englishName + ' | ' + BD_SNAKES,
     description: getSpeciesDescription(species),
     ogImage: ogImageUrl,
     canonicalUrl: getCanonicalUrl(params.slug),
@@ -243,79 +260,101 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
 
   if (!species || species.group?.slug?.current !== 'snakes') notFound()
 
-  const primaryImageUrl = species.primaryImage
-    ? urlForImage(species.primaryImage)?.width(1600).height(1100).url()
-    : null
-
-  const galleryImages = (species.images ?? [])
-    .map((image) => ({
-      image,
-      url: urlForImage(image)?.width(900).height(650).url(),
-    }))
-    .filter((item) => item.url)
-
   const localNames = species.localNames?.filter(Boolean) ?? []
   const zones = species.zones?.filter((zone) => zone.title) ?? []
   const districts = species.districts?.filter((district) => district.title) ?? []
+  const occurrencePoints = species.occurrencePoints ?? []
   const references = species.sourceReferences?.filter((reference) => reference.title) ?? []
   const relatedArticles =
     species.relatedProkritiKothaArticles?.filter((article) => article.slug?.current) ?? []
   const similarSpecies =
     species.similarSpecies?.filter((item) => item.slug?.current) ?? []
 
+  const galleryImages = [
+    imageToGalleryItem(species.primaryImage, species.englishName),
+    ...(species.images ?? []).map((image) => imageToGalleryItem(image, species.englishName)),
+  ].filter((image): image is SpeciesGalleryImage => Boolean(image))
+
+  const uniqueGalleryImages = galleryImages.filter(
+    (image, index, array) => array.findIndex((item) => item.url === image.url) === index,
+  )
+
+  const hasDetailContent = Boolean(
+    species.identification ||
+    species.scaleDescription ||
+    species.behaviour ||
+    species.habitat ||
+    species.diet ||
+    species.ecologicalRole ||
+    species.mythsAndFacts ||
+    species.safetyNote,
+  )
+
   return (
-    <main id="main-content">
+    <main id="main-content" className="bg-earth-50">
       <article>
-        <header className="border-b border-earth-200 bg-gradient-to-br from-earth-50 via-white to-forest-50">
-          <div className="container-site section-padding-sm">
-            <nav aria-label="Breadcrumb" className="mb-8 text-sm text-earth-500">
+        <header className="relative overflow-hidden bg-forest-950 text-white">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]" />
+
+          <div className="container-site relative py-12 md:py-16 lg:py-20">
+            <nav aria-label="Breadcrumb" className="mb-8 text-sm text-forest-100/75">
               <ol className="flex flex-wrap items-center gap-2">
                 <li>
-                  <Link href="/" className="hover:text-forest-800">
+                  <Link href="/" className="hover:text-white">
                     Home
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
                 <li>
-                  <Link href="/bangladesh-wildlife" className="hover:text-forest-800">
+                  <Link href="/bangladesh-wildlife" className="hover:text-white">
                     Bangladesh Wildlife
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
                 <li>
-                  <Link href="/bangladesh-wildlife/snakes" className="hover:text-forest-800">
+                  <Link href="/bangladesh-wildlife/snakes" className="hover:text-white">
                     Snakes
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
-                <li className="text-earth-700" aria-current="page">
+                <li className="text-bark-200" aria-current="page">
                   {species.englishName}
                 </li>
               </ol>
             </nav>
 
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center">
               <div>
-                <p className="section-label mb-5">বাংলাদেশের সাপ · Species profile</p>
-
-                <p className="text-2xl font-medium text-forest-800">
-                  {species.banglaName}
+                <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
+                  {BD_SNAKES} / Species profile
                 </p>
 
-                <h1 className="mt-3 font-serif text-h1 leading-tight text-earth-900">
+                {species.banglaName && (
+                  <p className="mt-6 text-2xl font-semibold text-bark-200">
+                    {species.banglaName}
+                  </p>
+                )}
+
+                <h1 className="mt-3 font-serif text-[clamp(3rem,6vw,5.8rem)] leading-[0.98] tracking-tight text-white">
                   {species.englishName}
                 </h1>
 
-                <p className="mt-4 text-2xl italic text-earth-600">
+                <p className="mt-4 text-2xl italic text-forest-100">
                   {species.scientificName}
                 </p>
 
+                {species.shortDescription && (
+                  <p className="mt-7 max-w-3xl text-lg leading-8 text-forest-100">
+                    {species.shortDescription}
+                  </p>
+                )}
+
                 {localNames.length > 0 && (
-                  <div className="mt-5 flex flex-wrap gap-2">
+                  <div className="mt-6 flex flex-wrap gap-2">
                     {localNames.map((name) => (
                       <span
                         key={name}
-                        className="rounded-full border border-earth-200 bg-white px-3 py-1 text-sm text-earth-700"
+                        className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-sm text-forest-50"
                       >
                         {name}
                       </span>
@@ -323,89 +362,40 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                   </div>
                 )}
 
-                {species.shortDescription && (
-                  <p className="mt-7 max-w-3xl text-lg leading-8 text-earth-700">
-                    {species.shortDescription}
-                  </p>
-                )}
-
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <span className="rounded-full border border-forest-200 bg-forest-50 px-4 py-2 text-sm font-semibold text-forest-800">
+                  <span className="rounded-full border border-forest-200/30 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-forest-50">
                     {formatVenomStatus(species.venomStatus)}
                   </span>
 
                   {species.medicalImportance && (
-                    <span className="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-earth-800">
+                    <span className="rounded-full border border-bark-300/50 bg-bark-500/15 px-4 py-2 text-sm font-semibold text-bark-100">
                       {formatMedicalImportance(species.medicalImportance)}
                     </span>
                   )}
 
                   {species.iucnGlobalStatus && (
-                    <span className="rounded-full border border-earth-200 bg-white px-4 py-2 text-sm font-semibold text-earth-700">
+                    <span className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-forest-50">
                       Global IUCN: {species.iucnGlobalStatus}
-                    </span>
-                  )}
-
-                  {species.bangladeshStatus && (
-                    <span className="rounded-full border border-earth-200 bg-white px-4 py-2 text-sm font-semibold text-earth-700">
-                      Bangladesh: {species.bangladeshStatus}
                     </span>
                   )}
                 </div>
               </div>
 
-              <div>
-                {primaryImageUrl ? (
-                  <figure className="overflow-hidden rounded-3xl border border-earth-200 bg-white shadow-lg">
-                    <div className="relative aspect-[4/3] bg-earth-100">
-                      <Image
-                        src={primaryImageUrl}
-                        alt={species.primaryImage?.alt || species.englishName}
-                        fill
-                        priority
-                        sizes="(min-width: 1024px) 420px, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-
-                    {(species.primaryImage?.caption || species.primaryImage?.credit) && (
-                      <figcaption className="border-t border-earth-100 px-5 py-3 text-sm text-earth-500">
-                        {species.primaryImage.caption}
-                        {species.primaryImage.caption && species.primaryImage.credit ? ' — ' : ''}
-                        {species.primaryImage.credit}
-                      </figcaption>
-                    )}
-                  </figure>
-                ) : (
-                  <div className="flex aspect-[4/3] items-center justify-center rounded-3xl border border-earth-200 bg-forest-50 px-8 text-center shadow-sm">
-                    <span className="font-serif text-3xl text-forest-800">
-                      {species.banglaName || species.englishName}
-                    </span>
-                  </div>
-                )}
-              </div>
+              <SpeciesImageGallery
+                images={uniqueGalleryImages}
+                fallbackTitle={species.banglaName || species.englishName}
+              />
             </div>
           </div>
         </header>
 
-        <section className="bg-white">
-          <div className="container-site section-padding-sm">
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-              <InfoCard
-                label="Venom status"
-                value={formatVenomStatus(species.venomStatus)}
-                tone="forest"
-              />
-              <InfoCard
-                label="Medical importance"
-                value={formatMedicalImportance(species.medicalImportance)}
-                tone="amber"
-              />
+        <section className="border-b border-earth-200 bg-white">
+          <div className="container-site py-10 md:py-12">
+            <dl className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              <InfoCard label="Venom status" value={formatVenomStatus(species.venomStatus)} tone="forest" />
+              <InfoCard label="Medical importance" value={formatMedicalImportance(species.medicalImportance)} tone="amber" />
               <InfoCard label="Family" value={species.family} />
               <InfoCard label="Order" value={species.order} />
-            </div>
-
-            <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               <InfoCard label="Global IUCN" value={species.iucnGlobalStatus} />
               <InfoCard label="Bangladesh status" value={species.bangladeshStatus} />
               <InfoCard
@@ -414,13 +404,9 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
               />
               <InfoCard
                 label="Known districts"
-                value={
-                  districts.length > 0
-                    ? `${districts.length} district${districts.length > 1 ? 's' : ''}`
-                    : undefined
-                }
+                value={districts.length > 0 ? String(districts.length) : undefined}
               />
-            </div>
+            </dl>
 
             {species.statusSource && (
               <p className="mt-4 text-sm leading-6 text-earth-500">
@@ -430,262 +416,131 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
           </div>
         </section>
 
-        <section className="border-y border-earth-200 bg-amber-50">
-          <div className="container-site py-8">
-            <div className="max-w-4xl">
-              <p className="section-label mb-3">Public safety note</p>
-              <h2 className="font-serif text-3xl text-earth-900">
-                Observe from a safe distance
-              </h2>
-              <p className="mt-4 text-body leading-8 text-earth-700">
-                This page is for education, conservation awareness, and field
-                identification support. It is not a snake handling, catching, or
-                rescue manual. If a snake is found near people, keep distance and
-                contact trained rescuers or relevant authorities.
+        <section className="border-b border-earth-200 bg-[#fbf7ed]">
+          <div className="container-site py-10 md:py-12">
+            <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+              <div>
+                <p className="section-label mb-3">Public safety note</p>
+                <h2 className="font-serif text-3xl text-earth-950">
+                  Observe from a safe distance.
+                </h2>
+              </div>
+              <p className="text-body leading-8 text-earth-700">
+                This page is for education, conservation awareness, and field identification support.
+                It is not a snake handling, catching, or rescue manual. If a snake is found near people,
+                keep distance and contact trained responders or relevant authorities.
               </p>
             </div>
           </div>
         </section>
 
         <section className="bg-earth-50">
-          <div className="container-site section-padding-sm">
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="container-site py-12 md:py-14 lg:py-16">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
               <div className="space-y-6">
-                <ContentSection
-                  eyebrow="Field identification"
-                  title="Identification"
-                  children={species.identification}
-                />
-                <ContentSection
-                  eyebrow="Morphology"
-                  title="Scale and body description"
-                  children={species.scaleDescription}
-                />
-                <ContentSection
-                  eyebrow="Natural history"
-                  title="Behaviour"
-                  children={species.behaviour}
-                />
-                <ContentSection
-                  eyebrow="Habitat"
-                  title="Habitat"
-                  children={species.habitat}
-                />
-                <ContentSection
-                  eyebrow="Ecology"
-                  title="Diet"
-                  children={species.diet}
-                />
-                <ContentSection
-                  eyebrow="Range"
-                  title="Distribution"
-                  children={species.distributionText}
-                />
-                <ContentSection
-                  eyebrow="Conservation value"
-                  title="Ecological role"
-                  children={species.ecologicalRole}
-                />
-                <ContentSection
-                  eyebrow="Public awareness"
-                  title="Myths and facts"
-                  children={species.mythsAndFacts}
-                />
-                <ContentSection
-                  eyebrow="Safety"
-                  title="Species-specific safety note"
-                  children={species.safetyNote}
-                />
+                {hasDetailContent ? (
+                  <>
+                    <DetailSection eyebrow="Field identification" title="Identification" body={species.identification} />
+                    <DetailSection eyebrow="Morphology" title="Scale and body description" body={species.scaleDescription} />
+                    <DetailSection eyebrow="Natural history" title="Behaviour" body={species.behaviour} />
+                    <DetailSection eyebrow="Habitat" title="Habitat" body={species.habitat} />
+                    <DetailSection eyebrow="Ecology" title="Diet" body={species.diet} />
+                    <DetailSection eyebrow="Conservation value" title="Ecological role" body={species.ecologicalRole} />
+                    <DetailSection eyebrow="Public awareness" title="Myths and facts" body={species.mythsAndFacts} />
+                    <DetailSection eyebrow="Safety" title="Species-specific safety note" body={species.safetyNote} />
+                  </>
+                ) : (
+                  <section className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card">
+                    <p className="section-label mb-3">Profile data</p>
+                    <h2 className="font-serif text-3xl leading-tight text-earth-950">
+                      Field notes are being prepared
+                    </h2>
+                    <p className="mt-5 max-w-3xl text-body leading-8 text-earth-700">
+                      Detailed identification, habitat, behaviour, diet, ecological role, myths, and safety notes will appear here once they are added and reviewed in Sanity Studio.
+                    </p>
+                  </section>
+                )}
               </div>
 
               <aside className="space-y-6">
                 <ShareButtons
-                  title={species.banglaName + ' / ' + species.englishName}
+                  title={(species.banglaName ? species.banglaName + ' / ' : '') + species.englishName}
                   description={getSpeciesDescription(species)}
                   label="Share this species profile"
                 />
-                {districts.length > 0 && (
-                  <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
-                    <p className="section-label mb-3">Distribution</p>
-                    <h2 className="font-serif text-2xl text-earth-900">
-                      Known districts
-                    </h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {districts.map((district) => (
-                        <span
-                          key={district._id}
-                          className="rounded-full border border-earth-200 bg-earth-50 px-3 py-1 text-sm text-earth-700"
-                        >
-                          {district.title}
-                        </span>
+
+                {references.length > 0 && (
+                  <div className="rounded-[1.75rem] border border-earth-200 bg-white p-6 shadow-card">
+                    <p className="section-label mb-3">Sources</p>
+                    <h2 className="font-serif text-2xl text-earth-950">References</h2>
+                    <ul className="mt-4 space-y-3 text-sm leading-6 text-earth-700">
+                      {references.map((reference) => (
+                        <li key={reference._key || reference.title}>
+                          {reference.url ? (
+                            <a href={reference.url} target="_blank" rel="noreferrer" className="font-semibold text-forest-800 hover:text-forest-950">
+                              {reference.title}
+                            </a>
+                          ) : (
+                            <span className="font-semibold text-earth-950">{reference.title}</span>
+                          )}
+                          {reference.note && <p className="text-earth-500">{reference.note}</p>}
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 )}
-
-                {zones.length > 0 && (
-                  <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
-                    <p className="section-label mb-3">Landscape</p>
-                    <h2 className="font-serif text-2xl text-earth-900">
-                      Wildlife zones
-                    </h2>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {zones.map((zone) => (
-                        <span
-                          key={zone._id}
-                          className="rounded-full border border-forest-200 bg-forest-50 px-3 py-1 text-sm text-forest-800"
-                        >
-                          {zone.title}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {species.reviewedBy && (
-                  <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
-                    <p className="section-label mb-3">Review</p>
-                    <h2 className="font-serif text-2xl text-earth-900">
-                      Reviewed record
-                    </h2>
-                    <p className="mt-3 text-body text-earth-700">
-                      Reviewed by {species.reviewedBy}
-                    </p>
-                  </div>
-                )}
-
-                <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
-                  <p className="section-label mb-3">Data caution</p>
-                  <h2 className="font-serif text-2xl text-earth-900">
-                    Location privacy
-                  </h2>
-                  <p className="mt-3 text-sm leading-7 text-earth-600">
-                    Exact occurrence locations may be withheld or generalized to
-                    protect sensitive species, habitats, and local communities.
-                  </p>
-                </div>
               </aside>
             </div>
           </div>
         </section>
 
-        {galleryImages.length > 0 && (
+        <section className="bg-earth-50">
+          <div className="container-site pb-12 md:pb-14 lg:pb-16">
+            <SpeciesDistributionMap
+              districts={districts}
+              zones={zones}
+              occurrencePoints={occurrencePoints}
+              distributionText={species.distributionText}
+            />
+          </div>
+        </section>
+
+        {(similarSpecies.length > 0 || relatedArticles.length > 0) && (
           <section className="border-t border-earth-200 bg-white">
-            <div className="container-site section-padding-sm">
-              <div className="mb-8">
-                <p className="section-label mb-3">Gallery</p>
-                <h2 className="font-serif text-h2 text-earth-900">
-                  Images for visual reference
-                </h2>
-              </div>
-
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {galleryImages.map(({ image, url }) => (
-                  <figure
-                    key={image.asset?._id || image.alt || url}
-                    className="overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-sm"
-                  >
-                    <div className="relative aspect-[4/3] bg-earth-100">
-                      <Image
-                        src={url as string}
-                        alt={image.alt || species.englishName}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-
-                    {(image.caption || image.credit) && (
-                      <figcaption className="border-t border-earth-100 px-4 py-3 text-sm text-earth-500">
-                        {image.caption}
-                        {image.caption && image.credit ? ' — ' : ''}
-                        {image.credit}
-                      </figcaption>
-                    )}
-                  </figure>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {relatedArticles.length > 0 && (
-          <section className="border-t border-earth-200 bg-earth-50">
-            <div className="container-site section-padding-sm">
-              <div className="mb-8">
-                <p className="section-label mb-3">Related reading</p>
-                <h2 className="font-serif text-h2 text-earth-900">
-                  Prokriti Kotha articles about this species
-                </h2>
-              </div>
-
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {relatedArticles.map((article) => (
-                  <RelatedArticleCard key={article._id} article={article} />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {similarSpecies.length > 0 && (
-          <section className="border-t border-earth-200 bg-white">
-            <div className="container-site section-padding-sm">
-              <div className="mb-8">
-                <p className="section-label mb-3">Similar species</p>
-                <h2 className="font-serif text-h2 text-earth-900">
-                  Compare carefully
-                </h2>
-              </div>
-
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {similarSpecies.map((item) => (
-                  <SimilarSpeciesCard key={item._id} species={item} />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {references.length > 0 && (
-          <section className="border-t border-earth-200 bg-white">
-            <div className="container-site section-padding-sm">
-              <div className="mb-8">
-                <p className="section-label mb-3">Sources</p>
-                <h2 className="font-serif text-h2 text-earth-900">
-                  References
-                </h2>
-              </div>
-
-              <div className="space-y-4">
-                {references.map((reference) => (
-                  <div
-                    key={reference._key || reference.title}
-                    className="rounded-2xl border border-earth-200 bg-earth-50 p-5"
-                  >
-                    <h3 className="font-medium text-earth-900">
-                      {reference.url ? (
-                        <a
-                          href={reference.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-forest-800 hover:text-forest-900"
-                        >
-                          {reference.title}
-                        </a>
-                      ) : (
-                        reference.title
-                      )}
-                    </h3>
-
-                    {reference.note && (
-                      <p className="mt-2 text-sm leading-6 text-earth-600">
-                        {reference.note}
-                      </p>
-                    )}
+            <div className="container-site py-12 md:py-14 lg:py-16">
+              {similarSpecies.length > 0 && (
+                <div>
+                  <div className="mb-8 max-w-3xl">
+                    <p className="section-label mb-3">Compare carefully</p>
+                    <h2 className="font-serif text-h2 text-earth-950">
+                      Similar species
+                    </h2>
                   </div>
-                ))}
-              </div>
+
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {similarSpecies.slice(0, 3).map((item) => (
+                      <SimilarSpeciesCard key={item._id} species={item} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {relatedArticles.length > 0 && (
+                <div className={similarSpecies.length > 0 ? 'mt-12' : ''}>
+                  <div className="mb-8 max-w-3xl">
+                    <p className="section-label mb-3">Editorial connection</p>
+                    <h2 className="font-serif text-h2 text-earth-950">
+                      Related Prokriti Kotha articles
+                    </h2>
+                  </div>
+
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {relatedArticles.slice(0, 3).map((article) => (
+                      <RelatedArticleCard key={article._id} article={article} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -693,5 +548,3 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     </main>
   )
 }
-
-

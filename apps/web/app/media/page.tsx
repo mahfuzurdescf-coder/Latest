@@ -1,150 +1,126 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import { Button } from '@/components/ui/Button'
-import { Card, CardContent } from '@/components/ui/Card'
-import { Container } from '@/components/ui/Container'
-import { Section, SectionHeader } from '@/components/ui/Section'
-import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
-import { buildMetadata } from '@/lib/seo'
-import { SITE } from '@/lib/site'
-
-export const metadata: Metadata = buildMetadata({
-  title: 'Media',
+export const metadata: Metadata = {
+  title: 'Media | DESCF',
   description:
-    'Media information for DESCF, including conservation communication, interviews, public awareness, and responsible wildlife storytelling enquiries.',
-  canonicalUrl: 'https://descf.org/media',
-})
+    'DESCF media information, approved communication assets, press guidance, and public conservation messaging.',
+}
 
-const mediaJsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'Media', url: 'https://descf.org/media' },
-])
-
-const MEDIA_AREAS = [
+const mediaStandards = [
   {
-    title: 'Interviews and expert comments',
-    description:
-      'Media teams may contact DESCF for responsible commentary on snake awareness, biodiversity, conservation communication, and human-wildlife coexistence.',
+    label: 'Approved',
+    title: 'Use verified material',
+    text: 'Photos, captions, names, dates, and claims should be checked before public or media use.',
   },
   {
-    title: 'Conservation storytelling',
-    description:
-      'DESCF supports ethical storytelling that informs the public without sensationalising wildlife or encouraging risky interaction.',
+    label: 'Careful',
+    title: 'Avoid sensational wildlife messaging',
+    text: 'Media content should not increase panic, promote risky handling, or exaggerate danger.',
   },
   {
-    title: 'Public awareness campaigns',
-    description:
-      'Media collaboration can support awareness around snakes, biodiversity protection, coexistence, and responsible ecological behaviour.',
+    label: 'Useful',
+    title: 'Support public understanding',
+    text: 'Media communication should make conservation, coexistence, and safety easier to understand.',
   },
-  {
-    title: 'Field communication guidance',
-    description:
-      'Wildlife-related media work should avoid exposing sensitive locations, disturbing animals, or creating misleading public narratives.',
-  },
-]
-
-const MEDIA_GUIDELINES = [
-  'Avoid sensational language about snakes or wildlife',
-  'Do not reveal sensitive wildlife locations',
-  'Do not encourage unsafe handling or interaction with wildlife',
-  'Credit DESCF properly when using organisational information',
-  'Contact DESCF before publishing field-sensitive material',
 ]
 
 export default function MediaPage() {
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(mediaJsonLd) }}
-      />
-
-      <main id="main-content">
-        <section className="border-b border-earth-200 bg-earth-50">
-          <Container className="section-padding-sm">
-            <div className="max-w-3xl">
-              <p className="section-label mb-4">Media</p>
-              <h1 className="font-serif text-h1 text-earth-950">
-                Media and conservation communication
-              </h1>
-              <p className="mt-5 text-body-lg text-earth-700">
-                DESCF welcomes responsible media enquiries related to biodiversity,
-                snake conservation, ecological awareness, field documentation, and
-                human-wildlife coexistence in Bangladesh.
-              </p>
+    <main>
+      <section className="bg-[#0b2410] text-white">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[1.1fr_0.9fr] md:items-center lg:px-8 lg:py-32">
+          <div>
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.32em] text-[#d3a126]">
+              DESCF Media
+            </p>
+            <h1 className="max-w-3xl font-serif text-5xl leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
+              Media communication without fear-based storytelling.
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-white/88">
+              This section should support journalists, media partners,
+              institutions, and public communicators with approved information,
+              responsible language, and conservation-focused context.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link href="/resources" className="rounded-xl bg-[#c99522] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#ad801b]">
+                Back to resources
+              </Link>
+              <Link href="/contact" className="rounded-xl border border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#0b2410]">
+                Media contact
+              </Link>
             </div>
-          </Container>
-        </section>
+          </div>
 
-        <Section>
-          <Container>
-            <SectionHeader
-              eyebrow="Media collaboration"
-              title="Wildlife communication should inform, not sensationalise"
-              description="DESCF’s media engagement should help the public understand wildlife more responsibly, especially species that are often misunderstood or feared."
-            />
+          <div className="rounded-[2rem] border border-white/12 bg-white/[0.06] p-8">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#d3a126]">
+              Media principle
+            </p>
+            <h2 className="mt-5 font-serif text-3xl leading-tight">
+              Communicate wildlife with accuracy, restraint, and responsibility.
+            </h2>
+            <p className="mt-5 leading-7 text-white/82">
+              DESCF media material should protect credibility. Avoid dramatic
+              language, unsupported impact claims, and unsafe wildlife behaviour.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid gap-5 md:grid-cols-2">
-              {MEDIA_AREAS.map((area) => (
-                <Card key={area.title}>
-                  <CardContent>
-                    <h2 className="font-serif text-2xl text-earth-950">
-                      {area.title}
-                    </h2>
-                    <p className="mt-3 text-body-sm text-earth-700">
-                      {area.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </Container>
-        </Section>
+      <section className="border-b border-[#eadfce] bg-[#fbf8f1]">
+        <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
+          <p className="text-xs font-bold uppercase tracking-[0.32em] text-[#315b2c]">
+            Media standard
+          </p>
+          <h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight text-[#24160f] sm:text-5xl">
+            Public communication should reduce confusion, not create noise.
+          </h2>
 
-        <section className="bg-earth-100/70">
-          <Container className="py-16 md:py-20">
-            <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr]">
-              <div>
-                <p className="section-label mb-3">Media guidance</p>
-                <h2 className="font-serif text-h2 text-earth-950">
-                  Responsible wildlife media requires ethical restraint.
-                </h2>
-                <p className="mt-5 text-body text-earth-700">
-                  Conservation media should not create fear, expose sensitive habitats,
-                  or turn wildlife into spectacle. DESCF encourages careful, factual,
-                  and conservation-oriented communication.
-                </p>
-
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Button href={`mailto:${SITE.contactEmail}`} variant="primary">
-                    Media enquiry
-                  </Button>
-                  <Button href="/newsroom" variant="secondary">
-                    Visit newsroom
-                  </Button>
-                </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {mediaStandards.map((item) => (
+              <div key={item.title} className="rounded-[1.5rem] border border-[#ead8bd] bg-white p-7 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#315b2c]">{item.label}</p>
+                <h3 className="mt-4 font-serif text-2xl leading-tight text-[#24160f]">{item.title}</h3>
+                <p className="mt-4 leading-7 text-[#7b4f36]">{item.text}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              <Card>
-                <CardContent>
-                  <h3 className="font-serif text-2xl text-earth-950">
-                    Basic guidelines
-                  </h3>
+      <section className="bg-white">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 py-20 md:grid-cols-[1fr_0.8fr] lg:px-8">
+          <div className="rounded-[2rem] border border-dashed border-[#d7c19f] bg-[#fbf8f1] p-10">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#315b2c]">
+              Media kit
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight text-[#24160f]">
+              Approved media materials are being prepared.
+            </h2>
+            <p className="mt-5 leading-7 text-[#7b4f36]">
+              Future media assets can include approved photos, organisational
+              profile, press notes, speaker information, public safety messages,
+              and media-use guidelines.
+            </p>
+          </div>
 
-                  <ul className="mt-5 space-y-3">
-                    {MEDIA_GUIDELINES.map((item) => (
-                      <li key={item} className="flex gap-3 text-body-sm text-earth-700">
-                        <span className="mt-2 h-2 w-2 rounded-full bg-forest-700" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </Container>
-        </section>
-      </main>
-    </>
+          <div className="rounded-[2rem] border border-[#ead8bd] bg-white p-8 shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#315b2c]">
+              Contact
+            </p>
+            <h3 className="mt-4 font-serif text-3xl leading-tight text-[#24160f]">
+              Need official DESCF information?
+            </h3>
+            <p className="mt-4 leading-7 text-[#7b4f36]">
+              Use the contact page for institutional collaboration, media
+              enquiries, and responsible conservation communication.
+            </p>
+            <Link href="/contact" className="mt-8 inline-flex rounded-xl border border-[#315b2c] px-5 py-3 text-sm font-bold text-[#315b2c] transition hover:bg-[#315b2c] hover:text-white">
+              Contact DESCF
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

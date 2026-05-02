@@ -245,158 +245,222 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
       <main id="main-content">
         <article>
-          <header className="border-b border-earth-200 bg-earth-50">
-            <div className="container-site section-padding-sm">
+          <header className="bg-[#102414] text-white">
+            <div className="container-site py-16 sm:py-20 lg:py-24">
               <nav
                 aria-label="Breadcrumb"
-                className="mb-8 text-sm text-earth-500"
+                className="mb-10 text-sm text-white/65"
               >
                 <ol className="flex flex-wrap items-center gap-2">
                   <li>
-                    <Link href="/" className="hover:text-forest-800">
+                    <Link href="/" className="transition hover:text-white">
                       Home
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
                   <li>
-                    <Link href="/prokriti-kotha" className="hover:text-forest-800">
+                    <Link
+                      href="/prokriti-kotha"
+                      className="transition hover:text-white"
+                    >
                       Prokriti Kotha
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
-                  <li className="text-earth-700" aria-current="page">
+                  <li className="text-white" aria-current="page">
                     {article.title}
                   </li>
                 </ol>
               </nav>
 
-              <div className="max-w-4xl">
-                <div className="mb-5 flex flex-wrap items-center gap-3 text-sm text-earth-600">
-                  <span className="rounded-full border border-forest-200 bg-forest-50 px-3 py-1 font-medium text-forest-800">
-                    {categoryLabel}
-                  </span>
-
-                  {article.language && (
-                    <span className="rounded-full border border-earth-200 bg-white px-3 py-1 font-medium text-earth-700">
-                      {article.language === 'bn' ? 'Bangla' : 'English'}
+              <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_460px]">
+                <div>
+                  <div className="mb-6 flex flex-wrap items-center gap-3">
+                    <span className="rounded-full border border-amber-300/35 bg-amber-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-amber-200">
+                      {categoryLabel}
                     </span>
+
+                    {article.language && (
+                      <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">
+                        {article.language === 'bn' ? 'Bangla' : 'English'}
+                      </span>
+                    )}
+
+                    {publishedDateLabel && (
+                      <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">
+                        {publishedDateLabel}
+                      </span>
+                    )}
+                  </div>
+
+                  <h1 className="max-w-4xl font-serif text-5xl leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                    {article.title}
+                  </h1>
+
+                  {article.excerpt && (
+                    <p className="mt-7 max-w-3xl text-lg leading-8 text-white/80 sm:text-xl">
+                      {article.excerpt}
+                    </p>
                   )}
 
-                  {publishedDateLabel && <span>{publishedDateLabel}</span>}
+                  <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-white/70">
+                    <span>
+                      By {article.author?.name || 'DESCF Editorial'}
+                    </span>
 
-                  {typeof article.readingTime === 'number' && article.readingTime > 0 && (
-                    <span>{article.readingTime} min read</span>
-                  )}
+                    {typeof article.readingTime === 'number' &&
+                      article.readingTime > 0 && (
+                        <>
+                          <span aria-hidden="true">?</span>
+                          <span>{article.readingTime} min read</span>
+                        </>
+                      )}
+                  </div>
                 </div>
 
-                <h1 className="font-serif text-h1 leading-tight text-earth-900">
-                  {article.title}
-                </h1>
-
-                {article.excerpt && (
-                  <p className="mt-5 max-w-3xl text-lg leading-8 text-earth-700">
-                    {article.excerpt}
-                  </p>
-                )}
-
-                {article.author?.name && (
-                  <p className="mt-7 text-sm font-medium text-forest-800">
-                    By {article.author.name}
-                  </p>
-                )}
+                <div className="rounded-[2rem] border border-white/15 bg-white/10 p-3 shadow-2xl shadow-black/25">
+                  {coverImageUrl ? (
+                    <figure className="overflow-hidden rounded-[1.5rem] bg-white/5">
+                      <Image
+                        src={coverImageUrl}
+                        alt={article.coverImage?.alt || article.title}
+                        width={1200}
+                        height={850}
+                        priority
+                        className="aspect-[4/3] w-full object-cover"
+                      />
+                      {(article.coverImage?.caption ||
+                        article.coverImage?.credit) && (
+                        <figcaption className="border-t border-white/10 px-5 py-4 text-sm leading-6 text-white/65">
+                          {article.coverImage.caption}
+                          {article.coverImage.caption &&
+                          article.coverImage.credit
+                            ? ' ? '
+                            : ''}
+                          {article.coverImage.credit}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ) : (
+                    <div className="flex aspect-[4/3] items-center justify-center rounded-[1.5rem] bg-white/10 p-8 text-center">
+                      <div>
+                        <p className="section-label mb-3 text-amber-200">
+                          Prokriti Kotha
+                        </p>
+                        <p className="font-serif text-3xl text-white">
+                          Editorial article
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </header>
 
-          {coverImageUrl && (
-            <div className="container-site pt-10">
-              <figure className="overflow-hidden rounded-2xl border border-earth-200 bg-white">
-                <Image
-                  src={coverImageUrl}
-                  alt={article.coverImage?.alt || article.title}
-                  width={1600}
-                  height={900}
-                  priority
-                  className="h-auto w-full object-cover"
-                />
-                {(article.coverImage?.caption || article.coverImage?.credit) && (
-                  <figcaption className="border-t border-earth-100 px-5 py-3 text-sm text-earth-500">
-                    {article.coverImage.caption}
-                    {article.coverImage.caption && article.coverImage.credit ? ' — ' : ''}
-                    {article.coverImage.credit}
-                  </figcaption>
-                )}
-              </figure>
+          <section className="border-b border-earth-200 bg-earth-50">
+            <div className="container-site py-8">
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="rounded-2xl border border-earth-200 bg-white p-5">
+                  <p className="section-label mb-2">Section</p>
+                  <p className="font-serif text-2xl text-earth-950">
+                    Prokriti Kotha
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-earth-200 bg-white p-5">
+                  <p className="section-label mb-2">Article type</p>
+                  <p className="font-serif text-2xl text-earth-950">
+                    {categoryLabel}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-earth-200 bg-white p-5">
+                  <p className="section-label mb-2">Reading time</p>
+                  <p className="font-serif text-2xl text-earth-950">
+                    {typeof article.readingTime === 'number' &&
+                    article.readingTime > 0
+                      ? (
+                          <>{article.readingTime} min read</>
+                        )
+                      : (
+                          'Not specified'
+                        )}
+                  </p>
+                </div>
+              </div>
             </div>
-          )}
+          </section>
 
           <div className="container-site section-padding-sm">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
-              <div className="max-w-3xl">
-                {article.body && article.body.length > 0 ? (
-                  <div className="prose prose-earth max-w-none">
-                    <PortableText value={article.body} />
-                  </div>
-                ) : (
-                  <div className="rounded-xl border border-earth-200 bg-white p-8">
-                    <h2 className="font-serif text-2xl text-earth-900">
-                      Article content is not available yet
-                    </h2>
-                    <p className="mt-2 text-body text-earth-600">
-                      This article has been published, but the full body content has not been added in the CMS yet.
-                    </p>
-                  </div>
-                )}
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+              <div className="min-w-0">
+                <div className="rounded-[2rem] border border-earth-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
+                  {article.body && article.body.length > 0 ? (
+                    <div className="prose prose-earth max-w-none">
+                      <PortableText value={article.body} />
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="section-label mb-4">Article body</p>
+                      <h2 className="font-serif text-3xl text-earth-950">
+                        Full article content is being prepared
+                      </h2>
+                      <p className="mt-4 max-w-2xl text-body leading-8 text-earth-700">
+                        This article has been published, but the full body
+                        content has not been added in Sanity Studio yet.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <aside className="space-y-6">
+              <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
                 <ShareButtons
                   title={article.title}
                   description={getArticleDescription(article)}
                   label="Share this article"
                 />
-                <div className="rounded-xl border border-earth-200 bg-white p-5">
-                  <h2 className="font-serif text-xl text-earth-900">
+
+                <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
+                  <h2 className="font-serif text-xl text-earth-950">
                     Article details
                   </h2>
 
-                  <dl className="mt-4 space-y-3 text-sm">
+                  <dl className="mt-5 space-y-4 text-sm">
                     <div>
-                      <dt className="font-medium text-earth-900">Section</dt>
-                      <dd className="mt-1 text-earth-600">Prokriti Kotha</dd>
-                    </div>
-
-                    <div>
-                      <dt className="font-medium text-earth-900">Category</dt>
-                      <dd className="mt-1 text-earth-600">{categoryLabel}</dd>
+                      <dt className="font-semibold text-earth-950">Category</dt>
+                      <dd className="mt-1 text-earth-650">{categoryLabel}</dd>
                     </div>
 
                     {publishedDateLabel && (
                       <div>
-                        <dt className="font-medium text-earth-900">Published</dt>
-                        <dd className="mt-1 text-earth-600">
+                        <dt className="font-semibold text-earth-950">
+                          Published
+                        </dt>
+                        <dd className="mt-1 text-earth-650">
                           {publishedDateLabel}
                         </dd>
                       </div>
                     )}
 
-                    {article.author?.name && (
-                      <div>
-                        <dt className="font-medium text-earth-900">Author</dt>
-                        <dd className="mt-1 text-earth-600">
-                          {article.author.name}
-                        </dd>
-                      </div>
-                    )}
+                    <div>
+                      <dt className="font-semibold text-earth-950">Author</dt>
+                      <dd className="mt-1 text-earth-650">
+                        {article.author?.name || 'DESCF Editorial'}
+                      </dd>
+                    </div>
                   </dl>
                 </div>
 
-                <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
-                  <h2 className="font-serif text-xl text-earth-900">
-                    Safety note
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+                  <h2 className="font-serif text-xl text-earth-950">
+                    Editorial safety note
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-earth-700">
-                    DESCF content is for education and conservation awareness. It should not be treated as snake handling, catching, or rescue instruction.
+                    DESCF content is for education and conservation awareness.
+                    It should not be treated as snake handling, catching, or
+                    rescue instruction.
                   </p>
                 </div>
               </aside>
@@ -405,12 +469,12 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
         </article>
 
         {article.relatedSpecies && article.relatedSpecies.length > 0 && (
-          <section className="border-t border-earth-200 bg-earth-50">
+          <section className="border-t border-earth-200 bg-[#f7f2e8]">
             <div className="container-site section-padding-sm">
               <div className="mb-8">
-                <p className="section-label mb-3">Related species</p>
+                <p className="section-label mb-3">Field-guide connection</p>
                 <h2 className="font-serif text-h2 text-earth-900">
-                  Species connected to this article
+                  Species connected to this story
                 </h2>
               </div>
 
@@ -426,10 +490,10 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
         )}
 
         {article.relatedArticles && article.relatedArticles.length > 0 && (
-          <section className="border-t border-earth-200 bg-white">
+          <section className="border-t border-earth-200 bg-earth-50">
             <div className="container-site section-padding-sm">
               <div className="mb-8">
-                <p className="section-label mb-3">Related reading</p>
+                <p className="section-label mb-3">Continue reading</p>
                 <h2 className="font-serif text-h2 text-earth-900">
                   More from Prokriti Kotha
                 </h2>

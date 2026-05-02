@@ -1,4 +1,4 @@
-﻿// apps/web/app/sitemap.ts
+// apps/web/app/sitemap.ts
 import type { MetadataRoute } from 'next'
 import { sanityFetch } from '@/lib/sanity/client'
 import {
@@ -40,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl('/'), lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: absoluteUrl('/about'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: absoluteUrl('/mission'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: absoluteUrl('/leadership'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: absoluteUrl('/team'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: absoluteUrl('/current-work'), lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: absoluteUrl('/programmes'), lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: absoluteUrl('/strategic-priorities'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },

@@ -41,7 +41,7 @@ export function EventRegistrationForm({
   form,
   eventTitle,
 }: EventRegistrationFormProps) {
-  const fields = form.fields ?? []
+  const fields = useMemo(() => form.fields ?? [], [form.fields])
   const isClosed = !form.isActive || isDeadlinePassed(form.deadline)
 
   const initialAnswers = useMemo(() => {
@@ -387,3 +387,4 @@ export function EventRegistrationForm({
     </div>
   )
 }
+

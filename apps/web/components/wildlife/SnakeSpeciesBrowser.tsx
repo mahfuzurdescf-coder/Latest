@@ -112,6 +112,11 @@ function SpeciesCard({ species }: { species: SpeciesProfileCard }) {
               </span>
             )}
           </div>
+        
+
+          <div className="mt-6 inline-flex text-sm font-semibold text-forest-800 transition group-hover:text-forest-950">
+            View species profile <span aria-hidden="true" className="ml-1">-&gt;</span>
+          </div>
         </div>
       </Link>
     </article>
@@ -155,14 +160,14 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
         <div className="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
           <div>
             <label htmlFor="snake-search" className="mb-2 block text-sm font-medium text-earth-900">
-              Search species
+              Search the snake field guide
             </label>
             <input
               id="snake-search"
               type="search"
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search by Bangla, English, scientific name, family..."
+              placeholder="Try Bangla, English, local name, scientific name, or family..."
               className="w-full rounded-xl border border-earth-200 bg-white px-4 py-3 text-sm text-earth-900 outline-none transition placeholder:text-earth-400 focus:border-forest-500 focus:ring-2 focus:ring-forest-100"
             />
           </div>
@@ -205,7 +210,7 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
         </div>
 
         <p className="mt-4 text-sm text-earth-500">
-          Showing {filteredSpecies.length} of {species.length} published snake profiles.
+          Showing {filteredSpecies.length} of {species.length}
         </p>
       </div>
 

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -13,11 +13,11 @@ interface HeaderProps {
 }
 
 const DEFAULT_NAV = [
-  { label: 'About', href: '/about' },
+  { label: 'Organisation', href: '/about' },
   { label: 'Current Work', href: '/current-work' },
-  { label: 'Programmes', href: '/programmes' },
-  { label: 'Newsroom', href: '/newsroom' },
-  { label: 'Partner', href: '/partner' },
+  { label: '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be', href: '/prokriti-kotha' },
+  { label: '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa', href: '/bangladesh-wildlife/snakes' },
+  { label: 'Resources', href: '/evidence-resources' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -30,7 +30,7 @@ export function Header({ settings }: HeaderProps) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const navLinks = settings.navLinks?.length ? settings.navLinks : DEFAULT_NAV
+  const navLinks = DEFAULT_NAV
   const donationLink = settings.donationLink ?? '/donate'
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export function Header({ settings }: HeaderProps) {
                   href={link.href}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                    'whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                     active
                       ? 'bg-forest-50 text-forest-800'
                       : 'text-earth-600 hover:bg-earth-100 hover:text-earth-950',

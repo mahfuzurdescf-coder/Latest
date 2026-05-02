@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 
 import { LogoMark } from '@/components/brand/LogoMark'
 import type { SiteSettings } from '@/types/sanity'
@@ -7,13 +7,26 @@ interface FooterProps {
   settings: SiteSettings
 }
 
+
+function getFooterLabel(link: { label?: string; href?: string }) {
+  if (link.href === '/prakriti-kotha' || link.href === '/prokriti-kotha') {
+    return '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be'
+  }
+
+  if (link.href === '/bangladesher-sap') {
+    return '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
+  }
+
+  return link.label
+}
+
 const FOOTER_SECTIONS = [
   {
     title: 'Organisation',
     links: [
       { label: 'About DESCF', href: '/about' },
       { label: 'Mission & Vision', href: '/mission' },
-      { label: 'Leadership', href: '/leadership' },
+      { label: 'Team', href: '/team' },
       { label: 'Governance', href: '/governance' },
     ],
   },
@@ -27,12 +40,12 @@ const FOOTER_SECTIONS = [
     ],
   },
   {
-    title: 'Resources',
+    title: 'Sections',
     links: [
       { label: 'Newsroom', href: '/newsroom' },
-      { label: 'Prokriti Kotha', href: '/prokriti-kotha' },
+      { label: 'à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾', href: '/prokriti-kotha' },
       { label: 'Bangladesh Wildlife', href: '/bangladesh-wildlife' },
-      { label: 'Snake Field Guide', href: '/bangladesh-wildlife/snakes' },
+      { label: 'à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª', href: '/bangladesh-wildlife/snakes' },
       { label: 'Reports & Publications', href: '/reports' },
       { label: 'Evidence & Resources', href: '/evidence-resources' },
       { label: 'Media', href: '/media' },
@@ -73,7 +86,7 @@ export function Footer({ settings }: FooterProps) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="mt-auto bg-[#1f1712] text-earth-300">
+    <footer className="mt-auto bg-forest-950 text-earth-100">
       <div className="container-site py-14 md:py-16">
         <div className="grid gap-10 lg:grid-cols-[1.25fr_2fr]">
           <div>
@@ -131,7 +144,7 @@ export function Footer({ settings }: FooterProps) {
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <h3 className="mb-4 text-label uppercase tracking-widest text-bark-300">
+                <h3 className="mb-4 text-label uppercase tracking-widest text-forest-300">
                   {section.title}
                 </h3>
 
@@ -140,9 +153,9 @@ export function Footer({ settings }: FooterProps) {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-earth-300/85 transition-colors hover:text-white"
+                        className="text-sm text-earth-100/80 transition-colors hover:text-white"
                       >
-                        {link.label}
+                        {getFooterLabel(link)}
                       </Link>
                     </li>
                   ))}

@@ -274,7 +274,7 @@ export interface Event {
 export interface EventCard
   extends Pick<
     Event,
-    | '_id'
+| '_id'
     | '_type'
     | 'title'
     | 'slug'
@@ -282,6 +282,7 @@ export interface EventCard
     | 'time'
     | 'location'
     | 'status'
+    | 'registrationLink'
   > {}
 
 // â”€â”€â”€ TeamMember â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
