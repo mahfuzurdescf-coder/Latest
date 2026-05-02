@@ -279,6 +279,17 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
     (image, index, array) => array.findIndex((item) => item.url === image.url) === index,
   )
 
+  const hasDetailContent = Boolean(
+    species.identification ||
+    species.scaleDescription ||
+    species.behaviour ||
+    species.habitat ||
+    species.diet ||
+    species.ecologicalRole ||
+    species.mythsAndFacts ||
+    species.safetyNote,
+  )
+
   return (
     <main id="main-content" className="bg-earth-50">
       <article>
@@ -427,14 +438,28 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
           <div className="container-site py-12 md:py-14 lg:py-16">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
               <div className="space-y-6">
-                <DetailSection eyebrow="Field identification" title="Identification" body={species.identification} />
-                <DetailSection eyebrow="Morphology" title="Scale and body description" body={species.scaleDescription} />
-                <DetailSection eyebrow="Natural history" title="Behaviour" body={species.behaviour} />
-                <DetailSection eyebrow="Habitat" title="Habitat" body={species.habitat} />
-                <DetailSection eyebrow="Ecology" title="Diet" body={species.diet} />
-                <DetailSection eyebrow="Conservation value" title="Ecological role" body={species.ecologicalRole} />
-                <DetailSection eyebrow="Public awareness" title="Myths and facts" body={species.mythsAndFacts} />
-                <DetailSection eyebrow="Safety" title="Species-specific safety note" body={species.safetyNote} />
+                {hasDetailContent ? (
+                  <>
+                    <DetailSection eyebrow="Field identification" title="Identification" body={species.identification} />
+                    <DetailSection eyebrow="Morphology" title="Scale and body description" body={species.scaleDescription} />
+                    <DetailSection eyebrow="Natural history" title="Behaviour" body={species.behaviour} />
+                    <DetailSection eyebrow="Habitat" title="Habitat" body={species.habitat} />
+                    <DetailSection eyebrow="Ecology" title="Diet" body={species.diet} />
+                    <DetailSection eyebrow="Conservation value" title="Ecological role" body={species.ecologicalRole} />
+                    <DetailSection eyebrow="Public awareness" title="Myths and facts" body={species.mythsAndFacts} />
+                    <DetailSection eyebrow="Safety" title="Species-specific safety note" body={species.safetyNote} />
+                  </>
+                ) : (
+                  <section className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card">
+                    <p className="section-label mb-3">Profile data</p>
+                    <h2 className="font-serif text-3xl leading-tight text-earth-950">
+                      Field notes are being prepared
+                    </h2>
+                    <p className="mt-5 max-w-3xl text-body leading-8 text-earth-700">
+                      Detailed identification, habitat, behaviour, diet, ecological role, myths, and safety notes will appear here once they are added and reviewed in Sanity Studio.
+                    </p>
+                  </section>
+                )}
               </div>
 
               <aside className="space-y-6">
