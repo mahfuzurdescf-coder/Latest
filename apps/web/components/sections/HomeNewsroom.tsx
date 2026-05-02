@@ -13,41 +13,45 @@ interface HomeNewsroomProps {
 
 export function HomeNewsroom({ posts }: HomeNewsroomProps) {
   return (
-    <Section className="bg-[#f8f4eb]">
+    <Section className="bg-forest-50">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            eyebrow="Newsroom"
-            title="Updates, field notes, and conservation stories"
-            description="Read selected updates and insights from DESCF conservation communication work."
-            className="mb-0"
+            eyebrow="প্রকৃতি কথা"
+            title="A calmer editorial space for nature, wildlife, and coexistence"
+            description="Read selected stories, field notes, reflections, and conservation writing from DESCF’s nature-focused editorial space."
+            className="mb-0 max-w-3xl"
           />
 
-          <Button href="/newsroom" variant="secondary">
-            View all stories
+          <Button href="/prokriti-kotha" variant="secondary">
+            Read প্রকৃতি কথা
           </Button>
         </div>
 
         {posts.length > 0 ? (
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 3).map((post) => (
-              <ArticleCard key={post._id} post={post} />
+              <ArticleCard
+                key={post._id}
+                post={post}
+                className="border-forest-100 bg-white/90 shadow-card hover:border-forest-300"
+              />
             ))}
           </div>
         ) : (
           <div className="mt-10">
             <EmptyState
-              title="Stories are being prepared"
-              description="DESCF articles, updates, and field notes will appear here once they are added in the CMS."
-              actionLabel="Browse newsroom"
-              actionHref="/newsroom"
+              title="প্রকৃতি কথা is being prepared"
+              description="Nature stories, field notes, and conservation reflections will appear here once they are added in the CMS."
+              actionLabel="Visit প্রকৃতি কথা"
+              actionHref="/prokriti-kotha"
             />
           </div>
         )}
 
         <div className="mt-8 text-sm text-earth-600">
-          <Link href="/newsroom" className="font-semibold text-forest-700 hover:text-forest-900">
-            Go to newsroom →
+          <Link href="/prokriti-kotha" className="font-semibold text-forest-700 hover:text-forest-950">
+            Go to প্রকৃতি কথা →
           </Link>
         </div>
       </Container>
