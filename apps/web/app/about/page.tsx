@@ -50,16 +50,16 @@ export default function AboutPage() {
       />
 
       <section className="border-b border-earth-200 bg-[#fbf7ed] bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div className="container-site py-16 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
             <div>
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-5">
                 About DESCF
               </p>
-              <h1 className="max-w-4xl font-serif text-5xl leading-[0.96] tracking-[-0.04em] text-earth-950 md:text-7xl">
+              <h1 className="max-w-4xl text-h1 text-earth-950">
                 A conservation organisation built around learning, trust, and coexistence.
               </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-earth-700">
+              <p className="mt-7 max-w-2xl text-body-lg text-earth-700">
                 Deep Ecology and Snake Conservation Foundation works at the intersection of biodiversity conservation, snake awareness, ecological education, responsible communication, and public engagement in Bangladesh.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -73,13 +73,13 @@ export default function AboutPage() {
             </div>
 
             <aside className="rounded-[2rem] border border-white/10 bg-forest-950 p-8 text-white shadow-card-lg">
-              <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+              <p className="section-label text-gold-300">
                 Institution principle
               </p>
               <h2 className="mt-5 font-serif text-3xl leading-tight">
                 DESCF should look like a serious conservation platform, not a random activity page.
               </h2>
-              <p className="mt-5 text-sm leading-7 text-white/82">
+              <p className="mt-5 text-body-sm text-forest-100/75">
                 Every public page should help visitors understand what DESCF does, why it matters, and how the work supports safer biodiversity awareness.
               </p>
               <div className="mt-7 grid grid-cols-3 gap-3">
@@ -108,15 +108,15 @@ export default function AboutPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="mb-10 max-w-3xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+            <p className="section-label mb-4">
               What DESCF does
             </p>
-            <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+            <h2 className="text-h2 text-earth-950">
               Conservation work becomes stronger when public communication is responsible.
             </h2>
-            <p className="mt-5 text-base leading-7 text-earth-700">
+            <p className="mt-5 text-body text-earth-700">
               The site should explain DESCF through concrete work areas instead of vague institutional claims.
             </p>
           </div>
@@ -133,7 +133,7 @@ export default function AboutPage() {
                 <h3 className="mt-4 font-serif text-2xl leading-tight text-earth-950">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-earth-700">{item.text}</p>
+                <p className="mt-4 text-body-sm text-earth-700">{item.text}</p>
               </article>
             ))}
           </div>
@@ -141,16 +141,16 @@ export default function AboutPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-[#f7f3ec]">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Public standard
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 The brand should feel calm, credible, and careful.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-earth-700">
+              <p className="mt-5 max-w-xl text-body text-earth-700">
                 DESCF’s public identity should not depend on loud claims. It should depend on trust, evidence, field learning, and consistent conservation language.
               </p>
             </div>
@@ -172,17 +172,17 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="rounded-[2rem] bg-forest-950 p-8 text-white shadow-card-lg md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+                <p className="mb-4 section-label text-gold-300">
                   Next step
                 </p>
                 <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-[-0.03em]">
                   Understand the mission, then follow the work.
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/82">
+                <p className="mt-4 max-w-2xl text-body-sm text-forest-100/75">
                   Visitors should be able to move from institutional identity to mission, programmes, resources, events, and contact routes without confusion.
                 </p>
               </div>
@@ -201,4 +201,5 @@ export default function AboutPage() {
     </main>
   )
 }
+
 

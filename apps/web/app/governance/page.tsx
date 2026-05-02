@@ -120,16 +120,16 @@ export default async function GovernancePage() {
       />
 
       <section className="border-b border-earth-200 bg-[#fbf7ed] bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div className="container-site py-16 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
             <div>
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-5">
                 Governance
               </p>
-              <h1 className="max-w-4xl font-serif text-5xl leading-[0.96] tracking-[-0.04em] text-earth-950 md:text-7xl">
+              <h1 className="max-w-4xl text-h1 text-earth-950">
                 Accountability systems for serious conservation work.
               </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-earth-700">
+              <p className="mt-7 max-w-2xl text-body-lg text-earth-700">
                 DESCF’s governance page explains how the organisation approaches accountability, transparency, responsible communication, safeguarding, policy standards, and public trust.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -143,13 +143,13 @@ export default async function GovernancePage() {
             </div>
 
             <aside className="rounded-[2rem] border border-white/10 bg-forest-950 p-8 text-white shadow-card-lg">
-              <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+              <p className="section-label text-gold-300">
                 Governance principle
               </p>
               <h2 className="mt-5 font-serif text-3xl leading-tight">
                 Trust is built through records, restraint, and clear standards.
               </h2>
-              <p className="mt-5 text-sm leading-7 text-white/82">
+              <p className="mt-5 text-body-sm text-forest-100/75">
                 This is not a people page. It is the public home for DESCF’s accountability, document standards, policy approach, and safety-first communication principles.
               </p>
               <div className="mt-7 grid grid-cols-3 gap-3">
@@ -178,15 +178,15 @@ export default async function GovernancePage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="mb-10 max-w-3xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+            <p className="section-label mb-4">
               Governance framework
             </p>
-            <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+            <h2 className="text-h2 text-earth-950">
               Governance should make the organisation easier to evaluate.
             </h2>
-            <p className="mt-5 text-base leading-7 text-earth-700">
+            <p className="mt-5 text-body text-earth-700">
               Visitors should be able to understand what DESCF is accountable for, how public documents are handled, and how institutional communication stays careful.
             </p>
           </div>
@@ -203,7 +203,7 @@ export default async function GovernancePage() {
                 <h3 className="mt-4 font-serif text-2xl leading-tight text-earth-950">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-earth-700">{item.text}</p>
+                <p className="mt-4 text-body-sm text-earth-700">{item.text}</p>
               </article>
             ))}
           </div>
@@ -211,16 +211,16 @@ export default async function GovernancePage() {
       </section>
 
       <section className="border-b border-earth-200 bg-[#f7f3ec]">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Institutional trust
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 Credibility depends on what DESCF can responsibly show.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-earth-700">
+              <p className="mt-5 max-w-xl text-body text-earth-700">
                 A serious conservation website should separate verified work, published records, policy commitments, and future plans. That discipline protects the organisation from overclaiming.
               </p>
             </div>
@@ -234,7 +234,7 @@ export default async function GovernancePage() {
                   <h3 className="font-serif text-2xl leading-tight text-earth-950">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-earth-700">{item.text}</p>
+                  <p className="mt-3 text-body-sm text-earth-700">{item.text}</p>
                 </article>
               ))}
             </div>
@@ -243,16 +243,16 @@ export default async function GovernancePage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Governance documents
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 Published documents should appear with context.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-earth-700">
+              <p className="mt-5 max-w-xl text-body text-earth-700">
                 Documents should not appear as vague PDFs. Each record should have a clear title, type, summary, and public purpose wherever possible.
               </p>
             </div>
@@ -272,7 +272,7 @@ export default async function GovernancePage() {
                         {item?.title || 'Governance document'}
                       </h3>
                       {item?.summary && (
-                        <p className="mt-3 text-sm leading-7 text-earth-700">
+                        <p className="mt-3 text-body-sm text-earth-700">
                           {item.summary}
                         </p>
                       )}
@@ -297,7 +297,7 @@ export default async function GovernancePage() {
                   <h3 className="mt-4 font-serif text-3xl leading-tight text-earth-950">
                     No governance documents published yet.
                   </h3>
-                  <p className="mt-4 text-sm leading-7 text-earth-700">
+                  <p className="mt-4 text-body-sm text-earth-700">
                     Policies, governance notes, accountability documents, and reviewed institutional records will appear here after publication in Sanity Studio.
                   </p>
                 </div>
@@ -308,16 +308,16 @@ export default async function GovernancePage() {
       </section>
 
       <section className="border-b border-earth-200 bg-[#f7f3ec]">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Policy standard
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 Policies should be useful, readable, and maintainable.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-earth-700">
+              <p className="mt-5 max-w-xl text-body text-earth-700">
                 Governance should not depend on hidden internal knowledge. The website and CMS should help DESCF maintain better public records over time.
               </p>
             </div>
@@ -348,7 +348,7 @@ export default async function GovernancePage() {
                     {item?.title || 'Policy document'}
                   </h3>
                   {item?.summary && (
-                    <p className="mt-4 text-sm leading-7 text-earth-700">{item.summary}</p>
+                    <p className="mt-4 text-body-sm text-earth-700">{item.summary}</p>
                   )}
                 </article>
               ))}
@@ -358,17 +358,17 @@ export default async function GovernancePage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="rounded-[2rem] bg-forest-950 p-8 text-white shadow-card-lg md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+                <p className="mb-4 section-label text-gold-300">
                   Governance contact
                 </p>
                 <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-[-0.03em]">
                   Accountability improves when communication is clear.
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/82">
+                <p className="mt-4 max-w-2xl text-body-sm text-forest-100/75">
                   For governance, policy, safeguarding, document, or institutional enquiries, contact DESCF with a clear purpose and relevant context.
                 </p>
               </div>
@@ -387,6 +387,7 @@ export default async function GovernancePage() {
     </main>
   )
 }
+
 
 
 

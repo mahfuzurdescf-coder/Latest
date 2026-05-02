@@ -100,10 +100,10 @@ function PersonCard({ item }: { item: ProfileCard }) {
     <article className="overflow-hidden rounded-[2rem] border border-earth-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-lg">
       <div className="flex aspect-[4/3] items-center justify-center bg-forest-950 text-center text-white">
         <div className="px-6">
-          <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+          <p className="section-label text-gold-300">
             {item.eyebrow}
           </p>
-          <p className="mt-3 text-sm leading-6 text-white/75">
+          <p className="mt-3 text-body-sm text-forest-100/75">
             Verified photo
           </p>
         </div>
@@ -116,7 +116,7 @@ function PersonCard({ item }: { item: ProfileCard }) {
         <h3 className="mt-4 font-serif text-2xl leading-tight text-earth-950">
           {item.title}
         </h3>
-        <p className="mt-4 text-sm leading-7 text-earth-700">{item.text}</p>
+        <p className="mt-4 text-body-sm text-earth-700">{item.text}</p>
       </div>
     </article>
   )
@@ -133,13 +133,13 @@ function SectionIntro({
 }) {
   return (
     <div className="mb-10 max-w-3xl">
-      <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+      <p className="section-label mb-4">
         {eyebrow}
       </p>
-      <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+      <h2 className="text-h2 text-earth-950">
         {title}
       </h2>
-      <p className="mt-5 text-base leading-7 text-earth-700">{text}</p>
+      <p className="mt-5 text-body text-earth-700">{text}</p>
     </div>
   )
 }
@@ -148,18 +148,18 @@ export default function TeamPage() {
   return (
     <main>
       <section className="border-b border-earth-200 bg-[#fbf7ed] bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div className="container-site py-16 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-5">
                 DESCF Team
               </p>
 
-              <h1 className="max-w-4xl font-serif text-5xl leading-[0.96] tracking-[-0.04em] text-earth-950 md:text-7xl">
+              <h1 className="max-w-4xl text-h1 text-earth-950">
                 People behind conservation learning, public awareness, and responsible action.
               </h1>
 
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-earth-700">
+              <p className="mt-7 max-w-2xl text-body-lg text-earth-700">
                 DESCF’s team page should present the founder, working committee,
                 advisors, ambassadors, and campus committees with verified profiles,
                 clear roles, and responsible public representation.
@@ -176,7 +176,7 @@ export default function TeamPage() {
             </div>
 
             <aside className="rounded-[2rem] border border-white/10 bg-forest-950 p-8 text-white shadow-card-lg">
-              <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+              <p className="section-label text-gold-300">
                 People principle
               </p>
 
@@ -184,7 +184,7 @@ export default function TeamPage() {
                 A team page should build trust, not become a random gallery.
               </h2>
 
-              <p className="mt-5 text-sm leading-7 text-white/82">
+              <p className="mt-5 text-body-sm text-forest-100/75">
                 Every person shown here should have a verified name, approved photo,
                 clear role, and a short explanation of how they support DESCF’s
                 conservation mission.
@@ -195,16 +195,16 @@ export default function TeamPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Founder
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 Founder profile should receive a dedicated, dignified space.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-earth-700">
+              <p className="mt-5 max-w-xl text-body text-earth-700">
                 The founder section should briefly explain the founding vision,
                 conservation commitment, public responsibility, and role in shaping
                 DESCF’s institutional direction.
@@ -218,20 +218,20 @@ export default function TeamPage() {
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold-300">
                       Founder
                     </p>
-                    <p className="mt-3 text-sm leading-6 text-white/75">
+                    <p className="mt-3 text-body-sm text-forest-100/75">
                       Verified photo
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.32em] text-forest-800">
+                  <p className="section-label">
                     Founder spotlight
                   </p>
                   <h3 className="mt-4 font-serif text-3xl leading-tight text-earth-950">
                     Founder name and short note will be added after verification.
                   </h3>
-                  <p className="mt-4 text-sm leading-7 text-earth-700">
+                  <p className="mt-4 text-body-sm text-earth-700">
                     This space is reserved for the founder’s official profile, short
                     biography, founding motivation, and public message. Add only
                     verified information and an approved photo.
@@ -244,7 +244,7 @@ export default function TeamPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-[#f7f3ec]">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <SectionIntro
             eyebrow="Current Committee"
             title="The working committee should be visible as a serious operational team."
@@ -260,7 +260,7 @@ export default function TeamPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <SectionIntro
             eyebrow="Advisory Council"
             title="Advisors should be presented with the same visual respect as public ambassadors."
@@ -276,7 +276,7 @@ export default function TeamPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-[#f7f3ec]">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <SectionIntro
             eyebrow="Deep Ecology Ambassadors"
             title="Ambassadors should be highlighted as responsible public messengers."
@@ -292,16 +292,16 @@ export default function TeamPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Campus Committees
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 Campus teams can turn conservation awareness into youth-led public learning.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-earth-700">
+              <p className="mt-5 max-w-xl text-body text-earth-700">
                 Campus committees should be shown as a structured network. Later,
                 each campus can have a committee photo, coordinator name, member list,
                 activity record, and contact route.
@@ -317,7 +317,7 @@ export default function TeamPage() {
                   <h3 className="font-serif text-2xl leading-tight text-earth-950">
                     {item.title}
                   </h3>
-                  <p className="mt-4 text-sm leading-7 text-earth-700">{item.text}</p>
+                  <p className="mt-4 text-body-sm text-earth-700">{item.text}</p>
                 </article>
               ))}
             </div>
@@ -326,17 +326,17 @@ export default function TeamPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="rounded-[2rem] bg-forest-950 p-8 text-white shadow-card-lg md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+                <p className="mb-4 section-label text-gold-300">
                   Public representation
                 </p>
                 <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-[-0.03em]">
                   Team visibility should strengthen DESCF’s credibility.
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/82">
+                <p className="mt-4 max-w-2xl text-body-sm text-forest-100/75">
                   Add real profiles only after names, photos, roles, and public
                   descriptions are verified by DESCF.
                 </p>
@@ -352,3 +352,4 @@ export default function TeamPage() {
     </main>
   )
 }
+

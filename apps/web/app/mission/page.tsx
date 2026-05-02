@@ -55,16 +55,16 @@ export default function MissionPage() {
       />
 
       <section className="border-b border-earth-200 bg-[#fbf7ed] bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div className="container-site py-16 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-5">
                 Mission & Vision
               </p>
-              <h1 className="max-w-4xl font-serif text-5xl leading-[0.96] tracking-[-0.04em] text-earth-950 md:text-7xl">
+              <h1 className="max-w-4xl text-h1 text-earth-950">
                 Public conservation learning for safer coexistence.
               </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-earth-700">
+              <p className="mt-7 max-w-2xl text-body-lg text-earth-700">
                 DESCF’s mission is to strengthen biodiversity awareness, snake conservation communication, field-informed learning, and responsible human-wildlife coexistence in Bangladesh.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -78,13 +78,13 @@ export default function MissionPage() {
             </div>
 
             <aside className="rounded-[2rem] border border-white/10 bg-forest-950 p-8 text-white shadow-card-lg">
-              <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+              <p className="section-label text-gold-300">
                 Working direction
               </p>
               <h2 className="mt-5 font-serif text-3xl leading-tight">
                 Mission is not decoration. It must guide visible work.
               </h2>
-              <p className="mt-5 text-sm leading-7 text-white/82">
+              <p className="mt-5 text-body-sm text-forest-100/75">
                 The mission should be reflected across programmes, events, resources, governance standards, media language, and team representation.
               </p>
               <div className="mt-7 rounded-2xl border border-white/15 bg-white/5 p-5">
@@ -101,15 +101,15 @@ export default function MissionPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="max-w-3xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+            <p className="section-label mb-4">
               Mission
             </p>
-            <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+            <h2 className="text-h2 text-earth-950">
               Make conservation understandable, practical, and safe.
             </h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-earth-700">
+            <p className="mt-5 max-w-2xl text-body text-earth-700">
               DESCF should explain biodiversity in a way that students, communities, educators, media teams, and institutions can actually use.
             </p>
           </div>
@@ -123,7 +123,7 @@ export default function MissionPage() {
                 <h3 className="font-serif text-2xl leading-tight tracking-[-0.02em] text-earth-950">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-earth-700">{item.text}</p>
+                <p className="mt-4 text-body-sm text-earth-700">{item.text}</p>
               </article>
             ))}
           </div>
@@ -131,13 +131,13 @@ export default function MissionPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-[#f7f3ec]">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+              <p className="section-label mb-4">
                 Vision
               </p>
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+              <h2 className="text-h2 text-earth-950">
                 Build a public culture of responsible coexistence.
               </h2>
             </div>
@@ -166,12 +166,12 @@ export default function MissionPage() {
       </section>
 
       <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="mb-10 max-w-3xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-forest-800">
+            <p className="section-label mb-4">
               Working principles
             </p>
-            <h2 className="font-serif text-4xl leading-tight tracking-[-0.03em] text-earth-950 md:text-5xl">
+            <h2 className="text-h2 text-earth-950">
               The mission should control the tone of every public page.
             </h2>
           </div>
@@ -185,7 +185,7 @@ export default function MissionPage() {
                 <h3 className="font-serif text-2xl leading-tight tracking-[-0.02em] text-earth-950">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-earth-700">{item.text}</p>
+                <p className="mt-4 text-body-sm text-earth-700">{item.text}</p>
               </article>
             ))}
           </div>
@@ -193,17 +193,17 @@ export default function MissionPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="rounded-[2rem] bg-forest-950 p-8 text-white shadow-card-lg md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-gold-300">
+                <p className="mb-4 section-label text-gold-300">
                   Next step
                 </p>
                 <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-[-0.03em]">
                   Turn mission into visible public work.
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/82">
+                <p className="mt-4 max-w-2xl text-body-sm text-forest-100/75">
                   The mission only matters if visitors can see programmes, events, resources, governance standards, and people behind the work.
                 </p>
               </div>
@@ -222,4 +222,5 @@ export default function MissionPage() {
     </main>
   )
 }
+
 

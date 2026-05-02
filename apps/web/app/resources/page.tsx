@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -63,13 +63,13 @@ export default function ResourcesPage() {
       <section className="bg-[#0b2410] text-white">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[1.15fr_0.85fr] md:items-center lg:px-8 lg:py-32">
           <div>
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.32em] text-[#d3a126]">
+            <p className="section-label mb-5 text-gold-300">
               DESCF Resources
             </p>
-            <h1 className="max-w-3xl font-serif text-5xl leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-3xl text-h1">
               Public knowledge that is useful, careful, and accountable.
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-white/88">
+            <p className="mt-8 max-w-2xl text-body-lg text-forest-100/80">
               DESCF resources should work as a credible public knowledge system:
               reports, evidence, media material, safety-first explainers, and
               conservation learning documents arranged in one clear place.
@@ -92,11 +92,11 @@ export default function ResourcesPage() {
           </div>
 
           <div className="rounded-[2rem] border border-white/12 bg-white/[0.06] p-8 shadow-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#d3a126]">
+            <p className="section-label text-gold-300">
               Resource principle
             </p>
             <h2 className="mt-5 font-serif text-3xl leading-tight text-white sm:text-4xl">
-              Not a dumping ground — a disciplined conservation archive.
+              Not a dumping ground â€” a disciplined conservation archive.
             </h2>
             <p className="mt-5 leading-7 text-white/82">
               Every resource should have a purpose: help people understand
@@ -128,16 +128,16 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="border-b border-[#eadfce] bg-[#fbf8f1]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
-          <p className="text-xs font-bold uppercase tracking-[0.32em] text-[#315b2c]">
+      <section className="border-b border-[#eadfce] bg-earth-50">
+        <div className="container-site py-14 md:py-16 lg:py-20">
+          <p className="section-label">
             Resource sections
           </p>
           <div className="mt-4 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end">
-            <h2 className="font-serif text-4xl leading-tight text-[#24160f] sm:text-5xl">
+            <h2 className="text-h2 text-earth-950">
               Organise public material before publishing more of it.
             </h2>
-            <p className="max-w-2xl text-base leading-7 text-[#7b4f36]">
+            <p className="max-w-2xl text-body text-earth-700">
               The mistake would be to upload scattered PDFs, photos, and links.
               DESCF needs a structured resource system where each item has a
               clear type, purpose, date, source, and public value.
@@ -151,17 +151,17 @@ export default function ResourcesPage() {
                 href={card.href}
                 className="group flex min-h-[360px] flex-col rounded-[1.65rem] border border-[#ead8bd] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#315b2c]">
+                <p className="section-label">
                   {card.eyebrow}
                 </p>
-                <h3 className="mt-5 font-serif text-3xl leading-tight text-[#24160f]">
+                <h3 className="mt-5 font-serif text-3xl leading-tight text-earth-950">
                   {card.title}
                 </h3>
-                <p className="mt-5 flex-1 leading-7 text-[#7b4f36]">
+                <p className="mt-5 flex-1 leading-7 text-earth-700">
                   {card.description}
                 </p>
-                <span className="mt-8 text-sm font-bold text-[#315b2c]">
-                  {card.cta} <span className="transition group-hover:translate-x-1">→</span>
+                <span className="mt-8 text-sm font-bold text-forest-800">
+                  {card.cta} <span className="transition group-hover:translate-x-1">â†’</span>
                 </span>
               </Link>
             ))}
@@ -172,13 +172,13 @@ export default function ResourcesPage() {
       <section className="border-b border-[#eadfce] bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-[0.85fr_1.15fr] lg:px-8">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-[#315b2c]">
+            <p className="section-label">
               Publishing standard
             </p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight text-[#24160f] sm:text-5xl">
+            <h2 className="mt-4 text-h2 text-earth-950">
               Every resource should make DESCF more trustworthy.
             </h2>
-            <p className="mt-6 max-w-xl leading-7 text-[#7b4f36]">
+            <p className="mt-6 max-w-xl leading-7 text-earth-700">
               The public site should not look like random content storage. It
               should behave like a serious conservation institution: careful,
               readable, verifiable, and safety-first.
@@ -189,29 +189,29 @@ export default function ResourcesPage() {
             {principles.map((item) => (
               <div
                 key={item.title}
-                className="rounded-[1.4rem] border border-[#ead8bd] bg-[#fbf8f1] p-6"
+                className="rounded-[1.4rem] border border-[#ead8bd] bg-earth-50 p-6"
               >
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#315b2c]">
+                <p className="section-label">
                   {item.label}
                 </p>
-                <h3 className="mt-4 font-serif text-2xl leading-tight text-[#24160f]">
+                <h3 className="mt-4 font-serif text-2xl leading-tight text-earth-950">
                   {item.title}
                 </h3>
-                <p className="mt-4 leading-7 text-[#7b4f36]">{item.text}</p>
+                <p className="mt-4 leading-7 text-earth-700">{item.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#fbf8f1]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
+      <section className="bg-earth-50">
+        <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="rounded-[2rem] bg-[#0b2410] p-8 text-white shadow-2xl md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:p-12">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.32em] text-[#d3a126]">
+              <p className="section-label text-gold-300">
                 Next step
               </p>
-              <h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">
+              <h2 className="mt-4 max-w-3xl text-h2">
                 Build resources slowly, but structure them correctly from day one.
               </h2>
               <p className="mt-5 max-w-2xl leading-7 text-white/84">
