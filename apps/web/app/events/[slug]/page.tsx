@@ -1,21 +1,9 @@
 ﻿import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PortableText } from '@portabletext/react'
 
-import { EventRegistrationForm } from '@/components/forms/EventRegistrationForm'
-import { ShareButtons } from '@/components/share/ShareButtons'
-import { Button } from '@/components/ui/Button'
-import { Card, CardContent } from '@/components/ui/Card'
-import { Container } from '@/components/ui/Container'
-import { Section } from '@/components/ui/Section'
-import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
-import {
-  EVENT_DETAIL_WITH_REGISTRATION_QUERY,
-  EVENT_SLUGS_QUERY,
-} from '@/lib/sanity/queries'
-import type { EventDetail } from '@/types/sanity'
 
 type PageProps = {
   params: {
@@ -23,310 +11,582 @@ type PageProps = {
   }
 }
 
-export const revalidate = 60
-
-function formatDate(date?: string): string {
-  if (!date) return 'Date to be announced'
-
-  return new Intl.DateTimeFormat('en', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(date))
+type EventRecord = {
+  _id: string
+  title?: string
+  slug?: {
+    current?: string
+  }
+  excerpt?: unknown
+  summary?: unknown
+  shortDescription?: unknown
+  description?: unknown
+  body?: unknown
+  content?: unknown
+  details?: unknown
+  date?: string
+  eventDate?: string
+  startDate?: string
+  startAt?: string
+  startDateTime?: string
+  time?: string
+  startTime?: string
+  endTime?: string
+  endAt?: string
+  endDateTime?: string
+  location?: unknown
+  venue?: unknown
+  place?: unknown
+  status?: string
+  eventStatus?: string
+  speakers?: unknown
+  registrationLink?: string
+  registrationDeadline?: string
+  deadline?: string
+  registrationCloseDate?: string
+  registrationClosesAt?: string
+  registrationForm?: unknown
 }
 
-function getStatusLabel(status?: string): string {
-  if (status === 'completed') return 'Completed'
-  return 'Upcoming'
+const SITE_URL = 'https://descf.org'
+
+const eventBySlugQuery = `*[_type == "event" && slug.current == $slug][0]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  summary,
+  shortDescription,
+  description,
+  body,
+  content,
+  details,
+  date,
+  eventDate,
+  startDate,
+  startAt,
+  startDateTime,
+  time,
+  startTime,
+  endTime,
+  endAt,
+  endDateTime,
+  location,
+  venue,
+  place,
+  status,
+  eventStatus,
+  speakers,
+  registrationLink,
+  registrationDeadline,
+  deadline,
+  registrationCloseDate,
+  registrationClosesAt,
+  registrationForm->{
+    _id,
+    title,
+    registrationTitle,
+    description,
+    deadline,
+    fields,
+    submitButtonLabel,
+    successMessage,
+    notificationEmail
+  }
+}`
+
+function eventUrl(slug: string) {
+  return `${SITE_URL}/events/${slug}`
 }
 
-function getEventDescription(event: EventDetail): string {
-  return `${event.title} - ${formatDate(event.date)}${event.location ? `, ${event.location}` : ''}.`
+async function getEvent(slug: string) {
+  return sanityFetch({
+    query: eventBySlugQuery,
+    params: { slug },
+  }) as Promise<EventRecord | null>
 }
 
-function getEventCanonicalUrl(slug: string): string {
-  return `https://www.descf.org/events/${slug}`
+function toPlainText(value: unknown): string {
+  if (!value) return ''
+
+  if (typeof value === 'string') return value
+
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => toPlainText(item))
+      .filter(Boolean)
+      .join('\n\n')
+      .trim()
+  }
+
+  if (typeof value === 'object') {
+    const item = value as Record<string, unknown>
+
+    if (typeof item.text === 'string') return item.text
+
+    if (Array.isArray(item.children)) {
+      return item.children
+        .map((child) => {
+          if (typeof child === 'string') return child
+          if (child && typeof child === 'object' && 'text' in child) {
+            return String((child as { text?: unknown }).text || '')
+          }
+          return ''
+        })
+        .join('')
+        .trim()
+    }
+
+    if (typeof item.name === 'string') return item.name
+    if (typeof item.title === 'string') return item.title
+    if (typeof item.address === 'string') return item.address
+  }
+
+  return ''
 }
 
-function EventInfoCard({
-  label,
-  value,
-}: {
-  label: string
-  value?: string
-}) {
+function compactText(value: string, maxLength: number) {
+  const text = value.replace(/\s+/g, ' ').trim()
+  if (text.length <= maxLength) return text
+  return `${text.slice(0, maxLength).replace(/\s+\S*$/, '')}...`
+}
+
+function getTitle(event: EventRecord) {
+  return event.title || 'DESCF event'
+}
+
+function getFullDescription(event: EventRecord) {
   return (
-    <div className="rounded-2xl border border-earth-200 bg-white/85 p-5 shadow-sm backdrop-blur">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-earth-500">
-        {label}
-      </p>
-      <p className="mt-2 font-serif text-xl leading-tight text-earth-950">
-        {value || 'To be announced'}
-      </p>
-    </div>
+    toPlainText(event.body) ||
+    toPlainText(event.content) ||
+    toPlainText(event.details) ||
+    toPlainText(event.description) ||
+    toPlainText(event.summary) ||
+    toPlainText(event.shortDescription) ||
+    toPlainText(event.excerpt)
   )
 }
 
-export async function generateStaticParams() {
-  const slugs = await sanityFetch<Array<{ slug: string }>>({
-    query: EVENT_SLUGS_QUERY,
-    tags: ['event'],
-  })
+function getHeroDescription(event: EventRecord) {
+  return compactText(
+    toPlainText(event.excerpt) ||
+      toPlainText(event.summary) ||
+      toPlainText(event.shortDescription) ||
+      getFullDescription(event) ||
+      'Join DESCF for a conservation-focused event designed to support public awareness, community learning, and stronger human-wildlife coexistence.',
+    260
+  )
+}
 
-  return slugs
-    .filter((item) => item.slug)
-    .map((item) => ({
-      slug: item.slug,
-    }))
+function getMetaDescription(event: EventRecord) {
+  return compactText(getHeroDescription(event), 155)
+}
+
+function getDateSource(event: EventRecord) {
+  return (
+    event.date ||
+    event.eventDate ||
+    event.startDate ||
+    event.startAt ||
+    event.startDateTime ||
+    ''
+  )
+}
+
+function makeDate(value?: string) {
+  if (!value) return null
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return null
+  return date
+}
+
+function formatLongDate(value?: string) {
+  const date = makeDate(value)
+  if (!date) return 'Date to be announced'
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date)
+}
+
+function formatDay(value?: string) {
+  const date = makeDate(value)
+  if (!date) return 'Ã¢â‚¬â€'
+
+  return new Intl.DateTimeFormat('en-US', {
+    day: '2-digit',
+  }).format(date)
+}
+
+function formatMonth(value?: string) {
+  const date = makeDate(value)
+  if (!date) return 'TBA'
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+  })
+    .format(date)
+    .toUpperCase()
+}
+
+function formatTimeFromDate(value?: string) {
+  const date = makeDate(value)
+  if (!date) return ''
+
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date)
+}
+
+function getTimeRange(event: EventRecord) {
+  if (event.time) return event.time
+  if (event.startTime && event.endTime) return `${event.startTime} Ã¢â‚¬â€œ ${event.endTime}`
+  if (event.startTime) return event.startTime
+
+  const start = formatTimeFromDate(event.startAt || event.startDateTime)
+  const end = formatTimeFromDate(event.endAt || event.endDateTime)
+
+  if (start && end) return `${start} – ${end}`
+  if (start) return start
+
+  return 'Time to be announced'
+}
+
+function getLocation(event: EventRecord) {
+  return (
+    toPlainText(event.location) ||
+    toPlainText(event.venue) ||
+    toPlainText(event.place) ||
+    'Location to be announced'
+  )
+}
+
+function getStatus(event: EventRecord) {
+  const raw = event.eventStatus || event.status || 'Upcoming'
+  return raw
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
+}
+
+function hasRegistration(event: EventRecord) {
+  return Boolean(event.registrationForm || event.registrationLink)
+}
+
+function renderParagraphs(text: string) {
+  const paragraphs = text
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+
+  if (!paragraphs.length) {
+    return (
+      <p>
+        Full event details are being prepared. This page should explain the
+        event purpose, audience, activities, learning outcome, safety note, and
+        verified partner information.
+      </p>
+    )
+  }
+
+  return paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const event = await sanityFetch<EventDetail | null>({
-    query: EVENT_DETAIL_WITH_REGISTRATION_QUERY,
-    params: {
-      slug: params.slug,
-    },
-    tags: ['event', 'registrationForm'],
-  })
+  const event = await getEvent(params.slug)
 
   if (!event) {
     return buildMetadata({
-      title: 'Event not found',
-      description: 'The requested DESCF event could not be found.',
-      canonicalUrl: getEventCanonicalUrl(params.slug),
+      title: 'Event not found | DESCF',
+      description: 'This DESCF event could not be found.',
+      canonicalUrl: eventUrl(params.slug),
     })
   }
 
   return buildMetadata({
-    title: event.title,
-    description: getEventDescription(event),
-    canonicalUrl: getEventCanonicalUrl(event.slug.current),
+    title: `${getTitle(event)} | DESCF`,
+    description: getMetaDescription(event),
+    canonicalUrl: eventUrl(params.slug),
   })
 }
 
 export default async function EventDetailPage({ params }: PageProps) {
-  const event = await sanityFetch<EventDetail | null>({
-    query: EVENT_DETAIL_WITH_REGISTRATION_QUERY,
-    params: {
-      slug: params.slug,
-    },
-    tags: ['event', 'registrationForm'],
-  })
+  const event = await getEvent(params.slug)
 
   if (!event) {
     notFound()
   }
 
-  const eventJsonLd = buildBreadcrumbJSONLD([
-    { name: 'Home', url: 'https://www.descf.org' },
-    { name: 'Events', url: 'https://www.descf.org/events' },
-    {
-      name: event.title,
-      url: getEventCanonicalUrl(event.slug.current),
-    },
-  ])
-
-  const statusLabel = getStatusLabel(event.status)
+  const title = getTitle(event)
+  const slug = event.slug?.current || params.slug
+  const url = eventUrl(slug)
+  const dateSource = getDateSource(event)
+  const longDate = formatLongDate(dateSource)
+  const day = formatDay(dateSource)
+  const month = formatMonth(dateSource)
+  const timeRange = getTimeRange(event)
+  const location = getLocation(event)
+  const status = getStatus(event)
+  const heroDescription = getHeroDescription(event)
+  const fullDescription = getFullDescription(event)
+  const registrationAvailable = hasRegistration(event)
+  const registrationTarget = registrationAvailable ? '#registration' : '/contact'
+  const encodedUrl = encodeURIComponent(url)
+  const encodedTitle = encodeURIComponent(title)
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
-      />
+    <main>
+      <section className="border-b border-earth-200 bg-[radial-gradient(circle_at_top_right,rgba(49,94,52,0.10),transparent_32%),linear-gradient(135deg,#fbf8ef_0%,#fffdf8_52%,#eef4ea_100%)]">
+        <div className="mx-auto max-w-6xl px-6 py-12 lg:py-14">
+          <nav className="mb-8 text-sm text-earth-700" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-leaf-800">
+              Home
+            </Link>
+            <span className="px-2">/</span>
+            <Link href="/events" className="hover:text-leaf-800">
+              Events
+            </Link>
+            <span className="px-2">/</span>
+            <span className="text-earth-950">{title}</span>
+          </nav>
 
-      <main id="main-content" className="bg-earth-50">
-        <section className="relative overflow-hidden border-b border-earth-200 bg-gradient-to-br from-[#f7f3ec] via-white to-[#dfe9dc]">
-          <div className="pointer-events-none absolute -left-20 top-24 h-72 w-72 rounded-full bg-forest-200/25 blur-3xl" />
-          <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-amber-100/55 blur-3xl" />
+          <div className="grid gap-9 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-center">
+            <div className="max-w-3xl">
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.38em] text-leaf-800">
+                {status} event
+              </p>
 
-          <Container className="relative section-padding-sm">
-            <nav aria-label="Breadcrumb" className="mb-8 text-sm text-earth-500">
-              <ol className="flex flex-wrap items-center gap-2">
-                <li>
-                  <a href="/" className="hover:text-forest-800">
-                    Home
-                  </a>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li>
-                  <a href="/events" className="hover:text-forest-800">
-                    Events
-                  </a>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li className="text-earth-700" aria-current="page">
-                  {event.title}
-                </li>
-              </ol>
-            </nav>
+              <h1 className="max-w-3xl font-serif text-5xl leading-[0.98] tracking-[-0.03em] text-earth-950 sm:text-6xl lg:text-[4.8rem]">
+                {title}
+              </h1>
 
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-              <div className="max-w-4xl">
-                <p className="section-label mb-5">{statusLabel} event</p>
+              <p className="mt-6 max-w-2xl text-[1.05rem] leading-8 text-earth-800">
+                {heroDescription}
+              </p>
 
-                <h1 className="font-serif text-h1 leading-tight text-earth-950">
-                  {event.title}
-                </h1>
-
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-earth-700">
-                  Join DESCF for a conservation-focused event designed to support
-                  public awareness, community learning, and stronger
-                  human-wildlife coexistence.
-                </p>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  {event.registrationLink && (
-                    <Button href={event.registrationLink} variant="primary">
-                      Register now
-                    </Button>
-                  )}
-
-                  <Button href="/events" variant="secondary">
-                    View all events
-                  </Button>
-                </div>
-              </div>
-
-              <div className="rounded-[2rem] border border-white/80 bg-white/70 p-5 shadow-xl shadow-earth-900/5 backdrop-blur">
-                <p className="section-label mb-4">Event snapshot</p>
-                <div className="space-y-4">
-                  <EventInfoCard label="Date" value={formatDate(event.date)} />
-                  <EventInfoCard label="Time" value={event.time} />
-                  <EventInfoCard label="Location" value={event.location} />
-                </div>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <a
+                  href={registrationTarget}
+                  className="rounded-full bg-leaf-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-leaf-800"
+                >
+                  {registrationAvailable ? 'Register now' : 'Contact DESCF'}
+                </a>
+                <Link
+                  href="/events"
+                  className="rounded-full border border-leaf-700 px-6 py-3 text-sm font-bold text-leaf-900 transition hover:bg-leaf-50"
+                >
+                  View all events
+                </Link>
               </div>
             </div>
-          </Container>
-        </section>
 
-        <Section>
-          <Container>
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
-              <article className="space-y-6">
-                <Card>
-                  <CardContent>
-                    <p className="section-label mb-3">About this event</p>
-                    <h2 className="font-serif text-3xl text-earth-950">
-                      Event details
-                    </h2>
+            <aside className="rounded-[1.75rem] border border-earth-200 bg-white/90 p-5 shadow-lg shadow-earth-200/50 backdrop-blur">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.32em] text-leaf-800">
+                Event snapshot
+              </p>
 
-                    {event.description && event.description.length > 0 ? (
-                      <div className="prose prose-earth mt-6 max-w-none">
-                        <PortableText value={event.description} />
-                      </div>
-                    ) : (
-                      <p className="mt-4 text-body leading-8 text-earth-700">
-                        Details for this event will be updated soon.
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
-
-                {event.speakers && event.speakers.length > 0 && (
-                  <Card>
-                    <CardContent>
-                      <p className="section-label mb-3">People</p>
-                      <h2 className="font-serif text-3xl text-earth-950">
-                        Speakers / facilitators
-                      </h2>
-
-                      <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                        {event.speakers.map((speaker) => (
-                          <li
-                            key={speaker}
-                            className="rounded-2xl border border-earth-200 bg-earth-50 px-4 py-3 text-body-sm text-earth-700"
-                          >
-                            {speaker}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                )}
-              </article>
-
-              <aside className="space-y-6">
-                <ShareButtons
-                  title={event.title}
-                  description={getEventDescription(event)}
-                  label="Share this event"
-                />
-
-                {event.registrationForm ? (
-                  <EventRegistrationForm
-                    form={event.registrationForm}
-                    eventTitle={event.title}
-                  />
-                ) : (
-                  <Card>
-                    <CardContent>
-                      <p className="section-label mb-3">Registration</p>
-                      <h2 className="font-serif text-2xl text-earth-950">
-                        Registration information
-                      </h2>
-                      <p className="mt-3 text-body-sm leading-7 text-earth-700">
-                        Registration is not currently open through the website.
-                      </p>
-
-                      {event.registrationLink && (
-                        <div className="mt-5">
-                          <Button href={event.registrationLink} variant="primary">
-                            Open external registration
-                          </Button>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-
-                <Card>
-                  <CardContent>
-                    <p className="section-label mb-3">Need help?</p>
-                    <h2 className="font-serif text-2xl text-earth-950">
-                      Questions about this event?
-                    </h2>
-                    <p className="mt-3 text-body-sm leading-7 text-earth-700">
-                      For event-related questions, contact DESCF through the
-                      contact page.
-                    </p>
-                    <div className="mt-5">
-                      <Button href="/contact" variant="secondary">
-                        Contact DESCF
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </aside>
-            </div>
-          </Container>
-        </Section>
-
-        <section className="border-t border-earth-200 bg-white">
-          <Container className="py-12">
-            <div className="rounded-[2rem] border border-earth-200 bg-gradient-to-br from-forest-50 via-white to-earth-50 p-8">
-              <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-                <div>
-                  <p className="section-label mb-3">Stay connected</p>
-                  <h2 className="font-serif text-3xl text-earth-950">
-                    Explore more DESCF events and activities
-                  </h2>
-                  <p className="mt-3 max-w-2xl text-body leading-7 text-earth-700">
-                    Follow upcoming awareness, conservation, field learning, and
-                    community engagement activities from DESCF.
+              <div className="space-y-3">
+                <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-earth-600">
+                    Date
+                  </p>
+                  <p className="mt-2 font-serif text-[1.35rem] leading-snug text-earth-950">
+                    {longDate}
                   </p>
                 </div>
 
-                <Button href="/events" variant="primary">
-                  View events
-                </Button>
+                <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-earth-600">
+                    Time
+                  </p>
+                  <p className="mt-2 font-serif text-[1.35rem] leading-snug text-earth-950">
+                    {timeRange}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-earth-600">
+                    Location
+                  </p>
+                  <p className="mt-2 font-serif text-[1.35rem] leading-snug text-earth-950">
+                    {location}
+                  </p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+<section className="border-b border-earth-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-5">
+          <div className="grid gap-3 rounded-[1.75rem] border border-earth-200 bg-earth-50/80 p-3 sm:grid-cols-2 lg:grid-cols-[150px_1fr_1fr_1.2fr_150px]">
+            <div className="flex items-center gap-4 rounded-2xl bg-white p-4">
+              <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border border-leaf-200 bg-leaf-50 text-center">
+                <span className="block font-serif text-2xl leading-none text-leaf-900">
+                  {day}
+                </span>
+                <span className="block text-[10px] font-bold uppercase tracking-widest text-leaf-800">
+                  {month}
+                </span>
               </div>
             </div>
-          </Container>
-        </section>
-      </main>
-    </>
+
+            <div className="rounded-2xl bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-earth-600">
+                Date
+              </p>
+              <p className="mt-1 font-bold text-earth-950">{longDate}</p>
+            </div>
+
+            <div className="rounded-2xl bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-earth-600">
+                Time
+              </p>
+              <p className="mt-1 font-bold text-earth-950">{timeRange}</p>
+            </div>
+
+            <div className="rounded-2xl bg-white p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-earth-600">
+                Location
+              </p>
+              <p className="mt-1 font-bold text-earth-950">{location}</p>
+            </div>
+
+            <a
+              href={registrationTarget}
+              className="grid place-items-center rounded-2xl bg-leaf-700 px-5 py-4 text-center text-sm font-bold text-white transition hover:bg-leaf-800"
+            >
+              {registrationAvailable ? 'Join' : 'Contact'}
+            </a>
+          </div>
+        </div>
+      </section>
+
+<section className="bg-earth-50">
+        <div className="mx-auto grid max-w-6xl gap-7 px-6 py-10 lg:grid-cols-[minmax(0,760px)_300px] lg:items-start">
+          <div className="space-y-6">
+            <article className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-sm lg:p-8">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-leaf-800">
+                About this event
+              </p>
+              <h2 className="font-serif text-[2.15rem] leading-tight tracking-[-0.02em] text-earth-950">
+                Event details
+              </h2>
+
+              <div className="mt-6 space-y-5 text-[1.03rem] leading-8 text-earth-850">
+                {renderParagraphs(fullDescription)}
+              </div>
+            </article>
+
+            
+
+          </div>
+
+          <aside className="space-y-4 lg:sticky lg:top-24">
+            <section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-sm">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
+                Share
+              </p>
+              <h2 className="font-serif text-2xl leading-tight text-earth-950">
+                Share
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-earth-700">
+                Share this DESCF event with people who may benefit from
+                conservation learning.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
+                >
+                  Facebook
+                </a>
+                <a
+                  href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
+                >
+                  WhatsApp
+                </a>
+                <a
+                  href={url}
+                  className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
+                >
+                  Open link
+                </a>
+              </div>
+            </section>
+
+<section className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-amber-700">
+                Safety note
+              </p>
+              <h2 className="font-serif text-2xl leading-tight text-earth-950">
+                Education first, no risky handling.
+              </h2>
+              <p className="mt-4 text-sm leading-6 text-earth-700">
+                DESCF event content should support public education and
+                conservation awareness. It should not encourage risky wildlife
+                handling, catching, crowding, or disturbance.
+              </p>
+            </section>
+
+<section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-sm">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
+                Need help?
+              </p>
+              <h2 className="font-serif text-2xl leading-tight text-earth-950">
+                Questions about this event?
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-earth-700">
+                For event-related questions, contact DESCF through the contact
+                page.
+              </p>
+              <Link
+                href="/contact"
+                className="mt-5 inline-flex rounded-full border border-leaf-700 px-5 py-2.5 text-sm font-bold text-leaf-900 hover:bg-leaf-50"
+              >
+                Contact DESCF
+              </Link>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+<section className="bg-earth-50">
+        <div className="mx-auto max-w-6xl px-6 py-10">
+          <div className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-sm lg:flex lg:items-center lg:justify-between lg:p-8">
+            <div>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-leaf-800">
+                Stay connected
+              </p>
+              <h2 className="font-serif text-3xl leading-tight text-earth-950">
+                More DESCF events
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-earth-700">
+                Follow upcoming awareness, conservation, field learning, and
+                community engagement activities from DESCF.
+              </p>
+            </div>
+
+            <Link
+              href="/events"
+              className="mt-6 inline-flex rounded-full bg-leaf-700 px-6 py-3 text-sm font-bold text-white hover:bg-leaf-800 lg:mt-0"
+            >
+              View events
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }
