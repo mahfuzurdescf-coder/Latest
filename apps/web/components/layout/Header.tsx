@@ -15,8 +15,8 @@ interface HeaderProps {
 const DEFAULT_NAV = [
   { label: 'Organisation', href: '/about' },
   { label: 'Current Work', href: '/current-work' },
-  { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
-  { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
+  { label: 'à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾', href: '/prokriti-kotha' },
+  { label: 'à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª', href: '/bangladesh-wildlife/snakes' },
   { label: 'Resources', href: '/evidence-resources' },
   { label: 'Contact', href: '/contact' },
 ]
@@ -71,7 +71,7 @@ export function Header({ settings }: HeaderProps) {
                   href={link.href}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                    'whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                     active
                       ? 'bg-forest-50 text-forest-800'
                       : 'text-earth-600 hover:bg-earth-100 hover:text-earth-950',

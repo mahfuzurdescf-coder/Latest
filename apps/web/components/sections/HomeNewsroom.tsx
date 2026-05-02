@@ -12,19 +12,21 @@ interface HomeNewsroomProps {
 }
 
 export function HomeNewsroom({ posts }: HomeNewsroomProps) {
+  if (!posts.length) return null
+
   return (
     <Section className="bg-forest-50">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            eyebrow="প্রকৃতি কথা"
+            eyebrow="à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾"
             title="A calmer editorial space for nature, wildlife, and coexistence"
-            description="Read selected stories, field notes, reflections, and conservation writing from DESCF’s nature-focused editorial space."
+            description="Read selected stories, field notes, reflections, and conservation writing from DESCFâ€™s nature-focused editorial space."
             className="mb-0 max-w-3xl"
           />
 
           <Button href="/prokriti-kotha" variant="secondary">
-            Read প্রকৃতি কথা
+            Read à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾
           </Button>
         </div>
 
@@ -41,9 +43,9 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
         ) : (
           <div className="mt-10">
             <EmptyState
-              title="প্রকৃতি কথা is being prepared"
+              title="à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾ is being prepared"
               description="Nature stories, field notes, and conservation reflections will appear here once they are added in the CMS."
-              actionLabel="Visit প্রকৃতি কথা"
+              actionLabel="Visit à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾"
               actionHref="/prokriti-kotha"
             />
           </div>
@@ -51,7 +53,7 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
 
         <div className="mt-8 text-sm text-earth-600">
           <Link href="/prokriti-kotha" className="font-semibold text-forest-700 hover:text-forest-950">
-            Go to প্রকৃতি কথা →
+            Go to à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾ â†’
           </Link>
         </div>
       </Container>
