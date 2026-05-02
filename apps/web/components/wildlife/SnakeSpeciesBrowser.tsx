@@ -112,6 +112,11 @@ function SpeciesCard({ species }: { species: SpeciesProfileCard }) {
               </span>
             )}
           </div>
+        
+
+          <div className="mt-6 inline-flex text-sm font-semibold text-forest-800 transition group-hover:text-forest-950">
+            View species profile <span aria-hidden="true" className="ml-1">-&gt;</span>
+          </div>
         </div>
       </Link>
     </article>
