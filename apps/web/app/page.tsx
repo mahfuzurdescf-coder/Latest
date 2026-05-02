@@ -1,6 +1,7 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 import { HomeCTA } from '@/components/sections/HomeCTA'
+import { HomeGatewaySection } from '@/components/sections/HomeGatewaySection'
 import { HomeHero } from '@/components/sections/HomeHero'
 import { HomeTrustStrip } from '@/components/sections/HomeTrustStrip'
 import { HomeNewsroom } from '@/components/sections/HomeNewsroom'
@@ -85,6 +86,7 @@ export default async function HomePage() {
 
       <main id="main-content">
         <HomeHero curation={curation} />
+        <HomeGatewaySection />
         <HomeTrustStrip />
         <HomeProgrammes programmes={programmes} />
         <HomeNewsroom posts={uniquePosts} />
