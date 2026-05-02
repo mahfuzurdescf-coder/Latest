@@ -19,14 +19,14 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            eyebrow="à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾"
+            eyebrow="Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾"
             title="A calmer editorial space for nature, wildlife, and coexistence"
-            description="Read selected stories, field notes, reflections, and conservation writing from DESCFâ€™s nature-focused editorial space."
+            description="Read selected stories, field notes, reflections, and conservation writing from DESCFÃ¢â‚¬â„¢s nature-focused editorial space."
             className="mb-0 max-w-3xl"
           />
 
           <Button href="/prokriti-kotha" variant="secondary">
-            Read à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾
+            Read Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾
           </Button>
         </div>
 
@@ -43,9 +43,9 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
         ) : (
           <div className="mt-10">
             <EmptyState
-              title="à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾ is being prepared"
+              title="Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾ is being prepared"
               description="Nature stories, field notes, and conservation reflections will appear here once they are added in the CMS."
-              actionLabel="Visit à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾"
+              actionLabel="Visit Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾"
               actionHref="/prokriti-kotha"
             />
           </div>
@@ -53,7 +53,7 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
 
         <div className="mt-8 text-sm text-earth-600">
           <Link href="/prokriti-kotha" className="font-semibold text-forest-700 hover:text-forest-950">
-            Go to à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾ â†’
+            Go to Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾ Ã¢â€ â€™
           </Link>
         </div>
       </Container>

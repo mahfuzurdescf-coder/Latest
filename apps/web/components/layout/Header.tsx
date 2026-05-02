@@ -15,8 +15,8 @@ interface HeaderProps {
 const DEFAULT_NAV = [
   { label: 'Organisation', href: '/about' },
   { label: 'Current Work', href: '/current-work' },
-  { label: 'à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾', href: '/prokriti-kotha' },
-  { label: 'à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª', href: '/bangladesh-wildlife/snakes' },
+  { label: 'Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾', href: '/prokriti-kotha' },
+  { label: 'Ã Â¦Â¬Ã Â¦Â¾Ã Â¦â€šÃ Â¦Â²Ã Â¦Â¾Ã Â¦Â¦Ã Â§â€¡Ã Â¦Â¶Ã Â§â€¡Ã Â¦Â° Ã Â¦Â¸Ã Â¦Â¾Ã Â¦Âª', href: '/bangladesh-wildlife/snakes' },
   { label: 'Resources', href: '/evidence-resources' },
   { label: 'Contact', href: '/contact' },
 ]
