@@ -8,9 +8,9 @@
   :root {
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-serif: 'Lora', Georgia, serif;
-    --brand-primary: #406034;
-    --brand-primary-dark: #293f24;
-    --brand-earth: #faf8f3;
+    --brand-primary: #31512B;
+    --brand-primary-dark: #172015;
+    --brand-earth: #F8F5EA;
   }
 
   html {
@@ -20,6 +20,7 @@
 
   body {
     @apply min-h-screen bg-earth-50 text-earth-800 font-sans;
+    font-size: 16.5px;
   }
 
   a {
@@ -48,35 +49,35 @@
   }
 
   .section-padding {
-    @apply py-16 md:py-20 lg:py-24;
+    @apply py-16 md:py-24 lg:py-28;
   }
 
   .section-padding-sm {
-    @apply py-10 md:py-14 lg:py-16;
+    @apply py-12 md:py-16 lg:py-20;
   }
 
   .section-label {
-    @apply text-label font-semibold uppercase tracking-widest text-forest-700;
+    @apply text-label font-semibold uppercase tracking-[0.18em] text-forest-700;
   }
 
   .card-base {
-    @apply overflow-hidden rounded-2xl border border-earth-200 bg-white shadow-card transition duration-200 hover:-translate-y-0.5 hover:shadow-card-lg;
+    @apply overflow-hidden rounded-3xl border border-earth-200/80 bg-white shadow-card transition duration-200 hover:-translate-y-0.5 hover:border-forest-200 hover:shadow-card-lg;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-forest-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-forest-800;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-forest-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-forest-800;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-forest-700 px-5 py-2.5 text-sm font-semibold text-forest-800 transition-colors hover:bg-forest-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-forest-700 px-5 py-2.5 text-sm font-semibold text-forest-800 transition-colors hover:bg-forest-50;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-earth-700 transition-colors hover:bg-earth-100 hover:text-earth-950;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-earth-700 transition-colors hover:bg-earth-100 hover:text-earth-950;
   }
 
   .btn-cta {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-bark-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-bark-600;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-bark-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-bark-600;
   }
 
   .badge-current {
