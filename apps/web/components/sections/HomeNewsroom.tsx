@@ -3,9 +3,10 @@ import Link from 'next/link'
 import { ArticleCard } from '@/components/cards'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
-import { EmptyState } from '@/components/ui/EmptyState'
 import { Section, SectionHeader } from '@/components/ui/Section'
 import type { PostCard } from '@/types/sanity'
+
+const PROKRITI = '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be'
 
 interface HomeNewsroomProps {
   posts: PostCard[]
@@ -19,41 +20,30 @@ export function HomeNewsroom({ posts }: HomeNewsroomProps) {
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            eyebrow="ÃƒÂ Ã‚Â¦Ã‚ÂªÃƒÂ Ã‚Â§Ã‚ÂÃƒÂ Ã‚Â¦Ã‚Â°ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â§Ã†â€™ÃƒÂ Ã‚Â¦Ã‚Â¤ÃƒÂ Ã‚Â¦Ã‚Â¿ ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¦Ã‚Â¥ÃƒÂ Ã‚Â¦Ã‚Â¾"
+            eyebrow={PROKRITI}
             title="A calmer editorial space for nature, wildlife, and coexistence"
-            description="Read selected stories, field notes, reflections, and conservation writing from DESCFÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s nature-focused editorial space."
+            description="Read selected stories, field notes, reflections, and conservation writing from DESCF's nature-focused editorial space."
             className="mb-0 max-w-3xl"
           />
 
           <Button href="/prokriti-kotha" variant="secondary">
-            Read ÃƒÂ Ã‚Â¦Ã‚ÂªÃƒÂ Ã‚Â§Ã‚ÂÃƒÂ Ã‚Â¦Ã‚Â°ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â§Ã†â€™ÃƒÂ Ã‚Â¦Ã‚Â¤ÃƒÂ Ã‚Â¦Ã‚Â¿ ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¦Ã‚Â¥ÃƒÂ Ã‚Â¦Ã‚Â¾
+            Read {PROKRITI}
           </Button>
         </div>
 
-        {posts.length > 0 ? (
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {posts.slice(0, 3).map((post) => (
-              <ArticleCard
-                key={post._id}
-                post={post}
-                className="border-forest-100 bg-white/90 shadow-card hover:border-forest-300"
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="mt-10">
-            <EmptyState
-              title="ÃƒÂ Ã‚Â¦Ã‚ÂªÃƒÂ Ã‚Â§Ã‚ÂÃƒÂ Ã‚Â¦Ã‚Â°ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â§Ã†â€™ÃƒÂ Ã‚Â¦Ã‚Â¤ÃƒÂ Ã‚Â¦Ã‚Â¿ ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¦Ã‚Â¥ÃƒÂ Ã‚Â¦Ã‚Â¾ is being prepared"
-              description="Nature stories, field notes, and conservation reflections will appear here once they are added in the CMS."
-              actionLabel="Visit ÃƒÂ Ã‚Â¦Ã‚ÂªÃƒÂ Ã‚Â§Ã‚ÂÃƒÂ Ã‚Â¦Ã‚Â°ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â§Ã†â€™ÃƒÂ Ã‚Â¦Ã‚Â¤ÃƒÂ Ã‚Â¦Ã‚Â¿ ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¦Ã‚Â¥ÃƒÂ Ã‚Â¦Ã‚Â¾"
-              actionHref="/prokriti-kotha"
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {posts.slice(0, 3).map((post) => (
+            <ArticleCard
+              key={post._id}
+              post={post}
+              className="border-forest-100 bg-white/90 shadow-card hover:border-forest-300"
             />
-          </div>
-        )}
+          ))}
+        </div>
 
         <div className="mt-8 text-sm text-earth-600">
           <Link href="/prokriti-kotha" className="font-semibold text-forest-700 hover:text-forest-950">
-            Go to ÃƒÂ Ã‚Â¦Ã‚ÂªÃƒÂ Ã‚Â§Ã‚ÂÃƒÂ Ã‚Â¦Ã‚Â°ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â§Ã†â€™ÃƒÂ Ã‚Â¦Ã‚Â¤ÃƒÂ Ã‚Â¦Ã‚Â¿ ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¦Ã‚Â¥ÃƒÂ Ã‚Â¦Ã‚Â¾ ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢
+            Go to {PROKRITI} <span aria-hidden="true">-&gt;</span>
           </Link>
         </div>
       </Container>
