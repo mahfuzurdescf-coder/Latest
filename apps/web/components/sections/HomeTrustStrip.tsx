@@ -2,47 +2,59 @@ import { Container } from "@/components/ui/Container"
 
 const pillars = [
   {
-    label: "Research-informed",
-    title: "Conservation evidence",
+    label: "Coexistence",
+    title: "Reducing fear, improving response",
     description:
-      "Field learning, documentation, and ecological knowledge guide DESCF's conservation communication.",
+      "DESCF works to replace panic and misinformation with practical awareness, safer behaviour, and respect for wildlife.",
   },
   {
-    label: "Community-centred",
-    title: "Public awareness",
+    label: "Knowledge",
+    title: "Field-based conservation learning",
     description:
-      "DESCF promotes practical awareness to reduce fear, misinformation, and harmful responses to wildlife.",
+      "Observation, documentation, ecological education, and species learning help make conservation more grounded and useful.",
   },
   {
-    label: "Coexistence-focused",
-    title: "People and nature",
+    label: "Communication",
+    title: "Making nature understandable",
     description:
-      "The foundation supports safer relationships between communities, snakes, and broader biodiversity.",
+      "DESCF connects science, public education, media awareness, and storytelling so people can understand biodiversity better.",
   },
 ]
 
 export function HomeTrustStrip() {
   return (
     <section
-      aria-label="DESCF conservation priorities"
-      className="border-b border-earth-200 bg-[#fbf8f0]"
+      aria-label="Why DESCF exists"
+      className="border-b border-earth-200 bg-white"
     >
-      <Container className="py-8 sm:py-10">
-        <div className="grid gap-4 md:grid-cols-3">
+      <Container className="py-16 md:py-20 lg:py-24">
+        <div className="mb-10 max-w-3xl">
+          <p className="section-label mb-3">Why DESCF exists</p>
+          <h2 className="font-serif text-h2 text-earth-950">
+            Conservation becomes stronger when people understand nature before fearing it.
+          </h2>
+          <p className="mt-4 max-w-2xl text-body text-earth-600">
+            DESCF’s work is built around a simple institutional purpose: make biodiversity
+            knowledge more accessible, reduce harmful responses to wildlife, and support
+            coexistence through education and field-based conservation communication.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
           {pillars.map((pillar) => (
             <article
               key={pillar.title}
-              className="rounded-2xl border border-earth-200/80 bg-white/75 p-5 shadow-sm transition duration-200 hover:border-forest-300 hover:bg-white"
+              className="rounded-3xl border border-earth-200/80 bg-earth-50 p-6 shadow-card transition duration-200 hover:-translate-y-0.5 hover:border-forest-200 hover:bg-white hover:shadow-card-lg"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-forest-700">
+              <p className="text-label font-semibold uppercase tracking-[0.18em] text-forest-700">
                 {pillar.label}
               </p>
 
-              <h2 className="mt-3 font-serif text-2xl leading-tight text-earth-950">
+              <h3 className="mt-4 font-serif text-2xl leading-tight text-earth-950">
                 {pillar.title}
-              </h2>
+              </h3>
 
-              <p className="mt-3 text-sm leading-6 text-earth-700">
+              <p className="mt-4 text-body-sm leading-7 text-earth-600">
                 {pillar.description}
               </p>
             </article>
