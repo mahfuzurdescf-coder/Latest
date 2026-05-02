@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 
+const SNAKES_BD = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
+
 const guidePoints = [
   {
     label: 'Identification',
@@ -12,13 +14,13 @@ const guidePoints = [
     label: 'Safety',
     title: 'Awareness without panic',
     description:
-      'The guide is designed for public education, safer response, and coexistenceâ€”not snake handling or risky behaviour.',
+      'The guide is designed for public education, safer response, and coexistence - not snake handling or risky behaviour.',
   },
   {
     label: 'Field guide',
     title: 'A growing database for Bangladesh',
     description:
-      'DESCFâ€™s snake section can grow into a structured, searchable field-guide style resource for students and nature learners.',
+      "DESCF's snake section can grow into a structured, searchable field-guide style resource for students and nature learners.",
   },
 ]
 
@@ -30,8 +32,8 @@ export function HomeSnakeGuideSection() {
       <Container className="relative py-16 md:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
-            <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-              à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª
+            <p className="text-sm font-semibold tracking-normal text-bark-300">
+              {SNAKES_BD}
             </p>
 
             <h2 className="mt-4 font-serif text-h2 leading-tight text-white">
@@ -39,7 +41,7 @@ export function HomeSnakeGuideSection() {
             </h2>
 
             <p className="mt-5 max-w-2xl text-body leading-8 text-forest-100">
-              DESCFâ€™s snake database should feel different from the institutional pages:
+              DESCF&apos;s snake database should feel different from the institutional pages:
               darker, focused, field-guide inspired, and built around learning, safety,
               and respect for wildlife.
             </p>
