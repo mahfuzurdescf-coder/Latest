@@ -11,7 +11,7 @@ const gateways = [
     label: 'Organisation Portfolio',
     title: 'DESCF as an institution',
     description:
-      "Explore DESCF's mission, current work, programmes, governance, leadership, and collaboration pathways.",
+      "Explore DESCF's mission, current work, programmes, governance, team, and collaboration pathways.",
     href: '/about',
     cta: 'Explore organisation',
     cardClass: 'border-forest-200 bg-white text-earth-950',
@@ -96,3 +96,4 @@ export function HomeGatewaySection() {
     </section>
   )
 }
+

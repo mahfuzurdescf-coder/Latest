@@ -1,4 +1,4 @@
-﻿import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseBody } from 'next-sanity/webhook'
 
@@ -167,7 +167,7 @@ export async function POST(request: NextRequest) {
 
       case 'teamMember': {
         revalidateTag('teamMember')
-        revalidatePath('/leadership')
+        revalidatePath('/team')
         revalidatePath('/about')
         break
       }
@@ -220,5 +220,6 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
 
 

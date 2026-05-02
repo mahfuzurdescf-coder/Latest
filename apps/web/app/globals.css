@@ -115,3 +115,27 @@
     display: none;
   }
 }
+
+/* Event detail registration CTA polish */
+a[href="#registration"],
+button[data-registration-cta],
+.event-registration-cta {
+  background: #315e34 !important;
+  color: #ffffff !important;
+  border: 1px solid #315e34 !important;
+  box-shadow: 0 12px 26px rgba(49, 94, 52, 0.18) !important;
+}
+
+a[href="#registration"]:hover,
+button[data-registration-cta]:hover,
+.event-registration-cta:hover {
+  background: #244928 !important;
+  color: #ffffff !important;
+  border-color: #244928 !important;
+}
+
+a[href="#registration"] *,
+button[data-registration-cta] *,
+.event-registration-cta * {
+  color: #ffffff !important;
+}

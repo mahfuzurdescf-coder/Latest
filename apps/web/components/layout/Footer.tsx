@@ -7,13 +7,26 @@ interface FooterProps {
   settings: SiteSettings
 }
 
+
+function getFooterLabel(link: { label?: string; href?: string }) {
+  if (link.href === '/prakriti-kotha' || link.href === '/prokriti-kotha') {
+    return '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be'
+  }
+
+  if (link.href === '/bangladesher-sap') {
+    return '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
+  }
+
+  return link.label
+}
+
 const FOOTER_SECTIONS = [
   {
     title: 'Organisation',
     links: [
       { label: 'About DESCF', href: '/about' },
       { label: 'Mission & Vision', href: '/mission' },
-      { label: 'Leadership', href: '/leadership' },
+      { label: 'Team', href: '/team' },
       { label: 'Governance', href: '/governance' },
     ],
   },
@@ -30,9 +43,9 @@ const FOOTER_SECTIONS = [
     title: 'Sections',
     links: [
       { label: 'Newsroom', href: '/newsroom' },
-      { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
+      { label: 'à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾', href: '/prokriti-kotha' },
       { label: 'Bangladesh Wildlife', href: '/bangladesh-wildlife' },
-      { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
+      { label: 'à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª', href: '/bangladesh-wildlife/snakes' },
       { label: 'Reports & Publications', href: '/reports' },
       { label: 'Evidence & Resources', href: '/evidence-resources' },
       { label: 'Media', href: '/media' },
@@ -142,7 +155,7 @@ export function Footer({ settings }: FooterProps) {
                         href={link.href}
                         className="text-sm text-earth-100/80 transition-colors hover:text-white"
                       >
-                        {link.label}
+                        {getFooterLabel(link)}
                       </Link>
                     </li>
                   ))}

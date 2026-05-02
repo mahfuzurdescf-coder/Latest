@@ -282,44 +282,75 @@ export function EventCard({ event, className }: EventCardProps) {
   const day = date.toLocaleDateString('en-GB', { day: '2-digit' })
   const month = date.toLocaleDateString('en-GB', { month: 'short' })
   const year = date.toLocaleDateString('en-GB', { year: 'numeric' })
+  const isUpcoming = event.status === 'upcoming'
+  const detailHref = `/events/${event.slug.current}`
+  const registerHref = `${detailHref}#registration`
 
   return (
-    <Link
-      href={`/events/${event.slug.current}`}
+    <article
       className={cn(
-        'card-base group flex gap-4 p-5 transition duration-200 hover:-translate-y-0.5 hover:border-forest-300 hover:shadow-card',
+        'card-base group flex flex-col gap-5 p-5 transition duration-200 hover:-translate-y-0.5 hover:border-forest-300 hover:shadow-card sm:flex-row sm:items-center',
         className,
       )}
     >
-      <div className="flex h-14 w-14 flex-shrink-0 flex-col items-center justify-center rounded-xl border border-forest-200 bg-forest-50">
-        <span className="text-xl font-medium leading-none text-forest-900">{day}</span>
+      <div className="flex h-16 w-16 flex-shrink-0 flex-col items-center justify-center rounded-xl border border-forest-200 bg-forest-50">
+        <span className="text-2xl font-medium leading-none text-forest-900">{day}</span>
         <span className="mt-0.5 text-caption uppercase tracking-wider text-forest-600">{month}</span>
       </div>
 
       <div className="min-w-0 flex-1">
-        <div className="mb-1 flex items-center gap-2">
+        <div className="mb-2 flex flex-wrap items-center gap-2">
           <span
             className={cn(
               'rounded-md px-2 py-0.5 text-label',
-              event.status === 'upcoming'
+              isUpcoming
                 ? 'border border-forest-200 bg-forest-50 text-forest-700'
                 : 'bg-earth-100 text-earth-500',
             )}
           >
-            {event.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+            {isUpcoming ? 'Upcoming' : 'Completed'}
           </span>
-          <span className="text-caption text-earth-400">{year}</span>
+
+          <span className="rounded-md border border-earth-200 bg-earth-50 px-2 py-0.5 text-label text-earth-600">
+            {year}
+          </span>
+
+          {event.time ? (
+            <span className="rounded-md border border-earth-200 bg-earth-50 px-2 py-0.5 text-label text-earth-600">
+              {event.time}
+            </span>
+          ) : null}
+
+          {isUpcoming ? (
+            <span className="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-label text-amber-800">
+              Registration open
+            </span>
+          ) : null}
         </div>
 
-        <h3 className="text-body font-medium leading-snug text-earth-950 transition-colors group-hover:text-forest-800">
-          {event.title}
+        <h3 className="font-serif text-2xl leading-tight text-earth-950">
+          <Link href={detailHref} className="transition hover:text-forest-700">
+            {event.title}
+          </Link>
         </h3>
 
-        {event.location && (
-          <p className="mt-1 text-caption text-earth-500">{event.location}</p>
-        )}
+        {event.location ? (
+          <p className="mt-2 text-body-sm text-earth-600">{event.location}</p>
+        ) : null}
       </div>
-    </Link>
+
+      <div className="flex flex-wrap gap-2 sm:flex-col sm:items-stretch">
+        <Link href={detailHref} className="btn-secondary px-4 py-2 text-xs">
+          View event
+        </Link>
+
+        {isUpcoming ? (
+          <Link href={registerHref} className="btn-primary px-4 py-2 text-xs">
+            Register
+          </Link>
+        ) : null}
+      </div>
+    </article>
   )
 }
 

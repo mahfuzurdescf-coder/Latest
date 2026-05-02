@@ -37,7 +37,16 @@ export const SITE_SETTINGS_QUERY = `
     siteTitle, tagline, tagline_bn,
     logo{${IMAGE_FRAGMENT}},
     navLinks[]{_key, label, href},
-    footerLinks[]{_key, label, href},
+    footerLinks[]{
+    _key,
+    href,
+    "label": select(
+      href == "/prokriti-kotha" => "প্রকৃতি কথা",
+      href == "/prakriti-kotha" => "প্রকৃতি কথা",
+      href == "/bangladesher-sap" => "বাংলাদেশের সাপ",
+      label
+    ),
+  },
     social,
     contactEmail, contactPhone, address,
     donationLink,
@@ -205,7 +214,7 @@ export const EVENT_SLUGS_QUERY = /* groq */ `
   }
 `
 
-// ─── Team / Leadership ────────────────────────────────────────────────────────
+// ─── Team / Team ────────────────────────────────────────────────────────
 
 export const TEAM_MEMBERS_QUERY = `
   *[_type == "teamMember"] | order(order asc){
@@ -344,6 +353,7 @@ export const EVENT_DETAIL_WITH_REGISTRATION_QUERY = /* groq */ `
     date,
     time,
     location,
+    registrationLink,
     status,
     description,
     speakers,
@@ -920,5 +930,6 @@ export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
   "slug": slug.current,
   _updatedAt
 }`
+
 
 

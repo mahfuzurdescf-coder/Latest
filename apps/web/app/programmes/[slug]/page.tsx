@@ -102,11 +102,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     })
   }
 
+  const ogImageUrl = programme.heroImage
+    ? urlForImage(programme.heroImage)?.width(1200).height(630).url()
+    : undefined
+
   return buildMetadata({
     title: programme.seoTitle || programme.title,
     description: getProgrammeDescription(programme),
     canonicalUrl: programmeUrl(params.slug),
-    image: programme.heroImage,
+    ogImage: ogImageUrl,
   })
 }
 
