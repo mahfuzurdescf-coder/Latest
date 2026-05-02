@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -13,11 +13,11 @@ interface HeaderProps {
 }
 
 const DEFAULT_NAV = [
-  { label: 'About', href: '/about' },
+  { label: 'Organisation', href: '/about' },
   { label: 'Current Work', href: '/current-work' },
-  { label: 'Programmes', href: '/programmes' },
-  { label: 'Newsroom', href: '/newsroom' },
-  { label: 'Partner', href: '/partner' },
+  { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
+  { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
+  { label: 'Resources', href: '/evidence-resources' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -30,7 +30,7 @@ export function Header({ settings }: HeaderProps) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const navLinks = settings.navLinks?.length ? settings.navLinks : DEFAULT_NAV
+  const navLinks = DEFAULT_NAV
   const donationLink = settings.donationLink ?? '/donate'
 
   useEffect(() => {
