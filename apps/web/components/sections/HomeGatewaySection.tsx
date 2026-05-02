@@ -45,8 +45,8 @@ const gateways = [
 export function HomeGatewaySection() {
   return (
     <section className="border-b border-earth-200 bg-earth-50">
-      <Container className="py-12 md:py-16 lg:py-20">
-        <div className="mb-9 max-w-3xl">
+      <Container className="py-12 md:py-14 lg:py-16">
+        <div className="mb-8 max-w-3xl">
           <p className="section-label mb-3">Explore DESCF</p>
           <h2 className="font-serif text-h2 text-earth-950">
             Three connected spaces, one conservation identity.
