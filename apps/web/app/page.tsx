@@ -7,6 +7,7 @@ import { HomeTrustStrip } from '@/components/sections/HomeTrustStrip'
 import { HomeNewsroom } from '@/components/sections/HomeNewsroom'
 import { HomeProgrammes } from '@/components/sections/HomeProgrammes'
 import { HomeResources } from '@/components/sections/HomeResources'
+import { HomeSnakeGuideSection } from '@/components/sections/HomeSnakeGuideSection'
 import { buildOrganizationJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
@@ -90,6 +91,7 @@ export default async function HomePage() {
         <HomeTrustStrip />
         <HomeProgrammes programmes={programmes} />
         <HomeNewsroom posts={uniquePosts} />
+        <HomeSnakeGuideSection />
         <HomeResources resources={resources} />
         <HomeCTA />
       </main>
