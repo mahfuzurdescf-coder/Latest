@@ -15,8 +15,8 @@ interface HeaderProps {
 const DEFAULT_NAV = [
   { label: 'Organisation', href: '/about' },
   { label: 'Current Work', href: '/current-work' },
-  { label: 'Ã Â¦ÂªÃ Â§ÂÃ Â¦Â°Ã Â¦â€¢Ã Â§Æ’Ã Â¦Â¤Ã Â¦Â¿ Ã Â¦â€¢Ã Â¦Â¥Ã Â¦Â¾', href: '/prokriti-kotha' },
-  { label: 'Ã Â¦Â¬Ã Â¦Â¾Ã Â¦â€šÃ Â¦Â²Ã Â¦Â¾Ã Â¦Â¦Ã Â§â€¡Ã Â¦Â¶Ã Â§â€¡Ã Â¦Â° Ã Â¦Â¸Ã Â¦Â¾Ã Â¦Âª', href: '/bangladesh-wildlife/snakes' },
+  { label: 'ÃƒÂ Ã‚Â¦Ã‚ÂªÃƒÂ Ã‚Â§Ã‚ÂÃƒÂ Ã‚Â¦Ã‚Â°ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â§Ã†â€™ÃƒÂ Ã‚Â¦Ã‚Â¤ÃƒÂ Ã‚Â¦Ã‚Â¿ ÃƒÂ Ã‚Â¦Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¦Ã‚Â¥ÃƒÂ Ã‚Â¦Ã‚Â¾', href: '/prokriti-kotha' },
+  { label: 'ÃƒÂ Ã‚Â¦Ã‚Â¬ÃƒÂ Ã‚Â¦Ã‚Â¾ÃƒÂ Ã‚Â¦Ã¢â‚¬Å¡ÃƒÂ Ã‚Â¦Ã‚Â²ÃƒÂ Ã‚Â¦Ã‚Â¾ÃƒÂ Ã‚Â¦Ã‚Â¦ÃƒÂ Ã‚Â§Ã¢â‚¬Â¡ÃƒÂ Ã‚Â¦Ã‚Â¶ÃƒÂ Ã‚Â§Ã¢â‚¬Â¡ÃƒÂ Ã‚Â¦Ã‚Â° ÃƒÂ Ã‚Â¦Ã‚Â¸ÃƒÂ Ã‚Â¦Ã‚Â¾ÃƒÂ Ã‚Â¦Ã‚Âª', href: '/bangladesh-wildlife/snakes' },
   { label: 'Resources', href: '/evidence-resources' },
   { label: 'Contact', href: '/contact' },
 ]
