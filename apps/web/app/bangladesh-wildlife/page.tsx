@@ -9,7 +9,7 @@ import type { WildlifeGroupCard } from '@/types/sanity'
 
 const BD_WILDLIFE = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09ac\u09a8\u09cd\u09af\u09aa\u09cd\u09b0\u09be\u09a3\u09c0'
 const BD_SNAKES = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
-const BD_FROGS = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09ac\u09cd\u09af\u09be\u0982'
+const BD_FROGS = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09ac\u09cd\u09af\u09be\u0999'
 const BD_BIRDS = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09aa\u09be\u0996\u09bf'
 
 export const revalidate = 60
@@ -138,14 +138,28 @@ function PlannedGroupCard({
   description: string
 }) {
   return (
-    <article className="rounded-[1.75rem] border border-earth-200 bg-white p-6 shadow-card">
-      <p className="section-label mb-3">Planned</p>
-      <h2 className="font-serif text-2xl leading-tight text-earth-950">
-        {title}
-      </h2>
-      <p className="mt-3 text-body-sm leading-7 text-earth-600">
-        {description}
-      </p>
+    <article className="group overflow-hidden rounded-[1.75rem] border border-earth-200 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-forest-300 hover:shadow-card-lg">
+      <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-forest-50 to-earth-100 px-6 text-center">
+        <span className="font-serif text-3xl leading-tight text-forest-900">
+          {title}
+        </span>
+      </div>
+
+      <div className="flex min-h-[190px] flex-col p-6">
+        <p className="section-label mb-3">Planned field guide</p>
+
+        <h2 className="font-serif text-2xl leading-tight text-earth-950">
+          {title}
+        </h2>
+
+        <p className="mt-3 text-body-sm leading-7 text-earth-600">
+          {description}
+        </p>
+
+        <p className="mt-auto pt-6 text-sm font-semibold text-earth-500">
+          Content model ready <span aria-hidden="true">-&gt;</span>
+        </p>
+      </div>
     </article>
   )
 }
