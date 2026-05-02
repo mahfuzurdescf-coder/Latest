@@ -1,4 +1,4 @@
-﻿import Image from 'next/image'
+import Image from 'next/image'
 
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
@@ -43,19 +43,19 @@ export function HomeHero({ curation }: HomeHeroProps) {
     : null
 
   return (
-    <section className="relative overflow-hidden border-b border-earth-200 bg-[#f7f4ec]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(58,94,49,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(173,125,37,0.12),transparent_30%)]" />
+    <section className="relative overflow-hidden border-b border-earth-200 bg-earth-50">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(58,94,49,0.12),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(173,125,37,0.08),transparent_30%)]" />
 
-      <Container className="relative py-16 sm:py-20 lg:py-24">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.96fr)_minmax(420px,0.86fr)] lg:items-center xl:gap-16">
+      <Container className="relative py-16 sm:py-24 lg:py-28">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(380px,0.82fr)] lg:items-center xl:gap-16">
           <div className="max-w-[680px]">
             <p className="section-label mb-4">{eyebrow}</p>
 
-            <h1 className="font-serif text-[clamp(3rem,5.15vw,5rem)] leading-[0.97] tracking-[-0.035em] text-earth-950 text-balance">
+            <h1 className="font-serif text-[clamp(2.7rem,4.8vw,4.55rem)] leading-[0.97] tracking-[-0.035em] text-earth-950 text-balance">
               {title}
             </h1>
 
-            <p className="mt-6 max-w-xl text-[1.08rem] leading-8 text-earth-700 sm:text-[1.12rem]">
+            <p className="mt-6 max-w-2xl text-[1.05rem] leading-8 text-earth-700 sm:text-[1.1rem]">
               {description}
             </p>
 
@@ -69,7 +69,7 @@ export function HomeHero({ curation }: HomeHeroProps) {
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-[560px] rounded-[2rem] border border-earth-200/80 bg-white/80 p-4 shadow-card backdrop-blur-sm lg:justify-self-end lg:p-5">
+          <div className="mx-auto w-full max-w-[520px] rounded-[2rem] border border-earth-200/80 bg-white/85 p-4 shadow-card-lg backdrop-blur-sm lg:justify-self-end lg:p-5">
             {heroImageUrl ? (
               <figure className="overflow-hidden rounded-[1.45rem] bg-earth-100">
                 <Image
