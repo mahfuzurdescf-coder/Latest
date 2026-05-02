@@ -326,7 +326,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center">
               <div>
                 <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                  {BD_SNAKES} ? Species profile
+                  {BD_SNAKES} / Species profile
                 </p>
 
                 {species.banglaName && (

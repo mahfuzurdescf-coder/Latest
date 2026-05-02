@@ -60,6 +60,42 @@ export function SpeciesDistributionMap({
   }))
 
   const mapPoints = [...districtPoints, ...occurrenceMapPoints]
+  const hasDistributionData =
+    mapPoints.length > 0 || zones.length > 0 || Boolean(distributionText)
+
+  if (!hasDistributionData) {
+    return (
+      <section className="rounded-[2rem] border border-earth-200 bg-white p-6 shadow-card">
+        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="overflow-hidden rounded-[1.5rem] border border-earth-200 bg-forest-950 p-5">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Distribution data pending map" className="h-[280px] w-full">
+              <rect width="100" height="100" rx="8" fill="#172015" />
+              <path
+                d="M42 8 C55 14 65 26 70 40 C76 58 69 77 55 91 C44 82 34 69 30 53 C25 34 29 18 42 8 Z"
+                fill="#24381F"
+                stroke="#5F8C4A"
+                strokeWidth="0.9"
+                opacity="0.9"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <p className="section-label mb-3">Distribution map</p>
+            <h2 className="font-serif text-3xl leading-tight text-earth-950">
+              Distribution data is being prepared
+            </h2>
+            <p className="mt-4 text-body leading-8 text-earth-700">
+              Districts, zones, and public occurrence points will appear here once they are added in Sanity Studio. Exact sensitive locations should remain hidden or generalized.
+            </p>
+            <div className="mt-5 rounded-full bg-forest-50 px-4 py-2 text-sm font-semibold text-forest-800 inline-flex">
+              Studio-managed map field ready
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="rounded-[2rem] border border-earth-200 bg-white p-6 shadow-card">
