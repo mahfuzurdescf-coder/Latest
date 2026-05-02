@@ -16,7 +16,7 @@ export function HomeProgrammes({ programmes }: HomeProgrammesProps) {
   const supporting = validProgrammes.slice(1, 3)
 
   return (
-    <Section className="bg-white">
+    <Section className="bg-white !py-12 md:!py-14 lg:!py-16">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div>

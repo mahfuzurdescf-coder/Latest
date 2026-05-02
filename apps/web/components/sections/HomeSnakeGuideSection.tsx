@@ -29,8 +29,8 @@ export function HomeSnakeGuideSection() {
     <section className="relative overflow-hidden bg-forest-950 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]" />
 
-      <Container className="relative py-14 md:py-16 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+      <Container className="relative py-12 md:py-14 lg:py-16">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold tracking-normal text-bark-300">
               {SNAKES_BD}

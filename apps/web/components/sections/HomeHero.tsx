@@ -46,7 +46,7 @@ export function HomeHero({ curation }: HomeHeroProps) {
     <section className="relative overflow-hidden border-b border-earth-200 bg-earth-50">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(58,94,49,0.12),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(173,125,37,0.08),transparent_30%)]" />
 
-      <Container className="relative py-14 sm:py-18 lg:py-20">
+      <Container className="relative py-12 sm:py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(380px,0.82fr)] lg:items-center xl:gap-16">
           <div className="max-w-[680px]">
             <p className="section-label mb-4">{eyebrow}</p>

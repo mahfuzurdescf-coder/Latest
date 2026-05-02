@@ -4,7 +4,7 @@ import { Container } from '@/components/ui/Container'
 export function HomeCTA() {
   return (
     <section className="relative overflow-hidden bg-earth-50">
-      <Container className="py-14 md:py-16 lg:py-20">
+      <Container className="py-10 md:py-12 lg:py-14">
         <div className="relative overflow-hidden rounded-[2rem] bg-forest-950 px-6 py-10 text-white shadow-card-lg md:px-10 md:py-12 lg:px-12">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,245,234,0.12),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(173,125,37,0.18),transparent_34%)]" />
 
