@@ -12,13 +12,13 @@ const guidePoints = [
     label: 'Safety',
     title: 'Awareness without panic',
     description:
-      'The guide is designed for public education, safer response, and coexistence—not snake handling or risky behaviour.',
+      'The guide is designed for public education, safer response, and coexistenceâ€”not snake handling or risky behaviour.',
   },
   {
     label: 'Field guide',
     title: 'A growing database for Bangladesh',
     description:
-      'DESCF’s snake section can grow into a structured, searchable field-guide style resource for students and nature learners.',
+      'DESCFâ€™s snake section can grow into a structured, searchable field-guide style resource for students and nature learners.',
   },
 ]
 
@@ -31,7 +31,7 @@ export function HomeSnakeGuideSection() {
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-              বাংলাদেশের সাপ
+              à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª
             </p>
 
             <h2 className="mt-4 font-serif text-h2 leading-tight text-white">
@@ -39,7 +39,7 @@ export function HomeSnakeGuideSection() {
             </h2>
 
             <p className="mt-5 max-w-2xl text-body leading-8 text-forest-100">
-              DESCF’s snake database should feel different from the institutional pages:
+              DESCFâ€™s snake database should feel different from the institutional pages:
               darker, focused, field-guide inspired, and built around learning, safety,
               and respect for wildlife.
             </p>

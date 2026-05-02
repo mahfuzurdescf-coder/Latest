@@ -8,7 +8,7 @@ const gateways = [
     label: 'Organisation Portfolio',
     title: 'DESCF as an institution',
     description:
-      'Explore DESCF’s mission, current work, programmes, governance, leadership, and collaboration pathways.',
+      'Explore DESCFâ€™s mission, current work, programmes, governance, leadership, and collaboration pathways.',
     href: '/about',
     cta: 'Explore organisation',
     cardClass: 'border-forest-200 bg-white text-earth-950',
@@ -16,21 +16,21 @@ const gateways = [
     ctaClass: 'text-forest-800 hover:text-forest-950',
   },
   {
-    label: 'প্রকৃতি কথা',
+    label: 'à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾',
     title: 'Nature stories, field notes, and reflections',
     description:
       'A calm editorial space for nature, wildlife, coexistence, conservation thinking, and field-based storytelling.',
     href: '/prokriti-kotha',
-    cta: 'Read প্রকৃতি কথা',
+    cta: 'Read à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾',
     cardClass: 'border-forest-100 bg-forest-50 text-earth-950',
     labelClass: 'text-forest-700',
     ctaClass: 'text-forest-800 hover:text-forest-950',
   },
   {
-    label: 'বাংলাদেশের সাপ',
+    label: 'à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª',
     title: 'A field-guide style snake database',
     description:
-      'Browse DESCF’s public-friendly snake guide with names, identification clues, safety notes, and species profiles.',
+      'Browse DESCFâ€™s public-friendly snake guide with names, identification clues, safety notes, and species profiles.',
     href: '/bangladesh-wildlife/snakes',
     cta: 'Explore snake database',
     cardClass: 'border-forest-900 bg-forest-950 text-white',
@@ -49,8 +49,8 @@ export function HomeGatewaySection() {
             Three connected spaces, one conservation identity.
           </h2>
           <p className="mt-4 max-w-2xl text-body text-earth-600">
-            DESCF’s website is organised around institutional work, nature storytelling,
-            and Bangladesh’s snake field guide—each with its own feel, but under one brand system.
+            DESCFâ€™s website is organised around institutional work, nature storytelling,
+            and Bangladeshâ€™s snake field guideâ€”each with its own feel, but under one brand system.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export function HomeGatewaySection() {
               )}
             >
               <div>
-                <p className={cn('text-label font-semibold uppercase tracking-[0.18em]', item.labelClass)}>
+                <p className={cn('text-sm font-semibold tracking-normal', item.labelClass)}>
                   {item.label}
                 </p>
 
@@ -79,7 +79,7 @@ export function HomeGatewaySection() {
               </div>
 
               <span className={cn('mt-7 inline-flex text-sm font-semibold transition-colors', item.ctaClass)}>
-                {item.cta} →
+                {item.cta} â†’
               </span>
             </Link>
           ))}
