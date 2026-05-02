@@ -157,6 +157,7 @@ export default async function BangladeshWildlifePage() {
   })
 
   const validGroups = (groups ?? []).filter((group) => group.slug?.current)
+  const hasSnakesGroup = validGroups.some((group) => group.slug?.current === 'snakes')
 
   return (
     <main id="main-content" className="bg-earth-50">
@@ -252,27 +253,25 @@ export default async function BangladeshWildlifePage() {
             </p>
           </div>
 
-          {validGroups.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {validGroups.map((group) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {hasSnakesGroup ? (
+              validGroups.map((group) => (
                 <WildlifeGroupCardView key={group._id} group={group} />
-              ))}
-            </div>
-          ) : (
-            <div className="grid gap-6 lg:grid-cols-3">
+              ))
+            ) : (
               <StaticSnakesCard />
+            )}
 
-              <PlannedGroupCard
-                title={BD_FROGS}
-                description="Amphibian profiles can be added later using the same species profile schema."
-              />
+            <PlannedGroupCard
+              title={BD_FROGS}
+              description="Amphibian profiles can be added later using the same species profile schema."
+            />
 
-              <PlannedGroupCard
-                title={BD_BIRDS}
-                description="Bird profiles can be added later without changing the public field-guide architecture."
-              />
-            </div>
-          )}
+            <PlannedGroupCard
+              title={BD_BIRDS}
+              description="Bird profiles can be added later without changing the public field-guide architecture."
+            />
+          </div>
         </div>
       </section>
     </main>
