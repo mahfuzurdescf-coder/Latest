@@ -37,16 +37,7 @@ export const SITE_SETTINGS_QUERY = `
     siteTitle, tagline, tagline_bn,
     logo{${IMAGE_FRAGMENT}},
     navLinks[]{_key, label, href},
-    footerLinks[]{
-    _key,
-    href,
-    "label": select(
-      href == "/prokriti-kotha" => "প্রকৃতি কথা",
-      href == "/prakriti-kotha" => "প্রকৃতি কথা",
-      href == "/bangladesher-sap" => "বাংলাদেশের সাপ",
-      label
-    ),
-  },
+    footerLinks[]{_key, label, href, isExternal},
     social,
     contactEmail, contactPhone, address,
     donationLink,
@@ -933,3 +924,51 @@ export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
 
 
 
+
+// --- Editable page content ----------------------------------------------------
+
+export const PAGE_CONTENT_BY_KEY_QUERY = /* groq */ `
+  *[_type == "pageContent" && pageKey == $pageKey && status == "published"][0] {
+    _id,
+    _type,
+    title,
+    pageKey,
+    status,
+    heroTheme,
+    heroEyebrow,
+    heroTitle,
+    heroDescription,
+    primaryCta,
+    secondaryCta,
+    heroImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    sections[]{
+      _key,
+      sectionId,
+      theme,
+      layout,
+      eyebrow,
+      title,
+      description,
+      cards[]{
+        _key,
+        eyebrow,
+        title,
+        text,
+        link
+      },
+      primaryCta,
+      secondaryCta
+    },
+    seo
+  }
+`

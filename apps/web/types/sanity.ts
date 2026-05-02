@@ -766,3 +766,65 @@ export interface ProkritiKothaArticleCard
 }
 
 
+
+// --- Editable page content ----------------------------------------------------
+
+export type PageContentKey =
+  | 'about'
+  | 'mission'
+  | 'governance'
+  | 'team'
+  | 'contact'
+  | 'resources'
+  | 'reports-publications'
+  | 'evidence-resources'
+  | 'media'
+  | 'partner-with-us'
+
+export type PageSectionTheme = 'white' | 'earth' | 'forest'
+export type PageSectionLayout = 'intro' | 'cards' | 'split' | 'cta'
+export type PageHeroTheme = 'earth' | 'forest'
+
+export interface PageCard {
+  _key?: string
+  eyebrow?: string
+  title: string
+  text?: string
+  link?: NavLink
+}
+
+export interface PageSection {
+  _key?: string
+  sectionId?: string
+  theme?: PageSectionTheme
+  layout?: PageSectionLayout
+  eyebrow?: string
+  title?: string
+  description?: string
+  cards?: PageCard[]
+  primaryCta?: NavLink
+  secondaryCta?: NavLink
+}
+
+export interface PageContent {
+  _id: string
+  _type: 'pageContent'
+  title?: string
+  pageKey: PageContentKey
+  status?: 'draft' | 'published' | 'archived'
+  heroTheme?: PageHeroTheme
+  heroEyebrow?: string
+  heroTitle?: string
+  heroDescription?: string
+  primaryCta?: NavLink
+  secondaryCta?: NavLink
+  heroImage?: SanityImage
+  sections?: PageSection[]
+  seo?: {
+    seoTitle?: string
+    seoDescription?: string
+    canonicalUrl?: string
+    noIndex?: boolean
+    ogImage?: SanityImage
+  }
+}

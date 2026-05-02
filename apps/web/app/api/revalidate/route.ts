@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
+﻿import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import { parseBody } from 'next-sanity/webhook'
 
@@ -26,6 +26,11 @@ function revalidateCommonPaths() {
   revalidatePath('/partner')
   revalidatePath('/governance')
   revalidatePath('/contact')
+  revalidatePath('/mission')
+  revalidatePath('/team')
+  revalidatePath('/media')
+  revalidatePath('/reports-publications')
+  revalidatePath('/partner-with-us')
 }
 
 export async function POST(request: NextRequest) {
@@ -89,13 +94,27 @@ export async function POST(request: NextRequest) {
 
     switch (documentType) {
       case 'siteSettings':
-      case 'homepageCuration': {
+      case 'homepageCuration':
+      case 'pageContent': {
         revalidateTag('siteSettings')
         revalidateTag('homepageCuration')
         revalidatePath('/')
         revalidatePath('/contact')
+  revalidatePath('/mission')
+  revalidatePath('/team')
+  revalidatePath('/media')
+  revalidatePath('/reports-publications')
+  revalidatePath('/partner-with-us')
         revalidatePath('/partner')
         revalidatePath('/governance')
+        revalidatePath('/about')
+        revalidatePath('/mission')
+        revalidatePath('/team')
+        revalidatePath('/resources')
+        revalidatePath('/reports-publications')
+        revalidatePath('/evidence-resources')
+        revalidatePath('/media')
+        revalidatePath('/partner-with-us')
         break
       }
 
@@ -183,6 +202,14 @@ export async function POST(request: NextRequest) {
       case 'policy': {
         revalidateTag(documentType)
         revalidatePath('/governance')
+        revalidatePath('/about')
+        revalidatePath('/mission')
+        revalidatePath('/team')
+        revalidatePath('/resources')
+        revalidatePath('/reports-publications')
+        revalidatePath('/evidence-resources')
+        revalidatePath('/media')
+        revalidatePath('/partner-with-us')
         break
       }
 
@@ -220,6 +247,7 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
 
 
 

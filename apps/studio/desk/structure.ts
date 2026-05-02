@@ -59,6 +59,26 @@ export const deskStructure: StructureResolver = (S) =>
                 'homepageCuration',
                 'homepageCuration',
               ),
+              S.divider(),
+
+              S.listItem()
+                .title('Pages')
+                .child(
+                  S.list()
+                    .title('Pages')
+                    .items([
+                      singletonItem(S, 'About Page', 'pageContent', 'pageContent.about'),
+                      singletonItem(S, 'Mission Page', 'pageContent', 'pageContent.mission'),
+                      singletonItem(S, 'Governance Page', 'pageContent', 'pageContent.governance'),
+                      singletonItem(S, 'Team Page', 'pageContent', 'pageContent.team'),
+                      singletonItem(S, 'Contact Page', 'pageContent', 'pageContent.contact'),
+                      singletonItem(S, 'Resources Page', 'pageContent', 'pageContent.resources'),
+                      singletonItem(S, 'Reports & Publications Page', 'pageContent', 'pageContent.reports-publications'),
+                      singletonItem(S, 'Evidence & Resources Page', 'pageContent', 'pageContent.evidence-resources'),
+                      singletonItem(S, 'Media Page', 'pageContent', 'pageContent.media'),
+                      singletonItem(S, 'Partner With Us Page', 'pageContent', 'pageContent.partner-with-us'),
+                    ]),
+                )
             ]),
         ),
 
@@ -454,4 +474,6 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
     ])
+
+
 
