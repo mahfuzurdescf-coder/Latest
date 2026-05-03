@@ -529,7 +529,7 @@ export const event = defineType({
       title: 'Time',
       type: 'string',
       group: 'details',
-      description: 'Example: 10:00 AM â€“ 1:00 PM',
+      description: 'Example: 10:00 AM – 1:00 PM',
       validation: (Rule) => Rule.max(80),
     }),
     defineField({
@@ -803,6 +803,7 @@ export const siteSettings = defineType({
     },
   },
 })
+
 
 
 

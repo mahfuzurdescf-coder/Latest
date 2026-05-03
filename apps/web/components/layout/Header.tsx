@@ -29,7 +29,18 @@ const FIXED_LABELS_BY_HREF: Record<string, string> = {
 }
 
 function hasMojibake(value?: string) {
-  return Boolean(value && /Ã|Â|â/.test(value))
+  if (!value) return false
+
+  return Array.from(value).some((character) => {
+    const code = character.charCodeAt(0)
+
+    return (
+      code === 0x00c3 ||
+      code === 0x00c2 ||
+      code === 0x00e2 ||
+      code === 0xfffd
+    )
+  })
 }
 
 function getDisplayLabel(link: NavLink) {
@@ -223,3 +234,5 @@ export function Header({ settings }: HeaderProps) {
     </header>
   )
 }
+
+

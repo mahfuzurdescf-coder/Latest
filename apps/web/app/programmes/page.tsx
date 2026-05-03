@@ -94,7 +94,7 @@ export default async function ProgrammesPage() {
           <aside className="rounded-3xl border border-white/15 bg-white/8 p-7 shadow-card-lg backdrop-blur">
             <p className="section-label mb-4 text-bark-300">Portfolio principle</p>
             <h2 className="font-serif text-3xl leading-tight text-white">
-              Not scattered activities â€” structured conservation programmes.
+              Not scattered activities — structured conservation programmes.
             </h2>
             <p className="mt-4 text-body-sm text-forest-50">
               A strong programme page should show purpose, activities, audience, evidence,
@@ -140,7 +140,7 @@ export default async function ProgrammesPage() {
               Published DESCF programmes
             </h2>
             <p className="mt-4 text-body text-earth-700">
-              Programme records should help visitors understand DESCFâ€™s work as a serious
+              Programme records should help visitors understand DESCF’s work as a serious
               conservation system: what the programme does, why it matters, and how people can
               learn, participate, or collaborate responsibly.
             </p>
@@ -228,3 +228,4 @@ export default async function ProgrammesPage() {
     </main>
   )
 }
+
