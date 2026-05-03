@@ -1,8 +1,7 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { EventRegistrationForm } from '@/components/forms/EventRegistrationForm'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import type { RegistrationFormPublic } from '@/types/sanity'
@@ -50,9 +49,9 @@ type EventRecord = {
   registrationForm?: RegistrationFormPublic | null
 }
 
-const SITE_URL = 'https://descf.org'
+const SITE_URL = 'https://www.descf.org'
 
-const eventBySlugQuery = `*[_type == "event" && slug.current == $slug][0]{
+const eventBySlugQuery = `*[_type == "event" && coalesce(language, "bn") == "bn" && slug.current == $slug][0]{
   _id,
   title,
   slug,
