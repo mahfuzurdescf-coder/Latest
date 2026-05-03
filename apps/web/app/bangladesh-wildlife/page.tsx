@@ -80,7 +80,7 @@ function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
 
         <div className="p-6">
           <p className={isSnakes ? 'text-label font-semibold uppercase tracking-[0.18em] text-bark-300' : 'section-label mb-3'}>
-            Digital field guide
+            ডিজিটাল ফিল্ড গাইড
           </p>
 
           <h2
@@ -99,7 +99,7 @@ function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
           )}
 
           <p className={'mt-6 text-sm font-semibold ' + (isSnakes ? 'text-bark-200' : 'text-forest-800')}>
-            Explore profiles <span aria-hidden="true">-&gt;</span>
+            প্রোফাইল দেখুন <span aria-hidden="true">-&gt;</span>
           </p>
         </div>
       </Link>
@@ -124,7 +124,7 @@ function StaticSnakesCard() {
         href="/bangladesh-wildlife/snakes"
         className="mt-7 inline-flex rounded-full bg-bark-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-bark-600"
       >
-        Explore snakes
+        সাপ দেখুন
       </Link>
     </article>
   )
@@ -146,7 +146,7 @@ function PlannedGroupCard({
       </div>
 
       <div className="flex min-h-[190px] flex-col p-6">
-        <p className="section-label mb-3">Planned field guide</p>
+        <p className="section-label mb-3">পরিকল্পিত ফিল্ড গাইড</p>
 
         <h2 className="font-serif text-2xl leading-tight text-earth-950">
           {title}
@@ -182,7 +182,7 @@ export default async function BangladeshWildlifePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_390px] lg:items-center">
             <div className="max-w-4xl">
               <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                DESCF Field Guide
+                ডিইএসসিএফ ফিল্ড গাইড
               </p>
 
               <h1 className="mt-5 font-serif text-[clamp(3.2rem,7vw,6rem)] leading-[0.98] tracking-tight text-white">
@@ -197,7 +197,7 @@ export default async function BangladeshWildlifePage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/bangladesh-wildlife/snakes" className="btn-cta">
-                  Explore snake database
+                  সাপের ডাটাবেস দেখুন
                 </Link>
                 <Link
                   href="/prokriti-kotha"
@@ -216,8 +216,8 @@ export default async function BangladeshWildlifePage() {
                 Field-guide data, not scattered posts.
               </h2>
               <p className="mt-4 text-body-sm leading-7 text-forest-100">
-                Species profiles should carry identity, taxonomy, status, habitat,
-                distribution, ecological role, images, safety notes, and related reading
+                প্রজাতি প্রোফাইলে পরিচয়, শ্রেণিবিন্যাস, অবস্থা, আবাসস্থল,
+                বিস্তৃতি, পরিবেশগত ভূমিকা, ছবি, নিরাপত্তা নোট এবং সম্পর্কিত লেখা থাকা উচিত
                 in one structured place.
               </p>
             </div>
@@ -234,14 +234,14 @@ export default async function BangladeshWildlifePage() {
                 A public knowledge base for responsible wildlife learning.
               </h2>
               <p className="mt-5 text-body leading-8 text-earth-700">
-                This section is designed as a species database. Each profile can hold
-                identification, taxonomy, conservation status, habitat, distribution,
-                ecological role, myths and facts, image gallery, and public safety guidance.
+                এই অংশটি প্রজাতি ডাটাবেস হিসেবে তৈরি। প্রতিটি প্রোফাইলে
+                শনাক্তকরণ, শ্রেণিবিন্যাস, সংরক্ষণ অবস্থা, আবাসস্থল, বিস্তৃতি,
+                পরিবেশগত ভূমিকা, মিথ ও তথ্য, ছবি গ্যালারি এবং জননিরাপত্তা নির্দেশনা থাকতে পারে।
               </p>
             </div>
 
             <div className="rounded-[1.75rem] border border-bark-200 bg-bark-50 p-8 shadow-card">
-              <p className="section-label mb-4">Safety principle</p>
+              <p className="section-label mb-4">নিরাপত্তা নীতি</p>
               <h2 className="font-serif text-h2 text-earth-950">
                 Education first, no handling manual.
               </h2>
@@ -257,7 +257,7 @@ export default async function BangladeshWildlifePage() {
       <section className="bg-earth-50">
         <div className="container-site py-12 md:py-14 lg:py-16">
           <div className="mb-8 max-w-3xl">
-            <p className="section-label mb-3">Explore groups</p>
+            <p className="section-label mb-3">গ্রুপ দেখুন</p>
             <h2 className="font-serif text-h2 text-earth-950">
               Wildlife sections
             </h2>

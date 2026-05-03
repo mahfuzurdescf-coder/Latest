@@ -36,7 +36,7 @@ function formatVenomStatus(status?: string): string {
     'mildly-venomous': 'Mildly venomous',
     venomous: 'Venomous',
     'highly-venomous': 'Highly venomous',
-    unknown: 'Unknown / needs verification',
+    unknown: 'অজানা / যাচাই প্রয়োজন',
   }
 
   return status ? labels[status] || status : 'Unknown'
@@ -46,7 +46,7 @@ function formatMedicalImportance(status?: string): string {
   const labels: Record<string, string> = {
     'medically-important': 'Medically important',
     'not-medically-important': 'Not medically important',
-    uncertain: 'Uncertain / needs verification',
+    uncertain: 'অনিশ্চিত / যাচাই প্রয়োজন',
   }
 
   return status ? labels[status] || status : 'Not specified'
@@ -155,7 +155,7 @@ function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) 
         )}
 
         <div className="p-5">
-          <p className="section-label mb-2">Related reading</p>
+          <p className="section-label mb-2">সম্পর্কিত লেখা</p>
           <h3 className="font-serif text-xl leading-tight text-earth-950 group-hover:text-forest-900">
             {article.title}
           </h3>
@@ -233,8 +233,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!species || species.group?.slug?.current !== 'snakes') {
     return buildMetadata({
-      title: 'Snake species not found',
-      description: 'The requested snake species profile could not be found.',
+      title: 'সাপের প্রজাতি পাওয়া যায়নি',
+      description: 'অনুরোধ করা সাপের প্রজাতি প্রোফাইল পাওয়া যায়নি।',
       canonicalUrl: getCanonicalUrl(params.slug),
     })
   }
@@ -326,7 +326,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center">
               <div>
                 <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                  {BD_SNAKES} / Species profile
+                  {BD_SNAKES} / প্রজাতি প্রোফাইল
                 </p>
 
                 {species.banglaName && (
@@ -375,7 +375,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
 
                   {species.iucnGlobalStatus && (
                     <span className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-forest-50">
-                      Global IUCN: {species.iucnGlobalStatus}
+                      বিশ্ব IUCN: {species.iucnGlobalStatus}
                     </span>
                   )}
                 </div>
@@ -392,12 +392,12 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
         <section className="border-b border-earth-200 bg-white">
           <div className="container-site py-10 md:py-12">
             <dl className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-              <InfoCard label="Venom status" value={formatVenomStatus(species.venomStatus)} tone="forest" />
-              <InfoCard label="Medical importance" value={formatMedicalImportance(species.medicalImportance)} tone="amber" />
-              <InfoCard label="Family" value={species.family} />
-              <InfoCard label="Order" value={species.order} />
-              <InfoCard label="Global IUCN" value={species.iucnGlobalStatus} />
-              <InfoCard label="Bangladesh status" value={species.bangladeshStatus} />
+              <InfoCard label="বিষের অবস্থা" value={formatVenomStatus(species.venomStatus)} tone="forest" />
+              <InfoCard label="চিকিৎসাগত গুরুত্ব" value={formatMedicalImportance(species.medicalImportance)} tone="amber" />
+              <InfoCard label="পরিবার" value={species.family} />
+              <InfoCard label="বর্গ" value={species.order} />
+              <InfoCard label="বিশ্ব IUCN" value={species.iucnGlobalStatus} />
+              <InfoCard label="বাংলাদেশে অবস্থা" value={species.bangladeshStatus} />
               <InfoCard
                 label="Known zones"
                 value={zones.length > 0 ? zones.map((zone) => zone.title).join(', ') : undefined}
@@ -410,7 +410,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
 
             {species.statusSource && (
               <p className="mt-4 text-sm leading-6 text-earth-500">
-                Status source note: {species.statusSource}
+                অবস্থার উৎস নোট: {species.statusSource}
               </p>
             )}
           </div>
@@ -420,7 +420,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
           <div className="container-site py-10 md:py-12">
             <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
               <div>
-                <p className="section-label mb-3">Public safety note</p>
+                <p className="section-label mb-3">জননিরাপত্তা নোট</p>
                 <h2 className="font-serif text-3xl text-earth-950">
                   Observe from a safe distance.
                 </h2>
@@ -440,14 +440,14 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
               <div className="space-y-6">
                 {hasDetailContent ? (
                   <>
-                    <DetailSection eyebrow="Field identification" title="Identification" body={species.identification} />
-                    <DetailSection eyebrow="Morphology" title="Scale and body description" body={species.scaleDescription} />
-                    <DetailSection eyebrow="Natural history" title="Behaviour" body={species.behaviour} />
-                    <DetailSection eyebrow="Habitat" title="Habitat" body={species.habitat} />
-                    <DetailSection eyebrow="Ecology" title="Diet" body={species.diet} />
-                    <DetailSection eyebrow="Conservation value" title="Ecological role" body={species.ecologicalRole} />
-                    <DetailSection eyebrow="Public awareness" title="Myths and facts" body={species.mythsAndFacts} />
-                    <DetailSection eyebrow="Safety" title="Species-specific safety note" body={species.safetyNote} />
+                    <DetailSection eyebrow="মাঠ পর্যায়ের শনাক্তকরণ" title="শনাক্তকরণ" body={species.identification} />
+                    <DetailSection eyebrow="গঠন" title="আঁশ ও দেহের বর্ণনা" body={species.scaleDescription} />
+                    <DetailSection eyebrow="প্রাকৃতিক ইতিহাস" title="আচরণ" body={species.behaviour} />
+                    <DetailSection eyebrow="আবাসস্থল" title="আবাসস্থল" body={species.habitat} />
+                    <DetailSection eyebrow="বাস্তুসংস্থান" title="খাদ্যাভ্যাস" body={species.diet} />
+                    <DetailSection eyebrow="সংরক্ষণমূল্য" title="পরিবেশগত ভূমিকা" body={species.ecologicalRole} />
+                    <DetailSection eyebrow="জনসচেতনতা" title="মিথ ও তথ্য" body={species.mythsAndFacts} />
+                    <DetailSection eyebrow="নিরাপত্তা" title="প্রজাতি-নির্দিষ্ট নিরাপত্তা নোট" body={species.safetyNote} />
                   </>
                 ) : (
                   <section className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card">
@@ -456,7 +456,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                       Field notes are being prepared
                     </h2>
                     <p className="mt-5 max-w-3xl text-body leading-8 text-earth-700">
-                      Detailed identification, habitat, behaviour, diet, ecological role, myths, and safety notes will appear here once they are added and reviewed in Sanity Studio.
+                      Sanity Studio-তে যোগ ও পর্যালোচনা করার পর বিস্তারিত শনাক্তকরণ, আবাসস্থল, আচরণ, খাদ্যাভ্যাস, পরিবেশগত ভূমিকা, মিথ এবং নিরাপত্তা নোট এখানে দেখা যাবে।
                     </p>
                   </section>
                 )}
@@ -466,7 +466,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                 <ShareButtons
                   title={(species.banglaName ? species.banglaName + ' / ' : '') + species.englishName}
                   description={getSpeciesDescription(species)}
-                  label="Share this species profile"
+                  label="এই প্রজাতি প্রোফাইল শেয়ার করুন"
                 />
 
                 {references.length > 0 && (
@@ -513,7 +513,7 @@ export default async function SnakeSpeciesDetailPage({ params }: Props) {
                   <div className="mb-8 max-w-3xl">
                     <p className="section-label mb-3">Compare carefully</p>
                     <h2 className="font-serif text-h2 text-earth-950">
-                      Similar species
+                      সদৃশ প্রজাতি
                     </h2>
                   </div>
 

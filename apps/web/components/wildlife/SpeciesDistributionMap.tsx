@@ -68,7 +68,7 @@ export function SpeciesDistributionMap({
       <section className="rounded-[2rem] border border-earth-200 bg-white p-6 shadow-card">
         <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="overflow-hidden rounded-[1.5rem] border border-earth-200 bg-forest-950 p-5">
-            <svg viewBox="0 0 100 100" role="img" aria-label="Distribution data pending map" className="h-[280px] w-full">
+            <svg viewBox="0 0 100 100" role="img" aria-label="বিস্তৃতি তথ্য প্রস্তুতাধীন মানচিত্র" className="h-[280px] w-full">
               <rect width="100" height="100" rx="8" fill="#172015" />
               <path
                 d="M42 8 C55 14 65 26 70 40 C76 58 69 77 55 91 C44 82 34 69 30 53 C25 34 29 18 42 8 Z"
@@ -81,15 +81,15 @@ export function SpeciesDistributionMap({
           </div>
 
           <div>
-            <p className="section-label mb-3">Distribution map</p>
+            <p className="section-label mb-3">বিস্তৃতি মানচিত্র</p>
             <h2 className="font-serif text-3xl leading-tight text-earth-950">
-              Distribution data is being prepared
+              বিস্তৃতি তথ্য প্রস্তুত করা হচ্ছে
             </h2>
             <p className="mt-4 text-body leading-8 text-earth-700">
-              Districts, zones, and public occurrence points will appear here once they are added in Sanity Studio. Exact sensitive locations should remain hidden or generalized.
+              Sanity Studio-তে যোগ করার পর জেলা, অঞ্চল এবং পাবলিক occurrence point এখানে দেখা যাবে। সংবেদনশীল সুনির্দিষ্ট অবস্থান গোপন বা সাধারণীকৃত রাখা উচিত।
             </p>
             <div className="mt-5 rounded-full bg-forest-50 px-4 py-2 text-sm font-semibold text-forest-800 inline-flex">
-              Studio-managed map field ready
+              Studio-পরিচালিত মানচিত্র ফিল্ড প্রস্তুত
             </div>
           </div>
         </div>
@@ -101,9 +101,9 @@ export function SpeciesDistributionMap({
     <section className="rounded-[2rem] border border-earth-200 bg-white p-6 shadow-card">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="section-label mb-2">Distribution map</p>
+          <p className="section-label mb-2">বিস্তৃতি মানচিত্র</p>
           <h2 className="font-serif text-3xl text-earth-950">
-            Studio-managed range overview
+            Studio-পরিচালিত বিস্তৃতি সারাংশ
           </h2>
         </div>
 
@@ -114,7 +114,7 @@ export function SpeciesDistributionMap({
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
         <div className="overflow-hidden rounded-[1.5rem] border border-earth-200 bg-forest-950 p-4">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Approximate species distribution map" className="h-[360px] w-full">
+          <svg viewBox="0 0 100 100" role="img" aria-label="প্রজাতির আনুমানিক বিস্তৃতি মানচিত্র" className="h-[360px] w-full">
             <defs>
               <radialGradient id="mapGlow" cx="50%" cy="50%" r="70%">
                 <stop offset="0%" stopColor="#5F8C4A" stopOpacity="0.34" />
@@ -154,7 +154,7 @@ export function SpeciesDistributionMap({
           </svg>
 
           <p className="mt-3 text-xs leading-5 text-forest-100/75">
-            This is a public-facing approximate map. Exact sensitive locations should remain hidden or generalized.
+            এটি জনসাধারণের জন্য আনুমানিক মানচিত্র। সংবেদনশীল সুনির্দিষ্ট অবস্থান গোপন বা সাধারণীকৃত রাখা উচিত।
           </p>
         </div>
 

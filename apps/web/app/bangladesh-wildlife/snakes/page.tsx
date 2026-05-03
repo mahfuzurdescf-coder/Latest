@@ -119,7 +119,7 @@ export default async function BangladeshSnakesPage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center">
             <div className="max-w-4xl">
               <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                Digital field guide — Bangladesh Wildlife
+                ডিজিটাল ফিল্ড গাইড — বাংলাদেশের বন্যপ্রাণী
               </p>
 
               <h1 className="mt-5 font-serif text-[clamp(3.4rem,8vw,6.6rem)] leading-[0.96] tracking-tight text-white">
@@ -150,7 +150,7 @@ export default async function BangladeshSnakesPage() {
                 গাইডে খুঁজুন
               </p>
               <h2 className="mt-4 font-serif text-3xl leading-tight text-white">
-                Search by local, English, or scientific name.
+                স্থানীয়, ইংরেজি বা বৈজ্ঞানিক নাম দিয়ে খুঁজুন।
               </h2>
               <p className="mt-4 text-body-sm leading-7 text-forest-100">
                 Many people do not know a scientific name. The database supports
@@ -175,19 +175,19 @@ export default async function BangladeshSnakesPage() {
 
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             <StatCard
-              label="Published species"
+              label="প্রকাশিত প্রজাতি"
               value={totalSpecies}
-              note="Published snake profiles currently available in the DESCF database."
+              note="ডিইএসসিএফ ডাটাবেসে বর্তমানে প্রকাশিত সাপের প্রোফাইল।"
             />
             <StatCard
               label="Non-venomous"
               value={nonVenomousCount}
-              note="Separating harmless species is important for public awareness."
+              note="জনসচেতনতার জন্য নির্বিষ প্রজাতি আলাদা করে বোঝা গুরুত্বপূর্ণ।"
             />
             <StatCard
               label="Medically important"
               value={medicallyImportantCount}
-              note="This group is a priority for safety communication."
+              note="নিরাপত্তা যোগাযোগের জন্য এই গ্রুপটি অগ্রাধিকারযোগ্য।"
             />
           </div>
         </div>
@@ -209,19 +209,19 @@ export default async function BangladeshSnakesPage() {
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             <StandardCard
               title="Names and identity"
-              text="Bangla name, local name, English name, scientific name, and slug aliases help people search more easily."
+              text="বাংলা নাম, স্থানীয় নাম, ইংরেজি নাম, বৈজ্ঞানিক নাম এবং slug alias মানুষকে সহজে খুঁজতে সাহায্য করে।"
             />
             <StandardCard
-              title="Safety first"
+              title="নিরাপত্তা আগে"
               text="This database is not a handling or rescue manual. Safe distance and responsible response remain the priority."
             />
             <StandardCard
               title="Ecology matters"
-              text="Profiles can include habitat, diet, ecological role, and coexistence-focused learning."
+              text="প্রোফাইলে আবাসস্থল, খাদ্যাভ্যাস, পরিবেশগত ভূমিকা এবং সহাবস্থানভিত্তিক শেখার বিষয় থাকতে পারে।"
             />
             <StandardCard
               title="Location privacy"
-              text="Sensitive species and habitats should be protected by avoiding exact location disclosure."
+              text="সুনির্দিষ্ট অবস্থান প্রকাশ না করে সংবেদনশীল প্রজাতি ও আবাসস্থল সুরক্ষিত রাখা উচিত।"
             />
           </div>
         </div>
@@ -249,13 +249,13 @@ export default async function BangladeshSnakesPage() {
         <div className="container-site py-12 md:py-14 lg:py-16">
           <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="section-label mb-3">Species database</p>
+              <p className="section-label mb-3">প্রজাতি ডাটাবেস</p>
               <h2 className="font-serif text-h2 text-earth-950">
-                Browse snake species profiles.
+                সাপের প্রজাতি প্রোফাইল দেখুন।
               </h2>
               <p className="mt-4 max-w-2xl text-body leading-7 text-earth-600">
-                Search and filter published profiles by name, venom status, IUCN status,
-                family, local names, and available keywords.
+                নাম, বিষের অবস্থা, IUCN অবস্থা,
+                পরিবার, স্থানীয় নাম এবং keyword দিয়ে প্রকাশিত প্রোফাইল খুঁজুন ও ফিল্টার করুন।
               </p>
             </div>
 
