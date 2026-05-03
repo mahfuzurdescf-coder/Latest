@@ -126,7 +126,7 @@ function EventRow({ event }: { event: EventCardType }) {
 
       <div className="flex items-end sm:items-center">
         <span className="text-label text-forest-800 transition group-hover:translate-x-1">
-          View event ?
+          ইভেন্ট দেখুন
         </span>
       </div>
     </Link>
@@ -142,13 +142,13 @@ function EmptyEventCard({
 }) {
   return (
     <div className="rounded-[1.5rem] border border-dashed border-earth-300 bg-white/70 p-8">
-      <p className="section-label mb-3">No records yet</p>
+      <p className="section-label mb-3">এখনো কোনো রেকর্ড নেই</p>
       <h2 className="font-serif text-3xl text-earth-950">{title}</h2>
       <p className="mt-4 max-w-2xl text-body leading-7 text-earth-600">
         {description}
       </p>
       <Link href="/contact" className="btn-secondary mt-6">
-        Contact DESCF
+        ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
       </Link>
     </div>
   )
@@ -200,7 +200,7 @@ export default async function EventsPage() {
                   Browse events
                 </a>
                 <Link href="/programmes" className="btn-secondary border-white/25 bg-white/10 text-white hover:bg-white hover:text-forest-950">
-                  View programmes
+                  প্রোগ্রাম দেখুন
                 </Link>
               </div>
             </div>
@@ -336,7 +336,7 @@ export default async function EventsPage() {
                 </div>
 
                 <Link href="/contact" className="btn-secondary bg-white text-forest-950 hover:bg-gold-200">
-                  Contact DESCF
+                  ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
                 </Link>
               </div>
             </div>

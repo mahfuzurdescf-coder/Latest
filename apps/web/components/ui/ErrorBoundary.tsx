@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <p className="text-body text-earth-700 mb-4">
             We encountered an error. Please try again or contact us.
           </p>
-          <a href="/" className="btn-primary">Back to home</a>
+          <a href="/" className="btn-primary">হোমে ফিরুন</a>
         </main>
       )
     }

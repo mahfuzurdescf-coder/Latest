@@ -1,4 +1,4 @@
-﻿import Image from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { StatusBadge, CategoryBadge } from '@/components/ui'
@@ -118,7 +118,7 @@ export function ArticleCard({ post, featured = false, className }: ArticleCardPr
               <span aria-hidden="true" className="text-earth-300">/</span>
             )}
 
-            {hasReadingTime && <span>{post.readingTime} min read</span>}
+            {hasReadingTime && <span>{post.readingTime} মিনিট পড়া</span>}
           </div>
         )}
       </div>
@@ -341,7 +341,7 @@ export function EventCard({ event, className }: EventCardProps) {
 
       <div className="flex flex-wrap gap-2 sm:flex-col sm:items-stretch">
         <Link href={detailHref} className="btn-secondary px-4 py-2 text-xs">
-          View event
+          ইভেন্ট দেখুন
         </Link>
 
         {isUpcoming ? (

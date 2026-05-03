@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { SnakeSpeciesBrowser } from '@/components/wildlife/SnakeSpeciesBrowser'
@@ -8,7 +8,7 @@ import { snakeSpeciesQuery } from '@/lib/sanity/queries'
 import type { SpeciesProfileCard } from '@/types/sanity'
 
 const BD_SNAKES = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
-const VIEW_SPECIES = 'Species \u09a6\u09c7\u0996\u09c1\u09a8'
+const VIEW_SPECIES = 'প্রজাতি দেখুন'
 const READ_PROKRITI = '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be \u09aa\u09dc\u09c1\u09a8'
 
 export const revalidate = 60
@@ -147,7 +147,7 @@ export default async function BangladeshSnakesPage() {
 
             <div className="rounded-[2rem] border border-white/10 bg-white/[0.055] p-6 shadow-card backdrop-blur-sm">
               <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                Search guide
+                গাইডে খুঁজুন
               </p>
               <h2 className="mt-4 font-serif text-3xl leading-tight text-white">
                 Search by local, English, or scientific name.
@@ -231,7 +231,7 @@ export default async function BangladeshSnakesPage() {
         <div className="container-site py-10 md:py-12">
           <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
-              <p className="section-label mb-3">Public safety note</p>
+              <p className="section-label mb-3">জননিরাপত্তা নোট</p>
               <h2 className="font-serif text-3xl text-earth-950">
                 Keep distance. Do not handle snakes.
               </h2>
@@ -304,7 +304,7 @@ export default async function BangladeshSnakesPage() {
                 href="/contact"
                 className="mt-6 inline-flex rounded-full border border-forest-300 px-5 py-3 text-sm font-semibold text-forest-900 transition hover:bg-white"
               >
-                Contact DESCF
+                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
               </Link>
             </div>
           </div>

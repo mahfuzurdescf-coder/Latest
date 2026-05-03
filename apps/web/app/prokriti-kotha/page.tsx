@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -94,7 +94,7 @@ function ArticleCard({
 
           {article.readingTime ? (
             <span className="rounded-full border border-earth-200 bg-earth-50 px-3 py-1 text-xs font-semibold text-earth-600">
-              {article.readingTime} min read
+              {article.readingTime} মিনিট পড়া
             </span>
           ) : null}
         </div>
@@ -325,7 +325,7 @@ export default async function ProkritiKothaPage() {
                 public awareness, research এবং coexistence education—আরও human-readable করবে।
               </p>
               <Link href="/current-work" className="btn-secondary mt-7">
-                Explore DESCF work
+                ডিইএসসিএফের কাজ দেখুন
               </Link>
             </div>
           </div>

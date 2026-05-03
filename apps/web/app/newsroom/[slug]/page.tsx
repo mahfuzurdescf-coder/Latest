@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -194,7 +194,7 @@ export default async function NewsroomArticlePage({ params }: Props) {
                   {publishedDateLabel && <span>{publishedDateLabel}</span>}
 
                   {typeof post.readingTime === 'number' && post.readingTime > 0 && (
-                    <span>{post.readingTime} min read</span>
+                    <span>{post.readingTime} মিনিট পড়া</span>
                   )}
                 </div>
 
@@ -274,7 +274,7 @@ export default async function NewsroomArticlePage({ params }: Props) {
                 <ShareButtons
                   title={post.title}
                   description={getPostDescription(post)}
-                  label="Share this article"
+                  label="এই লেখা শেয়ার করুন"
                 />
                 <div className="rounded-xl border border-earth-200 bg-white p-5">
                   <h2 className="font-serif text-xl text-earth-900">
