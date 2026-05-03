@@ -1,4 +1,4 @@
-﻿import type { StructureResolver } from 'sanity/structure'
+import type { StructureResolver } from 'sanity/structure'
 
 import { ExportSubmissionsTool } from '../components/ExportSubmissionsTool'
 
@@ -477,4 +477,3 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
     ])
-

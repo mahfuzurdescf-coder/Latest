@@ -1,4 +1,4 @@
-﻿import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 const PAGE_KEYS = [
   { title: 'About', value: 'about' },
@@ -172,4 +172,3 @@ export const pageContent = defineType({
     },
   },
 })
-
