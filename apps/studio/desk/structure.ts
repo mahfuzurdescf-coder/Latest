@@ -1,4 +1,4 @@
-import type { StructureResolver } from 'sanity/structure'
+﻿import type { StructureResolver } from 'sanity/structure'
 
 import { ExportSubmissionsTool } from '../components/ExportSubmissionsTool'
 
@@ -81,6 +81,7 @@ export const deskStructure: StructureResolver = (S) =>
                       singletonItem(S, 'Strategic Priorities Page', 'pageContent', 'pageContent.strategic-priorities'),
                       singletonItem(S, 'Bangladesh Wildlife Page', 'pageContent', 'pageContent.bangladesh-wildlife'),
                       singletonItem(S, 'Bangladesh Snakes Page', 'pageContent', 'pageContent.bangladesh-snakes'),
+                      singletonItem(S, 'Prokriti Kotha Page', 'pageContent', 'pageContent.prokriti-kotha'),
                     ]),
                 )
             ]),
@@ -478,3 +479,4 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
     ])
+
