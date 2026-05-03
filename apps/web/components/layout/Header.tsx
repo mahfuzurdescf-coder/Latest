@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -13,12 +13,12 @@ interface HeaderProps {
 }
 
 const DEFAULT_NAV: NavLink[] = [
-  { label: 'Organisation', href: '/about' },
-  { label: 'Current Work', href: '/current-work' },
+  { label: 'সংগঠন', href: '/about' },
+  { label: 'চলমান কাজ', href: '/current-work' },
   { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
   { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
-  { label: 'Resources', href: '/evidence-resources' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'রিসোর্স', href: '/evidence-resources' },
+  { label: 'যোগাযোগ', href: '/contact' },
 ]
 
 const FIXED_LABELS_BY_HREF: Record<string, string> = {

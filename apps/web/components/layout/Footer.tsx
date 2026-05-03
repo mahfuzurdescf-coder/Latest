@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 
 import { LogoMark } from '@/components/brand/LogoMark'
 import type { NavLink, SiteFooterSection, SiteSettings } from '@/types/sanity'
@@ -16,39 +16,39 @@ const DEFAULT_FOOTER_SECTIONS: FooterSection[] = [
   {
     title: 'Organisation',
     links: [
-      { label: 'About DESCF', href: '/about' },
-      { label: 'Mission & Vision', href: '/mission' },
-      { label: 'Team', href: '/team' },
-      { label: 'Governance', href: '/governance' },
+      { label: 'ডিইএসসিএফ সম্পর্কে', href: '/about' },
+      { label: 'মিশন ও ভিশন', href: '/mission' },
+      { label: 'টিম', href: '/team' },
+      { label: 'গভর্নেন্স', href: '/governance' },
     ],
   },
   {
     title: 'Work',
     links: [
-      { label: 'Current Work', href: '/current-work' },
-      { label: 'Programmes', href: '/programmes' },
-      { label: 'Strategic Priorities', href: '/strategic-priorities' },
-      { label: 'Events', href: '/events' },
+      { label: 'চলমান কাজ', href: '/current-work' },
+      { label: 'প্রোগ্রাম', href: '/programmes' },
+      { label: 'কৌশলগত অগ্রাধিকার', href: '/strategic-priorities' },
+      { label: 'ইভেন্ট', href: '/events' },
     ],
   },
   {
     title: 'Sections',
     links: [
-      { label: 'Newsroom', href: '/newsroom' },
+      { label: 'নিউজরুম', href: '/newsroom' },
       { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
-      { label: 'Bangladesh Wildlife', href: '/bangladesh-wildlife' },
+      { label: 'বাংলাদেশের বন্যপ্রাণী', href: '/bangladesh-wildlife' },
       { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
-      { label: 'Reports & Publications', href: '/reports-publications' },
-      { label: 'Evidence & Resources', href: '/evidence-resources' },
-      { label: 'Media', href: '/media' },
+      { label: 'রিপোর্ট ও প্রকাশনা', href: '/reports-publications' },
+      { label: 'তথ্যপ্রমাণ ও রিসোর্স', href: '/evidence-resources' },
+      { label: 'মিডিয়া', href: '/media' },
     ],
   },
   {
     title: 'Connect',
     links: [
-      { label: 'Partner With Us', href: '/partner' },
-      { label: 'Support DESCF', href: '/donate' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'সহযোগিতা করুন', href: '/partner' },
+      { label: 'ডিইএসসিএফকে সহায়তা করুন', href: '/donate' },
+      { label: 'যোগাযোগ', href: '/contact' },
     ],
   },
 ]
