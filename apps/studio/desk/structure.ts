@@ -80,6 +80,7 @@ export const deskStructure: StructureResolver = (S) =>
                       singletonItem(S, 'Partner With Us Page', 'pageContent', 'pageContent.partner-with-us'),
                       singletonItem(S, 'Strategic Priorities Page', 'pageContent', 'pageContent.strategic-priorities'),
                       singletonItem(S, 'Bangladesh Wildlife Page', 'pageContent', 'pageContent.bangladesh-wildlife'),
+                      singletonItem(S, 'Bangladesh Snakes Page', 'pageContent', 'pageContent.bangladesh-snakes'),
                     ]),
                 )
             ]),

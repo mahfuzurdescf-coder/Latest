@@ -9,6 +9,7 @@ const PAGE_KEYS = [
   { title: 'Donate', value: 'donate' },
   { title: 'Strategic Priorities', value: 'strategic-priorities' },
   { title: 'Bangladesh Wildlife', value: 'bangladesh-wildlife' },
+  { title: 'Bangladesh Snakes', value: 'bangladesh-snakes' },
   { title: 'Governance', value: 'governance' },
   { title: 'Team', value: 'team' },
   { title: 'Contact', value: 'contact' },
