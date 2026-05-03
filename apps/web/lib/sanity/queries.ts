@@ -983,3 +983,29 @@ export const PAGE_CONTENT_BY_KEY_QUERY = /* groq */ `
 `
 
 
+
+export const UI_LABELS_QUERY = `*[_type == "uiLabels"][0]{
+  _id,
+  _type,
+  readMore,
+  learnMore,
+  viewDetails,
+  register,
+  submit,
+  download,
+  search,
+  filter,
+  clearFilters,
+  backToHome,
+  backToEvents,
+  backToResources,
+  contactUs,
+  partnerWithUs,
+  noResults,
+  translationUnavailable,
+  viewBanglaVersion,
+  sending,
+  submitting,
+  submissionFailed,
+  registrationFailed
+}`

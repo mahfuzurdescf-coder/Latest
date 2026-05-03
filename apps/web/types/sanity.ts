@@ -837,3 +837,35 @@ export interface PageContent {
 }
 
 
+
+// --- UI Labels ---------------------------------------------------------------
+export interface LocalizedLabel {
+  bn: string
+  en?: string
+}
+
+export interface UiLabels {
+  _id?: string
+  _type?: 'uiLabels'
+  readMore?: LocalizedLabel
+  learnMore?: LocalizedLabel
+  viewDetails?: LocalizedLabel
+  register?: LocalizedLabel
+  submit?: LocalizedLabel
+  download?: LocalizedLabel
+  search?: LocalizedLabel
+  filter?: LocalizedLabel
+  clearFilters?: LocalizedLabel
+  backToHome?: LocalizedLabel
+  backToEvents?: LocalizedLabel
+  backToResources?: LocalizedLabel
+  contactUs?: LocalizedLabel
+  partnerWithUs?: LocalizedLabel
+  noResults?: LocalizedLabel
+  translationUnavailable?: LocalizedLabel
+  viewBanglaVersion?: LocalizedLabel
+  sending?: LocalizedLabel
+  submitting?: LocalizedLabel
+  submissionFailed?: LocalizedLabel
+  registrationFailed?: LocalizedLabel
+}
