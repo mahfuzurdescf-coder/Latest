@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -6,31 +6,109 @@ import { useEffect, useState } from 'react'
 
 import { LogoMark } from '@/components/brand/LogoMark'
 import { cn } from '@/lib/utils'
-import type { SiteSettings } from '@/types/sanity'
+import type { NavLink, SiteSettings } from '@/types/sanity'
 
 interface HeaderProps {
   settings: SiteSettings
 }
 
-const DEFAULT_NAV = [
+const DEFAULT_NAV: NavLink[] = [
   { label: 'Organisation', href: '/about' },
   { label: 'Current Work', href: '/current-work' },
-  { label: '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be', href: '/prokriti-kotha' },
-  { label: '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa', href: '/bangladesh-wildlife/snakes' },
+  { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
+  { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
   { label: 'Resources', href: '/evidence-resources' },
   { label: 'Contact', href: '/contact' },
 ]
+
+const FIXED_LABELS_BY_HREF: Record<string, string> = {
+  '/prakriti-kotha': 'প্রকৃতি কথা',
+  '/prokriti-kotha': 'প্রকৃতি কথা',
+  '/bangladesher-sap': 'বাংলাদেশের সাপ',
+  '/bangladesh-wildlife/snakes': 'বাংলাদেশের সাপ',
+}
+
+function hasMojibake(value?: string) {
+  return Boolean(value && /Ã|Â|â/.test(value))
+}
+
+function getDisplayLabel(link: NavLink) {
+  const fixedLabel = link.href ? FIXED_LABELS_BY_HREF[link.href] : undefined
+  const label = link.label?.trim()
+
+  if (fixedLabel && (!label || hasMojibake(label))) return fixedLabel
+  return label || fixedLabel || ''
+}
+
+function getNavigationLinks(settings: SiteSettings) {
+  const studioLinks =
+    settings.navLinks?.filter((link) => link?.href && getDisplayLabel(link)) ?? []
+
+  return studioLinks.length > 0 ? studioLinks : DEFAULT_NAV
+}
+
+function isExternalLink(link: NavLink) {
+  if (!link.href) return false
+  return link.isExternal || /^https?:\/\//.test(link.href) || link.href.startsWith('mailto:')
+}
 
 function isActivePath(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/'
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
+function HeaderNavItem({
+  link,
+  pathname,
+  className,
+}: {
+  link: NavLink
+  pathname: string
+  className: string
+}) {
+  const href = link.href
+  const label = getDisplayLabel(link)
+
+  if (!href || !label) return null
+
+  const active = !isExternalLink(link) && isActivePath(pathname, href)
+
+  const itemClassName = cn(
+    className,
+    active
+      ? 'bg-forest-50 text-forest-800'
+      : 'text-earth-600 hover:bg-earth-100 hover:text-earth-950',
+  )
+
+  if (isExternalLink(link)) {
+    return (
+      <a
+        href={href}
+        target={href.startsWith('http') ? '_blank' : undefined}
+        rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        className={itemClassName}
+      >
+        {label}
+      </a>
+    )
+  }
+
+  return (
+    <Link
+      href={href}
+      aria-current={active ? 'page' : undefined}
+      className={itemClassName}
+    >
+      {label}
+    </Link>
+  )
+}
+
 export function Header({ settings }: HeaderProps) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const navLinks = DEFAULT_NAV
+  const navLinks = getNavigationLinks(settings)
   const donationLink = settings.donationLink ?? '/donate'
 
   useEffect(() => {
@@ -51,36 +129,25 @@ export function Header({ settings }: HeaderProps) {
       <div className="container-site">
         <div className="flex h-18 min-h-16 items-center gap-6 py-3">
           <Link
-              href="/"
-              aria-label="Go to DESCF homepage"
-              className="inline-flex items-center rounded-xl transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
-            >
-              <LogoMark showText />
-            </Link>
+            href="/"
+            aria-label="Go to DESCF homepage"
+            className="inline-flex items-center rounded-xl transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+          >
+            <LogoMark showText />
+          </Link>
 
           <nav
             className="ml-3 hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
           >
-            {navLinks.map((link) => {
-              const active = isActivePath(pathname, link.href)
-
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                    active
-                      ? 'bg-forest-50 text-forest-800'
-                      : 'text-earth-600 hover:bg-earth-100 hover:text-earth-950',
-                  )}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
+            {navLinks.map((link) => (
+              <HeaderNavItem
+                key={`${link.href}-${getDisplayLabel(link)}`}
+                link={link}
+                pathname={pathname}
+                className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+              />
+            ))}
           </nav>
 
           <div className="ml-auto flex items-center gap-3">
@@ -134,25 +201,14 @@ export function Header({ settings }: HeaderProps) {
         >
           <div className="container-site py-4">
             <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
-              {navLinks.map((link) => {
-                const active = isActivePath(pathname, link.href)
-
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    aria-current={active ? 'page' : undefined}
-                    className={cn(
-                      'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                      active
-                        ? 'bg-forest-50 text-forest-800'
-                        : 'text-earth-700 hover:bg-earth-100 hover:text-earth-950',
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                )
-              })}
+              {navLinks.map((link) => (
+                <HeaderNavItem
+                  key={`${link.href}-${getDisplayLabel(link)}-mobile`}
+                  link={link}
+                  pathname={pathname}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+                />
+              ))}
 
               <Link
                 href={donationLink}
@@ -167,4 +223,3 @@ export function Header({ settings }: HeaderProps) {
     </header>
   )
 }
-

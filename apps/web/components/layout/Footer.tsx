@@ -1,26 +1,18 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 import { LogoMark } from '@/components/brand/LogoMark'
-import type { SiteSettings } from '@/types/sanity'
+import type { NavLink, SiteSettings } from '@/types/sanity'
 
 interface FooterProps {
   settings: SiteSettings
 }
 
-
-function getFooterLabel(link: { label?: string; href?: string }) {
-  if (link.href === '/prakriti-kotha' || link.href === '/prokriti-kotha') {
-    return '\u09aa\u09cd\u09b0\u0995\u09c3\u09a4\u09bf \u0995\u09a5\u09be'
-  }
-
-  if (link.href === '/bangladesher-sap') {
-    return '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
-  }
-
-  return link.label
+type FooterSection = {
+  title: string
+  links: NavLink[]
 }
 
-const FOOTER_SECTIONS = [
+const DEFAULT_FOOTER_SECTIONS: FooterSection[] = [
   {
     title: 'Organisation',
     links: [
@@ -43,10 +35,10 @@ const FOOTER_SECTIONS = [
     title: 'Sections',
     links: [
       { label: 'Newsroom', href: '/newsroom' },
-      { label: 'à¦ªà§à¦°à¦•à§ƒà¦¤à¦¿ à¦•à¦¥à¦¾', href: '/prokriti-kotha' },
+      { label: 'প্রকৃতি কথা', href: '/prokriti-kotha' },
       { label: 'Bangladesh Wildlife', href: '/bangladesh-wildlife' },
-      { label: 'à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶à§‡à¦° à¦¸à¦¾à¦ª', href: '/bangladesh-wildlife/snakes' },
-      { label: 'Reports & Publications', href: '/reports' },
+      { label: 'বাংলাদেশের সাপ', href: '/bangladesh-wildlife/snakes' },
+      { label: 'Reports & Publications', href: '/reports-publications' },
       { label: 'Evidence & Resources', href: '/evidence-resources' },
       { label: 'Media', href: '/media' },
     ],
@@ -60,6 +52,75 @@ const FOOTER_SECTIONS = [
     ],
   },
 ]
+
+const FOOTER_SECTION_TITLES = ['Navigation', 'Work', 'Resources', 'Connect']
+
+const FIXED_LABELS_BY_HREF: Record<string, string> = {
+  '/prakriti-kotha': 'প্রকৃতি কথা',
+  '/prokriti-kotha': 'প্রকৃতি কথা',
+  '/bangladesher-sap': 'বাংলাদেশের সাপ',
+  '/bangladesh-wildlife/snakes': 'বাংলাদেশের সাপ',
+}
+
+function hasMojibake(value?: string) {
+  return Boolean(value && /Ã|Â|â/.test(value))
+}
+
+function getFooterLabel(link: NavLink) {
+  const fixedLabel = link.href ? FIXED_LABELS_BY_HREF[link.href] : undefined
+  const label = link.label?.trim()
+
+  if (fixedLabel && (!label || hasMojibake(label))) return fixedLabel
+  return label || fixedLabel || ''
+}
+
+function isExternalLink(link: NavLink) {
+  if (!link.href) return false
+  return link.isExternal || /^https?:\/\//.test(link.href) || link.href.startsWith('mailto:')
+}
+
+function getFooterSections(settings: SiteSettings): FooterSection[] {
+  const studioLinks =
+    settings.footerLinks?.filter((link) => link?.href && getFooterLabel(link)) ??
+    []
+
+  if (studioLinks.length === 0) return DEFAULT_FOOTER_SECTIONS
+
+  const chunkSize = Math.ceil(studioLinks.length / FOOTER_SECTION_TITLES.length)
+
+  return FOOTER_SECTION_TITLES.map((title, index) => ({
+    title,
+    links: studioLinks.slice(index * chunkSize, (index + 1) * chunkSize),
+  })).filter((section) => section.links.length > 0)
+}
+
+function FooterLink({ link }: { link: NavLink }) {
+  const href = link.href
+  const label = getFooterLabel(link)
+
+  if (!href || !label) return null
+
+  const className = 'text-sm text-earth-100/80 transition-colors hover:text-white'
+
+  if (isExternalLink(link)) {
+    return (
+      <a
+        href={href}
+        target={href.startsWith('http') ? '_blank' : undefined}
+        rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        className={className}
+      >
+        {label}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {label}
+    </Link>
+  )
+}
 
 function SocialLink({
   href,
@@ -84,6 +145,7 @@ function SocialLink({
 
 export function Footer({ settings }: FooterProps) {
   const year = new Date().getFullYear()
+  const footerSections = getFooterSections(settings)
 
   return (
     <footer className="mt-auto bg-forest-950 text-earth-100">
@@ -142,7 +204,7 @@ export function Footer({ settings }: FooterProps) {
           </div>
 
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {FOOTER_SECTIONS.map((section) => (
+            {footerSections.map((section) => (
               <div key={section.title}>
                 <h3 className="mb-4 text-label uppercase tracking-widest text-forest-300">
                   {section.title}
@@ -150,13 +212,8 @@ export function Footer({ settings }: FooterProps) {
 
                 <ul className="space-y-3">
                   {section.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-earth-100/80 transition-colors hover:text-white"
-                      >
-                        {getFooterLabel(link)}
-                      </Link>
+                    <li key={`${section.title}-${link.href}-${getFooterLabel(link)}`}>
+                      <FooterLink link={link} />
                     </li>
                   ))}
                 </ul>
@@ -188,4 +245,3 @@ export function Footer({ settings }: FooterProps) {
     </footer>
   )
 }
-
