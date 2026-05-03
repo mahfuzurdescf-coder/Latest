@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Image from 'next/image'
@@ -10,14 +10,24 @@ export interface SpeciesGalleryImage {
   credit?: string
 }
 
+export type SpeciesGalleryLabels = {
+  thumbnailAriaLabelPrefix?: string
+}
+
 interface SpeciesImageGalleryProps {
   images: SpeciesGalleryImage[]
   fallbackTitle: string
+  labels?: SpeciesGalleryLabels
 }
 
-export function SpeciesImageGallery({ images, fallbackTitle }: SpeciesImageGalleryProps) {
+export function SpeciesImageGallery({
+  images,
+  fallbackTitle,
+  labels,
+}: SpeciesImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeImage = images[activeIndex]
+  const thumbnailAriaLabelPrefix = labels?.thumbnailAriaLabelPrefix || 'Show image'
 
   if (!activeImage) {
     return (
@@ -63,7 +73,7 @@ export function SpeciesImageGallery({ images, fallbackTitle }: SpeciesImageGalle
                   ? 'border-bark-300 ring-2 ring-bark-300/40'
                   : 'border-white/10 opacity-75 hover:opacity-100')
               }
-              aria-label={'Show image ' + (index + 1)}
+              aria-label={`${thumbnailAriaLabelPrefix} ${index + 1}`}
             >
               <Image
                 src={image.url}

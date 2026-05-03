@@ -1,23 +1,53 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+
+export type ShareButtonLabels = {
+  title?: string
+  description?: string
+  nativeShare?: string
+  copied?: string
+  copyLink?: string
+  facebook?: string
+  whatsapp?: string
+  x?: string
+}
 
 interface ShareButtonsProps {
   title: string
   description?: string
   label?: string
+  labels?: ShareButtonLabels
+}
+
+const fallbackLabels: Required<ShareButtonLabels> = {
+  title: 'এই কনটেন্ট শেয়ার করুন',
+  description: 'আপনার কমিউনিটির সঙ্গে ডিইএসসিএফ কনটেন্ট শেয়ার করুন।',
+  nativeShare: 'Share',
+  copied: 'Copied',
+  copyLink: 'Copy link',
+  facebook: 'Facebook',
+  whatsapp: 'WhatsApp',
+  x: 'X',
 }
 
 export function ShareButtons({
   title,
   description,
-  label = 'এই কনটেন্ট শেয়ার করুন',
+  label,
+  labels,
 }: ShareButtonsProps) {
   const pathname = usePathname()
   const [currentUrl, setCurrentUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const [canNativeShare, setCanNativeShare] = useState(false)
+
+  const mergedLabels = {
+    ...fallbackLabels,
+    ...(labels ?? {}),
+    title: label || labels?.title || fallbackLabels.title,
+  }
 
   useEffect(() => {
     const url = 'https://www.descf.org' + pathname
@@ -57,9 +87,9 @@ export function ShareButtons({
 
   return (
     <div className="rounded-2xl border border-earth-200 bg-white p-5 shadow-sm">
-      <h2 className="font-serif text-xl text-earth-900">{label}</h2>
+      <h2 className="font-serif text-xl text-earth-900">{mergedLabels.title}</h2>
       <p className="mt-2 text-sm leading-6 text-earth-600">
-        আপনার কমিউনিটির সঙ্গে ডিইএসসিএফ কনটেন্ট শেয়ার করুন।
+        {mergedLabels.description}
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -69,7 +99,7 @@ export function ShareButtons({
             onClick={handleNativeShare}
             className="rounded-full bg-forest-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-forest-900"
           >
-            Share
+            {mergedLabels.nativeShare}
           </button>
         )}
 
@@ -78,7 +108,7 @@ export function ShareButtons({
           onClick={handleCopyLink}
           className="rounded-full border border-forest-300 bg-forest-50 px-4 py-2 text-sm font-semibold text-forest-900 transition hover:bg-forest-100"
         >
-          {copied ? 'Copied' : 'Copy link'}
+          {copied ? mergedLabels.copied : mergedLabels.copyLink}
         </button>
 
         <a
@@ -87,7 +117,7 @@ export function ShareButtons({
           rel="noreferrer"
           className="rounded-full border border-earth-200 bg-white px-4 py-2 text-sm font-semibold text-earth-700 transition hover:border-forest-300 hover:text-forest-900"
         >
-          Facebook
+          {mergedLabels.facebook}
         </a>
 
         <a
@@ -96,7 +126,7 @@ export function ShareButtons({
           rel="noreferrer"
           className="rounded-full border border-earth-200 bg-white px-4 py-2 text-sm font-semibold text-earth-700 transition hover:border-forest-300 hover:text-forest-900"
         >
-          WhatsApp
+          {mergedLabels.whatsapp}
         </a>
 
         <a
@@ -105,10 +135,9 @@ export function ShareButtons({
           rel="noreferrer"
           className="rounded-full border border-earth-200 bg-white px-4 py-2 text-sm font-semibold text-earth-700 transition hover:border-forest-300 hover:text-forest-900"
         >
-          X
+          {mergedLabels.x}
         </a>
       </div>
     </div>
   )
 }
-
