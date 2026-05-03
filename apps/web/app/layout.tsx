@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 
 import './globals.css'
 
@@ -9,6 +10,8 @@ import { SITE } from '@/lib/site'
 import { sanityFetch } from '@/lib/sanity/client'
 import { SITE_SETTINGS_QUERY } from '@/lib/sanity/queries'
 import type { SiteSettings } from '@/types/sanity'
+
+const GA_MEASUREMENT_ID = 'G-QB65DP9R63'
 
 export const metadata: Metadata = {
   icons: {
@@ -81,6 +84,22 @@ export default async function RootLayout({
 
 </head>
       <body className="flex min-h-screen flex-col bg-earth-50 text-earth-800">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag("js", new Date());
+              gtag("config", "${GA_MEASUREMENT_ID}");
+            `,
+          }}
+        />
         <SkipLink />
         <Header settings={safeSettings} />
         <div className="flex-1">{children}</div>
