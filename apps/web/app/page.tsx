@@ -77,6 +77,22 @@ export default async function HomePage() {
       : data.latestResources ?? []
 
   const organizationJsonLd = buildOrganizationJSONLD()
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.url,
+  logo: {
+    '@type': 'ImageObject',
+    url: SITE.ogImage,
+  },
+  sameAs: [
+    'https://www.facebook.com/descf',
+    'https://twitter.com/descf',
+    'https://www.instagram.com/descf',
+  ],
+  publisher: organizationJsonLd.publisher,
+}
 
   return (
     <>
