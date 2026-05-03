@@ -9,6 +9,7 @@ const PAGE_KEYS = [
   { title: 'Contact', value: 'contact' },
   { title: 'Resources', value: 'resources' },
   { title: 'Reports & Publications', value: 'reports-publications' },
+  { title: 'Reports', value: 'reports' },
   { title: 'Evidence & Resources', value: 'evidence-resources' },
   { title: 'Media', value: 'media' },
   { title: 'Partner With Us', value: 'partner-with-us' },

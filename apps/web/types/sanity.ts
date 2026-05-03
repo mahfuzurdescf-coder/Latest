@@ -786,6 +786,7 @@ export type PageContentKey =
   | 'contact'
   | 'resources'
   | 'reports-publications'
+  | 'reports'
   | 'evidence-resources'
   | 'media'
   | 'partner-with-us'
