@@ -106,7 +106,7 @@ const websiteJsonLd = {
         <HomeHero curation={curation} />
         <HomeGatewaySection content={getHomepageSection('gateway')} />
         <HomeTrustStrip content={getHomepageSection('trust-strip')} />
-        <HomeProgrammes programmes={programmes} />
+        <HomeProgrammes programmes={programmes} content={getHomepageSection('programmes')} />
         <HomeNewsroom posts={uniquePosts} />
         <HomeSnakeGuideSection />
         <HomeResources resources={resources} />
