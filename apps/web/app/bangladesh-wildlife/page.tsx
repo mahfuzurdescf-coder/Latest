@@ -1,26 +1,123 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import { urlForImage } from '@/lib/sanity/image'
-import { wildlifeGroupsQuery } from '@/lib/sanity/queries'
-import type { WildlifeGroupCard } from '@/types/sanity'
+import {
+  PAGE_CONTENT_BY_KEY_QUERY,
+  wildlifeGroupsQuery,
+} from '@/lib/sanity/queries'
+import type {
+  NavLink,
+  PageContent,
+  PageSection,
+  WildlifeGroupCard,
+} from '@/types/sanity'
 
-const BD_WILDLIFE = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09ac\u09a8\u09cd\u09af\u09aa\u09cd\u09b0\u09be\u09a3\u09c0'
-const BD_SNAKES = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
-const BD_FROGS = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09ac\u09cd\u09af\u09be\u0999'
-const BD_BIRDS = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09aa\u09be\u0996\u09bf'
+const PAGE_KEY = 'bangladesh-wildlife'
+
+const BD_WILDLIFE = 'বাংলাদেশের বন্যপ্রাণী'
+const BD_SNAKES = 'বাংলাদেশের সাপ'
+const BD_FROGS = 'বাংলাদেশের ব্যাঙ'
+const BD_BIRDS = 'বাংলাদেশের পাখি'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: BD_WILDLIFE + ' | DESCF',
+const fallbackMetadata = {
+  title: BD_WILDLIFE,
   description:
     "DESCF's science-based digital field guide for snakes, frogs, birds, and other wildlife of Bangladesh.",
-  alternates: {
-    canonical: 'https://www.descf.org/bangladesh-wildlife',
+}
+
+const fallbackHero = {
+  eyebrow: 'ডিইএসসিএফ ফিল্ড গাইড',
+  title: BD_WILDLIFE,
+  description:
+    "A science-based public field-guide system for learning about Bangladesh's wildlife through structured profiles, safety-first communication, and conservation-focused knowledge.",
+  primaryCta: { label: 'সাপের ডাটাবেস দেখুন', href: '/bangladesh-wildlife/snakes' },
+  secondaryCta: { label: 'Read Prokriti Kotha', href: '/prokriti-kotha' },
+}
+
+const fallbackHeroPanel = {
+  eyebrow: 'Database principle',
+  title: 'Field-guide data, not scattered posts.',
+  description:
+    'প্রজাতি প্রোফাইলে পরিচয়, শ্রেণিবিন্যাস, অবস্থা, আবাসস্থল, বিস্তৃতি, পরিবেশগত ভূমিকা, ছবি, নিরাপত্তা নোট এবং সম্পর্কিত লেখা থাকা উচিত in one structured place.',
+}
+
+const fallbackPrinciples = [
+  {
+    eyebrow: 'Purpose',
+    title: 'A public knowledge base for responsible wildlife learning.',
+    description:
+      'এই অংশটি প্রজাতি ডাটাবেস হিসেবে তৈরি। প্রতিটি প্রোফাইলে শনাক্তকরণ, শ্রেণিবিন্যাস, সংরক্ষণ অবস্থা, আবাসস্থল, বিস্তৃতি, পরিবেশগত ভূমিকা, মিথ ও তথ্য, ছবি গ্যালারি এবং জননিরাপত্তা নির্দেশনা থাকতে পারে।',
   },
+  {
+    eyebrow: 'নিরাপত্তা নীতি',
+    title: 'Education first, no handling manual.',
+    description:
+      'The database should never encourage risky handling. It should support safe distance, trained response, conservation awareness, and reduction of fear-based harm.',
+  },
+]
+
+const fallbackGroupsSection = {
+  eyebrow: 'গ্রুপ দেখুন',
+  title: 'Wildlife sections',
+  description:
+    'Start with the active snake database. Future wildlife groups can use the same profile system without changing the core architecture.',
+}
+
+const fallbackCardLabels = {
+  activeBadge: 'Active database',
+  fieldGuide: 'ডিজিটাল ফিল্ড গাইড',
+  plannedFieldGuide: 'পরিকল্পিত ফিল্ড গাইড',
+  viewProfile: 'প্রোফাইল দেখুন',
+  contentModelReady: 'Content model ready',
+}
+
+const fallbackStaticSnakesCard = {
+  title: BD_SNAKES,
+  description:
+    'A searchable public field guide with Bangla names, English names, scientific names, venom status, habitat notes, distribution, images, and safety guidance.',
+  cta: { label: 'সাপ দেখুন', href: '/bangladesh-wildlife/snakes' },
+}
+
+const fallbackPlannedGroups = [
+  {
+    title: BD_FROGS,
+    description:
+      'Amphibian profiles can be added later using the same species profile schema.',
+  },
+  {
+    title: BD_BIRDS,
+    description:
+      'Bird profiles can be added later without changing the public field-guide architecture.',
+  },
+]
+
+function getSection(sections: PageSection[], sectionId: string) {
+  return sections.find((section) => section.sectionId === sectionId)
+}
+
+function getLink(link: NavLink | undefined, fallback: NavLink) {
+  return {
+    label: link?.label || fallback.label,
+    href: link?.href || fallback.href,
+  }
+}
+
+function getSeo(page: PageContent | null) {
+  return (page as (PageContent & { seo?: { title?: string; description?: string } }) | null)?.seo
+}
+
+async function getBangladeshWildlifePageContent() {
+  return sanityFetch<PageContent | null>({
+    query: PAGE_CONTENT_BY_KEY_QUERY,
+    params: { pageKey: PAGE_KEY },
+    tags: ['pageContent'],
+  })
 }
 
 function getGroupHref(group: WildlifeGroupCard): string {
@@ -29,7 +126,13 @@ function getGroupHref(group: WildlifeGroupCard): string {
   return '/bangladesh-wildlife/' + slug
 }
 
-function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
+function WildlifeGroupCardView({
+  group,
+  labels,
+}: {
+  group: WildlifeGroupCard
+  labels: typeof fallbackCardLabels
+}) {
   const imageUrl = group.heroImage
     ? urlForImage(group.heroImage)?.width(900).height(600).url()
     : null
@@ -58,7 +161,7 @@ function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
             {isSnakes && (
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-forest-950/80 to-transparent px-5 pb-4 pt-12">
                 <span className="rounded-full border border-white/15 bg-white/12 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-                  Active database
+                  {labels.activeBadge}
                 </span>
               </div>
             )}
@@ -80,7 +183,7 @@ function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
 
         <div className="p-6">
           <p className={isSnakes ? 'text-label font-semibold uppercase tracking-[0.18em] text-bark-300' : 'section-label mb-3'}>
-            ডিজিটাল ফিল্ড গাইড
+            {labels.fieldGuide}
           </p>
 
           <h2
@@ -99,7 +202,7 @@ function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
           )}
 
           <p className={'mt-6 text-sm font-semibold ' + (isSnakes ? 'text-bark-200' : 'text-forest-800')}>
-            প্রোফাইল দেখুন <span aria-hidden="true">-&gt;</span>
+            {labels.viewProfile} <span aria-hidden="true">-&gt;</span>
           </p>
         </div>
       </Link>
@@ -107,24 +210,29 @@ function WildlifeGroupCardView({ group }: { group: WildlifeGroupCard }) {
   )
 }
 
-function StaticSnakesCard() {
+function StaticSnakesCard({
+  card,
+  activeBadge,
+}: {
+  card: typeof fallbackStaticSnakesCard
+  activeBadge: string
+}) {
   return (
     <article className="group overflow-hidden rounded-[1.75rem] border border-forest-900 bg-forest-950 p-6 text-white shadow-card transition duration-200 hover:-translate-y-1 hover:shadow-card-lg">
       <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-        Active database
+        {activeBadge}
       </p>
       <h2 className="mt-4 font-serif text-3xl leading-tight text-white">
-        {BD_SNAKES}
+        {card.title}
       </h2>
       <p className="mt-4 text-body-sm leading-7 text-forest-100">
-        A searchable public field guide with Bangla names, English names, scientific names,
-        venom status, habitat notes, distribution, images, and safety guidance.
+        {card.description}
       </p>
       <Link
-        href="/bangladesh-wildlife/snakes"
+        href={card.cta.href}
         className="mt-7 inline-flex rounded-full bg-bark-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-bark-600"
       >
-        সাপ দেখুন
+        {card.cta.label}
       </Link>
     </article>
   )
@@ -133,9 +241,11 @@ function StaticSnakesCard() {
 function PlannedGroupCard({
   title,
   description,
+  labels,
 }: {
   title: string
   description: string
+  labels: typeof fallbackCardLabels
 }) {
   return (
     <article className="group overflow-hidden rounded-[1.75rem] border border-earth-200 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-forest-300 hover:shadow-card-lg">
@@ -146,7 +256,7 @@ function PlannedGroupCard({
       </div>
 
       <div className="flex min-h-[190px] flex-col p-6">
-        <p className="section-label mb-3">পরিকল্পিত ফিল্ড গাইড</p>
+        <p className="section-label mb-3">{labels.plannedFieldGuide}</p>
 
         <h2 className="font-serif text-2xl leading-tight text-earth-950">
           {title}
@@ -157,21 +267,93 @@ function PlannedGroupCard({
         </p>
 
         <p className="mt-auto pt-6 text-sm font-semibold text-earth-500">
-          Content model ready <span aria-hidden="true">-&gt;</span>
+          {labels.contentModelReady} <span aria-hidden="true">-&gt;</span>
         </p>
       </div>
     </article>
   )
 }
 
-export default async function BangladeshWildlifePage() {
-  const groups = await sanityFetch<WildlifeGroupCard[]>({
-    query: wildlifeGroupsQuery,
-    tags: ['wildlifeGroup'],
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getBangladeshWildlifePageContent()
+  const seo = getSeo(page)
+
+  return buildMetadata({
+    title: seo?.title || page?.heroTitle || fallbackMetadata.title,
+    description: seo?.description || page?.heroDescription || fallbackMetadata.description,
+    canonicalUrl: 'https://www.descf.org/bangladesh-wildlife',
   })
+}
+
+export default async function BangladeshWildlifePage() {
+  const [page, groups] = await Promise.all([
+    getBangladeshWildlifePageContent(),
+    sanityFetch<WildlifeGroupCard[]>({
+      query: wildlifeGroupsQuery,
+      tags: ['wildlifeGroup'],
+    }),
+  ])
+
+  const sections = page?.sections ?? []
+  const heroPanelSection = getSection(sections, 'hero-panel')
+  const principlesSection = getSection(sections, 'principles')
+  const groupsSection = getSection(sections, 'wildlife-groups')
+  const cardLabelsSection = getSection(sections, 'card-labels')
+  const staticSnakesSection = getSection(sections, 'static-snakes-card')
+  const plannedGroupsSection = getSection(sections, 'planned-groups')
 
   const validGroups = (groups ?? []).filter((group) => group.slug?.current)
   const hasSnakesGroup = validGroups.some((group) => group.slug?.current === 'snakes')
+
+  const heroEyebrow = page?.heroEyebrow || fallbackHero.eyebrow
+  const heroTitle = page?.heroTitle || fallbackHero.title
+  const heroDescription = page?.heroDescription || fallbackHero.description
+  const primaryCta = getLink(page?.primaryCta, fallbackHero.primaryCta)
+  const secondaryCta = getLink(page?.secondaryCta, fallbackHero.secondaryCta)
+
+  const heroPanelEyebrow = heroPanelSection?.eyebrow || fallbackHeroPanel.eyebrow
+  const heroPanelTitle = heroPanelSection?.title || fallbackHeroPanel.title
+  const heroPanelDescription =
+    heroPanelSection?.description || fallbackHeroPanel.description
+
+  const principleCards =
+    principlesSection?.cards && principlesSection.cards.length > 0
+      ? principlesSection.cards.map((card) => ({
+          eyebrow: card.eyebrow || '',
+          title: card.title,
+          description: card.text || '',
+        }))
+      : fallbackPrinciples
+
+  const groupsEyebrow = groupsSection?.eyebrow || fallbackGroupsSection.eyebrow
+  const groupsTitle = groupsSection?.title || fallbackGroupsSection.title
+  const groupsDescription =
+    groupsSection?.description || fallbackGroupsSection.description
+
+  const cardLabels = {
+    activeBadge: cardLabelsSection?.cards?.[0]?.title || fallbackCardLabels.activeBadge,
+    fieldGuide: cardLabelsSection?.cards?.[1]?.title || fallbackCardLabels.fieldGuide,
+    plannedFieldGuide:
+      cardLabelsSection?.cards?.[2]?.title || fallbackCardLabels.plannedFieldGuide,
+    viewProfile: cardLabelsSection?.cards?.[3]?.title || fallbackCardLabels.viewProfile,
+    contentModelReady:
+      cardLabelsSection?.cards?.[4]?.title || fallbackCardLabels.contentModelReady,
+  }
+
+  const staticSnakesCard = {
+    title: staticSnakesSection?.title || fallbackStaticSnakesCard.title,
+    description:
+      staticSnakesSection?.description || fallbackStaticSnakesCard.description,
+    cta: getLink(staticSnakesSection?.primaryCta, fallbackStaticSnakesCard.cta),
+  }
+
+  const plannedGroups =
+    plannedGroupsSection?.cards && plannedGroupsSection.cards.length > 0
+      ? plannedGroupsSection.cards.map((card) => ({
+          title: card.title,
+          description: card.text || '',
+        }))
+      : fallbackPlannedGroups
 
   return (
     <main id="main-content" className="bg-earth-50">
@@ -182,43 +364,39 @@ export default async function BangladeshWildlifePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_390px] lg:items-center">
             <div className="max-w-4xl">
               <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                ডিইএসসিএফ ফিল্ড গাইড
+                {heroEyebrow}
               </p>
 
               <h1 className="mt-5 font-serif text-[clamp(3.2rem,7vw,6rem)] leading-[0.98] tracking-tight text-white">
-                {BD_WILDLIFE}
+                {heroTitle}
               </h1>
 
               <p className="mt-7 max-w-3xl text-xl leading-9 text-forest-100">
-                A science-based public field-guide system for learning about Bangladesh's
-                wildlife through structured profiles, safety-first communication, and
-                conservation-focused knowledge.
+                {heroDescription}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/bangladesh-wildlife/snakes" className="btn-cta">
-                  সাপের ডাটাবেস দেখুন
+                <Link href={primaryCta.href} className="btn-cta">
+                  {primaryCta.label}
                 </Link>
                 <Link
-                  href="/prokriti-kotha"
+                  href={secondaryCta.href}
                   className="rounded-full border border-forest-200 px-5 py-3 text-sm font-semibold text-forest-50 transition hover:bg-white/10"
                 >
-                  Read Prokriti Kotha
+                  {secondaryCta.label}
                 </Link>
               </div>
             </div>
 
             <div className="rounded-[2rem] border border-white/10 bg-white/[0.055] p-6 shadow-card backdrop-blur-sm">
               <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                Database principle
+                {heroPanelEyebrow}
               </p>
               <h2 className="mt-4 font-serif text-3xl leading-tight text-white">
-                Field-guide data, not scattered posts.
+                {heroPanelTitle}
               </h2>
               <p className="mt-4 text-body-sm leading-7 text-forest-100">
-                প্রজাতি প্রোফাইলে পরিচয়, শ্রেণিবিন্যাস, অবস্থা, আবাসস্থল,
-                বিস্তৃতি, পরিবেশগত ভূমিকা, ছবি, নিরাপত্তা নোট এবং সম্পর্কিত লেখা থাকা উচিত
-                in one structured place.
+                {heroPanelDescription}
               </p>
             </div>
           </div>
@@ -228,28 +406,24 @@ export default async function BangladeshWildlifePage() {
       <section className="border-b border-earth-200 bg-white">
         <div className="container-site py-12 md:py-14 lg:py-16">
           <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="rounded-[1.75rem] border border-earth-200 bg-earth-50 p-8 shadow-card">
-              <p className="section-label mb-4">Purpose</p>
-              <h2 className="font-serif text-h2 text-earth-950">
-                A public knowledge base for responsible wildlife learning.
-              </h2>
-              <p className="mt-5 text-body leading-8 text-earth-700">
-                এই অংশটি প্রজাতি ডাটাবেস হিসেবে তৈরি। প্রতিটি প্রোফাইলে
-                শনাক্তকরণ, শ্রেণিবিন্যাস, সংরক্ষণ অবস্থা, আবাসস্থল, বিস্তৃতি,
-                পরিবেশগত ভূমিকা, মিথ ও তথ্য, ছবি গ্যালারি এবং জননিরাপত্তা নির্দেশনা থাকতে পারে।
-              </p>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-bark-200 bg-bark-50 p-8 shadow-card">
-              <p className="section-label mb-4">নিরাপত্তা নীতি</p>
-              <h2 className="font-serif text-h2 text-earth-950">
-                Education first, no handling manual.
-              </h2>
-              <p className="mt-5 text-body leading-8 text-earth-700">
-                The database should never encourage risky handling. It should support safe
-                distance, trained response, conservation awareness, and reduction of fear-based harm.
-              </p>
-            </div>
+            {principleCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-[1.75rem] border border-earth-200 bg-earth-50 p-8 shadow-card"
+              >
+                {card.eyebrow ? (
+                  <p className="section-label mb-4">{card.eyebrow}</p>
+                ) : null}
+                <h2 className="font-serif text-h2 text-earth-950">
+                  {card.title}
+                </h2>
+                {card.description ? (
+                  <p className="mt-5 text-body leading-8 text-earth-700">
+                    {card.description}
+                  </p>
+                ) : null}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -257,34 +431,37 @@ export default async function BangladeshWildlifePage() {
       <section className="bg-earth-50">
         <div className="container-site py-12 md:py-14 lg:py-16">
           <div className="mb-8 max-w-3xl">
-            <p className="section-label mb-3">গ্রুপ দেখুন</p>
-            <h2 className="font-serif text-h2 text-earth-950">
-              Wildlife sections
-            </h2>
+            <p className="section-label mb-3">{groupsEyebrow}</p>
+            <h2 className="font-serif text-h2 text-earth-950">{groupsTitle}</h2>
             <p className="mt-4 text-body leading-8 text-earth-600">
-              Start with the active snake database. Future wildlife groups can use the same
-              profile system without changing the core architecture.
+              {groupsDescription}
             </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {hasSnakesGroup ? (
               validGroups.map((group) => (
-                <WildlifeGroupCardView key={group._id} group={group} />
+                <WildlifeGroupCardView
+                  key={group._id}
+                  group={group}
+                  labels={cardLabels}
+                />
               ))
             ) : (
-              <StaticSnakesCard />
+              <StaticSnakesCard
+                card={staticSnakesCard}
+                activeBadge={cardLabels.activeBadge}
+              />
             )}
 
-            <PlannedGroupCard
-              title={BD_FROGS}
-              description="Amphibian profiles can be added later using the same species profile schema."
-            />
-
-            <PlannedGroupCard
-              title={BD_BIRDS}
-              description="Bird profiles can be added later without changing the public field-guide architecture."
-            />
+            {plannedGroups.map((group) => (
+              <PlannedGroupCard
+                key={group.title}
+                title={group.title}
+                description={group.description}
+                labels={cardLabels}
+              />
+            ))}
           </div>
         </div>
       </section>

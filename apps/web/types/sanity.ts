@@ -1,4 +1,4 @@
-import type { PortableTextBlock } from '@portabletext/react'
+﻿import type { PortableTextBlock } from '@portabletext/react'
 
 // --- Shared primitives --------------------------------------------------------
 
@@ -154,7 +154,7 @@ export interface Post {
   relatedPosts?: PostCard[]
 }
 
-// Lightweight card version ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â used in lists, grids
+// Lightweight card version ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â used in lists, grids
 export interface PostCard
   extends Pick<
     Post,
@@ -795,6 +795,7 @@ export type PageContentKey =
   | 'events'
   | 'donate'
   | 'strategic-priorities'
+  | 'bangladesh-wildlife'
   | 'governance'
   | 'team'
   | 'contact'
@@ -886,3 +887,4 @@ export interface UiLabels {
   submissionFailed?: LocalizedLabel
   registrationFailed?: LocalizedLabel
 }
+
