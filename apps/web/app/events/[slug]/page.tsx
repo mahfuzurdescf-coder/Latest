@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { EventRegistrationForm } from '@/components/forms/EventRegistrationForm'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
+import type { RegistrationFormPublic } from '@/types/sanity'
 
 type PageProps = {
   params: {
@@ -45,7 +47,7 @@ type EventRecord = {
   deadline?: string
   registrationCloseDate?: string
   registrationClosesAt?: string
-  registrationForm?: unknown
+  registrationForm?: RegistrationFormPublic | null
 }
 
 const SITE_URL = 'https://descf.org'
@@ -341,13 +343,13 @@ export default async function EventDetailPage({ params }: PageProps) {
   return (
     <main>
       <section className="border-b border-earth-200 bg-[radial-gradient(circle_at_top_right,rgba(49,94,52,0.10),transparent_32%),linear-gradient(135deg,#fbf8ef_0%,#fffdf8_52%,#eef4ea_100%)]">
-        <div className="mx-auto max-w-6xl px-6 py-12 lg:py-14">
+        <div className="container-site py-12 lg:py-14">
           <nav className="mb-8 text-sm text-earth-700" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-leaf-800">
+            <Link href="/" className="hover:text-forest-800">
               Home
             </Link>
             <span className="px-2">/</span>
-            <Link href="/events" className="hover:text-leaf-800">
+            <Link href="/events" className="hover:text-forest-800">
               Events
             </Link>
             <span className="px-2">/</span>
@@ -356,7 +358,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
           <div className="grid gap-9 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-center">
             <div className="max-w-3xl">
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.38em] text-leaf-800">
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.38em] text-forest-800">
                 {status} event
               </p>
 
@@ -371,21 +373,21 @@ export default async function EventDetailPage({ params }: PageProps) {
               <div className="mt-7 flex flex-wrap gap-3">
                 <a
                   href={registrationTarget}
-                  className="rounded-full bg-leaf-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-leaf-800"
+                  className="btn-primary"
                 >
                   {registrationAvailable ? 'Register now' : 'Contact DESCF'}
                 </a>
                 <Link
                   href="/events"
-                  className="rounded-full border border-leaf-700 px-6 py-3 text-sm font-bold text-leaf-900 transition hover:bg-leaf-50"
+                  className="btn-secondary"
                 >
                   View all events
                 </Link>
               </div>
             </div>
 
-            <aside className="rounded-[1.75rem] border border-earth-200 bg-white/90 p-5 shadow-lg shadow-earth-200/50 backdrop-blur">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.32em] text-leaf-800">
+            <aside className="rounded-[1.75rem] border border-earth-200 bg-white/90 p-5 shadow-card backdrop-blur">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.32em] text-forest-800">
                 Event snapshot
               </p>
 
@@ -423,14 +425,14 @@ export default async function EventDetailPage({ params }: PageProps) {
       </section>
 
 <section className="border-b border-earth-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-5">
+        <div className="container-site py-5">
           <div className="grid gap-3 rounded-[1.75rem] border border-earth-200 bg-earth-50/80 p-3 sm:grid-cols-2 lg:grid-cols-[150px_1fr_1fr_1.2fr_150px]">
             <div className="flex items-center gap-4 rounded-2xl bg-white p-4">
-              <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border border-leaf-200 bg-leaf-50 text-center">
-                <span className="block font-serif text-2xl leading-none text-leaf-900">
+              <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl border border-forest-200 bg-forest-50 text-center">
+                <span className="block font-serif text-2xl leading-none text-forest-900">
                   {day}
                 </span>
-                <span className="block text-[10px] font-bold uppercase tracking-widest text-leaf-800">
+                <span className="block text-[10px] font-bold uppercase tracking-widest text-forest-800">
                   {month}
                 </span>
               </div>
@@ -459,7 +461,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
             <a
               href={registrationTarget}
-              className="grid place-items-center rounded-2xl bg-leaf-700 px-5 py-4 text-center text-sm font-bold text-white transition hover:bg-leaf-800"
+              className="grid place-items-center rounded-2xl bg-forest-700 px-5 py-4 text-center text-sm font-bold text-white transition hover:bg-forest-800"
             >
               {registrationAvailable ? 'Join' : 'Contact'}
             </a>
@@ -470,8 +472,8 @@ export default async function EventDetailPage({ params }: PageProps) {
 <section className="bg-earth-50">
         <div className="mx-auto grid max-w-6xl gap-7 px-6 py-10 lg:grid-cols-[minmax(0,760px)_300px] lg:items-start">
           <div className="space-y-6">
-            <article className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-sm lg:p-8">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-leaf-800">
+            <article className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card lg:p-8">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-forest-800">
                 About this event
               </p>
               <h2 className="font-serif text-[2.15rem] leading-tight tracking-[-0.02em] text-earth-950">
@@ -488,7 +490,7 @@ export default async function EventDetailPage({ params }: PageProps) {
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-24">
-            <section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-sm">
+            <section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
                 Share
               </p>
@@ -526,7 +528,7 @@ export default async function EventDetailPage({ params }: PageProps) {
               </div>
             </section>
 
-<section className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
+<section className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-amber-700">
                 Safety note
               </p>
@@ -540,7 +542,7 @@ export default async function EventDetailPage({ params }: PageProps) {
               </p>
             </section>
 
-<section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-sm">
+<section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
                 Need help?
               </p>
@@ -553,7 +555,7 @@ export default async function EventDetailPage({ params }: PageProps) {
               </p>
               <Link
                 href="/contact"
-                className="mt-5 inline-flex rounded-full border border-leaf-700 px-5 py-2.5 text-sm font-bold text-leaf-900 hover:bg-leaf-50"
+                className="btn-secondary mt-5"
               >
                 Contact DESCF
               </Link>
@@ -563,10 +565,10 @@ export default async function EventDetailPage({ params }: PageProps) {
       </section>
 
 <section className="bg-earth-50">
-        <div className="mx-auto max-w-6xl px-6 py-10">
-          <div className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-sm lg:flex lg:items-center lg:justify-between lg:p-8">
+        <div className="container-site py-10">
+          <div className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card lg:flex lg:items-center lg:justify-between lg:p-8">
             <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-leaf-800">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-forest-800">
                 Stay connected
               </p>
               <h2 className="font-serif text-3xl leading-tight text-earth-950">
@@ -580,7 +582,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
             <Link
               href="/events"
-              className="mt-6 inline-flex rounded-full bg-leaf-700 px-6 py-3 text-sm font-bold text-white hover:bg-leaf-800 lg:mt-0"
+              className="btn-primary mt-6 lg:mt-0"
             >
               View events
             </Link>
@@ -590,6 +592,8 @@ export default async function EventDetailPage({ params }: PageProps) {
     </main>
   )
 }
+
+
 
 
 
