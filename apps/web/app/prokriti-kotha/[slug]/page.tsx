@@ -1,23 +1,28 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { PortableText } from '@/components/portable-text/PortableText'
-import { ShareButtons } from '@/components/share/ShareButtons'
+import { ShareButtons, type ShareButtonLabels } from '@/components/share/ShareButtons'
 import { buildArticleJSONLD, buildBreadcrumbJSONLD } from '@/lib/json-ld'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import { urlForImage } from '@/lib/sanity/image'
 import {
+  PAGE_CONTENT_BY_KEY_QUERY,
   prokritiKothaArticleBySlugQuery,
   prokritiKothaArticleSlugsQuery,
 } from '@/lib/sanity/queries'
 import type {
+  PageContent,
+  PageSection,
   ProkritiKothaArticle,
   ProkritiKothaArticleCard,
   SpeciesProfileCard,
 } from '@/types/sanity'
+
+const PAGE_KEY = 'prokriti-kotha'
 
 interface Props {
   params: {
@@ -25,20 +30,132 @@ interface Props {
   }
 }
 
-function formatCategory(category?: string): string {
-  if (!category) return 'Article'
+const fallbackMeta = {
+  notFoundTitle: 'Prokriti Kotha article not found',
+  notFoundDescription: 'The requested DESCF Prokriti Kotha article could not be found.',
+  description:
+    'Read this DESCF Prokriti Kotha article on nature, wildlife, conservation, and community knowledge.',
+}
 
-  const labels: Record<string, string> = {
-    'nature-essay': 'Nature Essay',
-    'field-note': 'Field Note',
-    'conservation-story': 'Conservation Story',
-    'rescue-experience': 'Rescue Experience',
-    'myth-busting': 'Myth Busting',
-    'community-writing': 'Community Writing',
-    'opinion-feature': 'Opinion / Feature',
+const fallbackBreadcrumb = {
+  home: 'Home',
+  prokritiKotha: 'Prokriti Kotha',
+}
+
+const fallbackCategoryLabels: Record<string, string> = {
+  'nature-essay': 'Nature Essay',
+  'field-note': 'Field Note',
+  'conservation-story': 'Conservation Story',
+  'rescue-experience': 'Rescue Experience',
+  'myth-busting': 'Myth Busting',
+  'community-writing': 'Community Writing',
+  'opinion-feature': 'Opinion / Feature',
+}
+
+const fallbackArticleLabels = {
+  defaultCategory: 'Article',
+  banglaLanguage: 'Bangla',
+  englishLanguage: 'English',
+  authorPrefix: 'By',
+  defaultAuthor: 'DESCF Editorial',
+  readingTimeSuffix: 'মিনিট পড়া',
+  readingTimeFallback: 'Not specified',
+  coverFallbackEyebrow: 'Prokriti Kotha',
+  coverFallbackTitle: 'Editorial article',
+}
+
+const fallbackInfoCards = {
+  sectionLabel: 'Section',
+  sectionValue: 'Prokriti Kotha',
+  articleTypeLabel: 'Article type',
+  readingTimeLabel: 'পড়ার সময়',
+}
+
+const fallbackEmptyBody = {
+  eyebrow: 'Article body',
+  title: 'সম্পূর্ণ লেখার কনটেন্ট প্রস্তুত করা হচ্ছে',
+  description:
+    'This article has been published, but the full body কনটেন্ট এখনো Sanity Studio-তে যোগ করা হয়নি।',
+}
+
+const fallbackShareLabels: ShareButtonLabels = {
+  title: 'এই লেখা শেয়ার করুন',
+  description: 'আপনার কমিউনিটির সঙ্গে ডিইএসসিএফ কনটেন্ট শেয়ার করুন।',
+  nativeShare: 'Share',
+  copied: 'Copied',
+  copyLink: 'Copy link',
+  facebook: 'Facebook',
+  whatsapp: 'WhatsApp',
+  x: 'X',
+}
+
+const fallbackArticleDetails = {
+  title: 'Article details',
+  category: 'Category',
+  published: 'Published',
+  author: 'Author',
+}
+
+const fallbackSafety = {
+  title: 'সম্পাদকীয় নিরাপত্তা নোট',
+  description:
+    'ডিইএসসিএফ কনটেন্ট শিক্ষা ও সংরক্ষণ সচেতনতার জন্য। It should not be treated as snake handling, catching, or rescue instruction.',
+}
+
+const fallbackRelatedSpecies = {
+  eyebrow: 'Field-guide connection',
+  title: 'Species connected to this story',
+}
+
+const fallbackRelatedArticles = {
+  eyebrow: 'Continue reading',
+  title: 'More from Prokriti Kotha',
+}
+
+function getCanonicalUrl(slug: string): string {
+  return `https://www.descf.org/prokriti-kotha/${slug}`
+}
+
+function getSection(sections: PageSection[], sectionId: string) {
+  return sections.find((section) => section.sectionId === sectionId)
+}
+
+function getCardText(section: PageSection | undefined, index: number, fallback: string) {
+  const card = section?.cards?.[index]
+  return card?.title || card?.eyebrow || card?.text || fallback
+}
+
+function getSeo(page: PageContent | null) {
+  return (page as (PageContent & { seo?: { title?: string; description?: string } }) | null)?.seo
+}
+
+async function getProkritiKothaPageContent() {
+  return sanityFetch<PageContent | null>({
+    query: PAGE_CONTENT_BY_KEY_QUERY,
+    params: { pageKey: PAGE_KEY },
+    tags: ['pageContent'],
+  })
+}
+
+function getCategoryLabels(section: PageSection | undefined) {
+  return {
+    'nature-essay': getCardText(section, 0, fallbackCategoryLabels['nature-essay']),
+    'field-note': getCardText(section, 1, fallbackCategoryLabels['field-note']),
+    'conservation-story': getCardText(section, 2, fallbackCategoryLabels['conservation-story']),
+    'rescue-experience': getCardText(section, 3, fallbackCategoryLabels['rescue-experience']),
+    'myth-busting': getCardText(section, 4, fallbackCategoryLabels['myth-busting']),
+    'community-writing': getCardText(section, 5, fallbackCategoryLabels['community-writing']),
+    'opinion-feature': getCardText(section, 6, fallbackCategoryLabels['opinion-feature']),
   }
+}
 
-  return labels[category] || category
+function formatCategory(
+  category: string | undefined,
+  labels: Record<string, string>,
+  fallback: string,
+): string {
+  if (!category) return fallback
+  return labels[category] || category.replace(/-/g, ' ')
 }
 
 function formatDate(date?: string): string {
@@ -51,19 +168,22 @@ function formatDate(date?: string): string {
   }).format(new Date(date))
 }
 
-function getArticleDescription(article: ProkritiKothaArticle): string {
-  return (
-    article.seoDescription ||
-    article.excerpt ||
-    'Read this DESCF Prokriti Kotha article on nature, wildlife, conservation, and community knowledge.'
-  )
+function getArticleDescription(
+  article: ProkritiKothaArticle,
+  fallbackDescription: string,
+): string {
+  return article.seoDescription || article.excerpt || fallbackDescription
 }
 
-function getCanonicalUrl(slug: string): string {
-  return `https://www.descf.org/prokriti-kotha/${slug}`
-}
-
-function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) {
+function RelatedArticleCard({
+  article,
+  categoryLabels,
+  defaultCategory,
+}: {
+  article: ProkritiKothaArticleCard
+  categoryLabels: Record<string, string>
+  defaultCategory: string
+}) {
   const href = `/prokriti-kotha/${article.slug.current}`
   const imageUrl = article.coverImage
     ? urlForImage(article.coverImage)?.width(700).height(450).url()
@@ -86,7 +206,7 @@ function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) 
 
         <div className="p-5">
           <p className="text-sm font-medium text-forest-800">
-            {formatCategory(article.category)}
+            {formatCategory(article.category, categoryLabels, defaultCategory)}
           </p>
           <h3 className="mt-2 font-serif text-xl leading-tight text-earth-900">
             {article.title}
@@ -156,16 +276,24 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = await sanityFetch<ProkritiKothaArticle | null>({
-    query: prokritiKothaArticleBySlugQuery,
-    params: { slug: params.slug },
-    tags: ['prokritiKothaArticle'],
-  })
+  const [article, page] = await Promise.all([
+    sanityFetch<ProkritiKothaArticle | null>({
+      query: prokritiKothaArticleBySlugQuery,
+      params: { slug: params.slug },
+      tags: ['prokritiKothaArticle'],
+    }),
+    getProkritiKothaPageContent(),
+  ])
+
+  const sections = page?.sections ?? []
+  const notFoundSection = getSection(sections, 'detail-not-found')
+  const descriptionSection = getSection(sections, 'detail-meta')
+  const seo = getSeo(page)
 
   if (!article) {
     return buildMetadata({
-      title: 'Prokriti Kotha article not found',
-      description: 'The requested DESCF Prokriti Kotha article could not be found.',
+      title: notFoundSection?.title || fallbackMeta.notFoundTitle,
+      description: notFoundSection?.description || fallbackMeta.notFoundDescription,
       canonicalUrl: getCanonicalUrl(params.slug),
     })
   }
@@ -178,20 +306,104 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return buildMetadata({
     title: article.seoTitle || article.title,
-    description: getArticleDescription(article),
+    description: getArticleDescription(
+      article,
+      descriptionSection?.description || seo?.description || fallbackMeta.description,
+    ),
     ogImage: ogImageUrl,
     canonicalUrl: getCanonicalUrl(params.slug),
   })
 }
 
 export default async function ProkritiKothaArticlePage({ params }: Props) {
-  const article = await sanityFetch<ProkritiKothaArticle | null>({
-    query: prokritiKothaArticleBySlugQuery,
-    params: { slug: params.slug },
-    tags: ['prokritiKothaArticle'],
-  })
+  const [article, page] = await Promise.all([
+    sanityFetch<ProkritiKothaArticle | null>({
+      query: prokritiKothaArticleBySlugQuery,
+      params: { slug: params.slug },
+      tags: ['prokritiKothaArticle'],
+    }),
+    getProkritiKothaPageContent(),
+  ])
 
   if (!article) notFound()
+
+  const sections = page?.sections ?? []
+  const breadcrumbSection = getSection(sections, 'detail-breadcrumb')
+  const categoryLabelsSection = getSection(sections, 'category-labels')
+  const articleLabelsSection = getSection(sections, 'detail-article-labels')
+  const infoCardsSection = getSection(sections, 'detail-info-cards')
+  const emptyBodySection = getSection(sections, 'detail-empty-body')
+  const shareSection = getSection(sections, 'detail-share')
+  const articleDetailsSection = getSection(sections, 'detail-sidebar')
+  const safetySection = getSection(sections, 'detail-safety-note')
+  const relatedSpeciesSection = getSection(sections, 'detail-related-species')
+  const relatedArticlesSection = getSection(sections, 'detail-related-articles')
+  const descriptionSection = getSection(sections, 'detail-meta')
+
+  const categoryLabels = getCategoryLabels(categoryLabelsSection)
+
+  const articleLabels = {
+    defaultCategory: getCardText(articleLabelsSection, 0, fallbackArticleLabels.defaultCategory),
+    banglaLanguage: getCardText(articleLabelsSection, 1, fallbackArticleLabels.banglaLanguage),
+    englishLanguage: getCardText(articleLabelsSection, 2, fallbackArticleLabels.englishLanguage),
+    authorPrefix: getCardText(articleLabelsSection, 3, fallbackArticleLabels.authorPrefix),
+    defaultAuthor: getCardText(articleLabelsSection, 4, fallbackArticleLabels.defaultAuthor),
+    readingTimeSuffix: getCardText(articleLabelsSection, 5, fallbackArticleLabels.readingTimeSuffix),
+    readingTimeFallback: getCardText(articleLabelsSection, 6, fallbackArticleLabels.readingTimeFallback),
+    coverFallbackEyebrow: getCardText(articleLabelsSection, 7, fallbackArticleLabels.coverFallbackEyebrow),
+    coverFallbackTitle: getCardText(articleLabelsSection, 8, fallbackArticleLabels.coverFallbackTitle),
+  }
+
+  const breadcrumbLabels = {
+    home: getCardText(breadcrumbSection, 0, fallbackBreadcrumb.home),
+    prokritiKotha: getCardText(breadcrumbSection, 1, fallbackBreadcrumb.prokritiKotha),
+  }
+
+  const infoCards = {
+    sectionLabel: getCardText(infoCardsSection, 0, fallbackInfoCards.sectionLabel),
+    sectionValue: getCardText(infoCardsSection, 1, fallbackInfoCards.sectionValue),
+    articleTypeLabel: getCardText(infoCardsSection, 2, fallbackInfoCards.articleTypeLabel),
+    readingTimeLabel: getCardText(infoCardsSection, 3, fallbackInfoCards.readingTimeLabel),
+  }
+
+  const emptyBody = {
+    eyebrow: emptyBodySection?.eyebrow || fallbackEmptyBody.eyebrow,
+    title: emptyBodySection?.title || fallbackEmptyBody.title,
+    description: emptyBodySection?.description || fallbackEmptyBody.description,
+  }
+
+  const shareLabels: ShareButtonLabels = {
+    title: shareSection?.title || fallbackShareLabels.title,
+    description: shareSection?.description || fallbackShareLabels.description,
+    nativeShare: getCardText(shareSection, 0, fallbackShareLabels.nativeShare || 'Share'),
+    copyLink: getCardText(shareSection, 1, fallbackShareLabels.copyLink || 'Copy link'),
+    copied: getCardText(shareSection, 2, fallbackShareLabels.copied || 'Copied'),
+    facebook: getCardText(shareSection, 3, fallbackShareLabels.facebook || 'Facebook'),
+    whatsapp: getCardText(shareSection, 4, fallbackShareLabels.whatsapp || 'WhatsApp'),
+    x: getCardText(shareSection, 5, fallbackShareLabels.x || 'X'),
+  }
+
+  const articleDetails = {
+    title: articleDetailsSection?.title || fallbackArticleDetails.title,
+    category: getCardText(articleDetailsSection, 0, fallbackArticleDetails.category),
+    published: getCardText(articleDetailsSection, 1, fallbackArticleDetails.published),
+    author: getCardText(articleDetailsSection, 2, fallbackArticleDetails.author),
+  }
+
+  const safety = {
+    title: safetySection?.title || fallbackSafety.title,
+    description: safetySection?.description || fallbackSafety.description,
+  }
+
+  const relatedSpecies = {
+    eyebrow: relatedSpeciesSection?.eyebrow || fallbackRelatedSpecies.eyebrow,
+    title: relatedSpeciesSection?.title || fallbackRelatedSpecies.title,
+  }
+
+  const relatedArticles = {
+    eyebrow: relatedArticlesSection?.eyebrow || fallbackRelatedArticles.eyebrow,
+    title: relatedArticlesSection?.title || fallbackRelatedArticles.title,
+  }
 
   const coverImageUrl = article.coverImage
     ? urlForImage(article.coverImage)?.width(1600).height(900).url()
@@ -202,14 +414,27 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
     : coverImageUrl || undefined
 
   const canonicalUrl = getCanonicalUrl(params.slug)
-  const categoryLabel = formatCategory(article.category)
+  const categoryLabel = formatCategory(
+    article.category,
+    categoryLabels,
+    articleLabels.defaultCategory,
+  )
   const publishedDateLabel = formatDate(article.publishedAt ?? article._createdAt)
   const modifiedDate = article._updatedAt ?? article.publishedAt ?? article._createdAt
-  const authorName = article.author?.name ?? 'DESCF'
+  const authorName = article.author?.name ?? articleLabels.defaultAuthor
+  const readingTimeLabel =
+    typeof article.readingTime === 'number' && article.readingTime > 0
+      ? `${article.readingTime} ${articleLabels.readingTimeSuffix}`
+      : articleLabels.readingTimeFallback
+
+  const articleDescription = getArticleDescription(
+    article,
+    descriptionSection?.description || fallbackMeta.description,
+  )
 
   const articleJsonLd = buildArticleJSONLD({
     title: article.title,
-    description: getArticleDescription(article),
+    description: articleDescription,
     url: canonicalUrl,
     image: ogImageUrl,
     authorName,
@@ -219,11 +444,11 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
   const breadcrumbJsonLd = buildBreadcrumbJSONLD([
     {
-      name: 'Home',
+      name: breadcrumbLabels.home,
       url: 'https://www.descf.org',
     },
     {
-      name: 'Prokriti Kotha',
+      name: breadcrumbLabels.prokritiKotha,
       url: 'https://www.descf.org/prokriti-kotha',
     },
     {
@@ -254,7 +479,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                 <ol className="flex flex-wrap items-center gap-2">
                   <li>
                     <Link href="/" className="transition hover:text-white">
-                      Home
+                      {breadcrumbLabels.home}
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
@@ -263,7 +488,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                       href="/prokriti-kotha"
                       className="transition hover:text-white"
                     >
-                      Prokriti Kotha
+                      {breadcrumbLabels.prokritiKotha}
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
@@ -282,7 +507,9 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
                     {article.language && (
                       <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">
-                        {article.language === 'bn' ? 'Bangla' : 'English'}
+                        {article.language === 'bn'
+                          ? articleLabels.banglaLanguage
+                          : articleLabels.englishLanguage}
                       </span>
                     )}
 
@@ -305,14 +532,14 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
                   <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-white/70">
                     <span>
-                      By {article.author?.name || 'DESCF Editorial'}
+                      {articleLabels.authorPrefix} {authorName}
                     </span>
 
                     {typeof article.readingTime === 'number' &&
                       article.readingTime > 0 && (
                         <>
                           <span aria-hidden="true">•</span>
-                          <span>{article.readingTime} মিনিট পড়া</span>
+                          <span>{readingTimeLabel}</span>
                         </>
                       )}
                   </div>
@@ -345,10 +572,10 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                     <div className="flex aspect-[4/3] items-center justify-center rounded-[1.5rem] bg-white/10 p-8 text-center">
                       <div>
                         <p className="section-label mb-3 text-amber-200">
-                          Prokriti Kotha
+                          {articleLabels.coverFallbackEyebrow}
                         </p>
                         <p className="font-serif text-3xl text-white">
-                          Editorial article
+                          {articleLabels.coverFallbackTitle}
                         </p>
                       </div>
                     </div>
@@ -362,30 +589,23 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
             <div className="container-site py-8">
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="rounded-2xl border border-earth-200 bg-white p-5">
-                  <p className="section-label mb-2">Section</p>
+                  <p className="section-label mb-2">{infoCards.sectionLabel}</p>
                   <p className="font-serif text-2xl text-earth-950">
-                    Prokriti Kotha
+                    {infoCards.sectionValue}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-earth-200 bg-white p-5">
-                  <p className="section-label mb-2">Article type</p>
+                  <p className="section-label mb-2">{infoCards.articleTypeLabel}</p>
                   <p className="font-serif text-2xl text-earth-950">
                     {categoryLabel}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-earth-200 bg-white p-5">
-                  <p className="section-label mb-2">পড়ার সময়</p>
+                  <p className="section-label mb-2">{infoCards.readingTimeLabel}</p>
                   <p className="font-serif text-2xl text-earth-950">
-                    {typeof article.readingTime === 'number' &&
-                    article.readingTime > 0
-                      ? (
-                          <>{article.readingTime} মিনিট পড়া</>
-                        )
-                      : (
-                          'Not specified'
-                        )}
+                    {readingTimeLabel}
                   </p>
                 </div>
               </div>
@@ -402,13 +622,12 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                     </div>
                   ) : (
                     <div>
-                      <p className="section-label mb-4">Article body</p>
+                      <p className="section-label mb-4">{emptyBody.eyebrow}</p>
                       <h2 className="font-serif text-3xl text-earth-950">
-                        সম্পূর্ণ লেখার কনটেন্ট প্রস্তুত করা হচ্ছে
+                        {emptyBody.title}
                       </h2>
                       <p className="mt-4 max-w-2xl text-body leading-8 text-earth-700">
-                        This article has been published, but the full body
-                        কনটেন্ট এখনো Sanity Studio-তে যোগ করা হয়নি।
+                        {emptyBody.description}
                       </p>
                     </div>
                   )}
@@ -418,25 +637,27 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
               <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
                 <ShareButtons
                   title={article.title}
-                  description={getArticleDescription(article)}
-                  label="এই লেখা শেয়ার করুন"
+                  description={articleDescription}
+                  labels={shareLabels}
                 />
 
                 <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
                   <h2 className="font-serif text-xl text-earth-950">
-                    Article details
+                    {articleDetails.title}
                   </h2>
 
                   <dl className="mt-5 space-y-4 text-sm">
                     <div>
-                      <dt className="font-semibold text-earth-950">Category</dt>
+                      <dt className="font-semibold text-earth-950">
+                        {articleDetails.category}
+                      </dt>
                       <dd className="mt-1 text-earth-650">{categoryLabel}</dd>
                     </div>
 
                     {publishedDateLabel && (
                       <div>
                         <dt className="font-semibold text-earth-950">
-                          Published
+                          {articleDetails.published}
                         </dt>
                         <dd className="mt-1 text-earth-650">
                           {publishedDateLabel}
@@ -445,9 +666,11 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                     )}
 
                     <div>
-                      <dt className="font-semibold text-earth-950">Author</dt>
+                      <dt className="font-semibold text-earth-950">
+                        {articleDetails.author}
+                      </dt>
                       <dd className="mt-1 text-earth-650">
-                        {article.author?.name || 'DESCF Editorial'}
+                        {authorName}
                       </dd>
                     </div>
                   </dl>
@@ -455,12 +678,10 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
                 <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
                   <h2 className="font-serif text-xl text-earth-950">
-                    সম্পাদকীয় নিরাপত্তা নোট
+                    {safety.title}
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-earth-700">
-                    ডিইএসসিএফ কনটেন্ট শিক্ষা ও সংরক্ষণ সচেতনতার জন্য।
-                    It should not be treated as snake handling, catching, or
-                    rescue instruction.
+                    {safety.description}
                   </p>
                 </div>
               </aside>
@@ -472,9 +693,9 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
           <section className="border-t border-earth-200 bg-[#f7f2e8]">
             <div className="container-site section-padding-sm">
               <div className="mb-8">
-                <p className="section-label mb-3">Field-guide connection</p>
+                <p className="section-label mb-3">{relatedSpecies.eyebrow}</p>
                 <h2 className="font-serif text-h2 text-earth-900">
-                  Species connected to this story
+                  {relatedSpecies.title}
                 </h2>
               </div>
 
@@ -493,9 +714,9 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
           <section className="border-t border-earth-200 bg-earth-50">
             <div className="container-site section-padding-sm">
               <div className="mb-8">
-                <p className="section-label mb-3">Continue reading</p>
+                <p className="section-label mb-3">{relatedArticles.eyebrow}</p>
                 <h2 className="font-serif text-h2 text-earth-900">
-                  More from Prokriti Kotha
+                  {relatedArticles.title}
                 </h2>
               </div>
 
@@ -506,6 +727,8 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                     <RelatedArticleCard
                       key={relatedArticle._id}
                       article={relatedArticle}
+                      categoryLabels={categoryLabels}
+                      defaultCategory={articleLabels.defaultCategory}
                     />
                   ))}
               </div>
@@ -516,8 +739,3 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
     </>
   )
 }
-
-
-
-
-
