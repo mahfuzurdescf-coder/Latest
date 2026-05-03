@@ -15,6 +15,7 @@ import { sanityFetch } from '@/lib/sanity/client'
 import { HOME_PAGE_QUERY, HOMEPAGE_CURATION_QUERY } from '@/lib/sanity/queries'
 import type {
   HomepageCuration,
+  PageSection,
   PostCard,
   ProgrammeCard,
   ResourceCard,
@@ -78,7 +79,7 @@ export default async function HomePage() {
       : data.latestResources ?? []
 
 
-  const homepageSections = curation?.sections ?? []
+  const homepageSections: PageSection[] = curation?.sections ?? []
   const getHomepageSection = (sectionId: string) =>
     homepageSections.find((section) => section.sectionId === sectionId)
   const organizationJsonLd = buildOrganizationJSONLD()
@@ -104,7 +105,7 @@ const websiteJsonLd = {
       <main id="main-content">
         <HomeHero curation={curation} />
         <HomeGatewaySection content={getHomepageSection('gateway')} />
-        <HomeTrustStrip />
+        <HomeTrustStrip content={getHomepageSection('trust-strip')} />
         <HomeProgrammes programmes={programmes} />
         <HomeNewsroom posts={uniquePosts} />
         <HomeSnakeGuideSection />

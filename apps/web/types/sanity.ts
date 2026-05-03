@@ -487,6 +487,7 @@ export interface HomepageCuration {
   heroImage?: SanityImage
   primaryCta?: NavLink
   secondaryCta?: NavLink
+  sections?: PageSection[]
   featuredProgrammes?: ProgrammeCard[]
   featuredPosts?: PostCard[]
   featuredResources?: ResourceCard[]
