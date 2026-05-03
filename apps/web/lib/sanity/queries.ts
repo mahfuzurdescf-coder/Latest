@@ -1,4 +1,4 @@
-﻿const IMAGE_FRAGMENT = `
+const IMAGE_FRAGMENT = `
   asset->{_id, url, metadata{dimensions, lqip}},
   alt, caption, credit, hotspot, crop
 `
@@ -51,32 +51,32 @@ export const SITE_SETTINGS_QUERY = `
 export const HOME_PAGE_QUERY = `{
   "settings": ${SITE_SETTINGS_QUERY},
   "featuredPosts": *[
-    _type == "post" && status == "published" && featured == true && language == "en"
+    _type == "post" && status == "published" && featured == true && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc)[0..2]{${POST_CARD_FRAGMENT}},
   "latestPosts": *[
-    _type == "post" && status == "published" && language == "en"
+    _type == "post" && status == "published" && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc)[0..5]{${POST_CARD_FRAGMENT}},
   "currentProgrammes": *[
     _type == "programme" && status == "current"
   ] | order(_createdAt asc)[0..5]{${PROGRAMME_CARD_FRAGMENT}},
   "allProgrammes": *[_type == "programme"] | order(_createdAt asc){${PROGRAMME_CARD_FRAGMENT}},
   "editorPicks": *[
-    _type == "post" && status == "published" && editorPick == true && language == "en"
+    _type == "post" && status == "published" && editorPick == true && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc)[0..2]{${POST_CARD_FRAGMENT}},
-  "latestResources": *[_type == "resource"] | order(pubDate desc)[0..3]{${RESOURCE_CARD_FRAGMENT}}
+  "latestResources": *[_type == "resource" && coalesce(language, "bn") == "bn"] | order(pubDate desc)[0..3]{${RESOURCE_CARD_FRAGMENT}}
 }`
 
 // ─── Newsroom ─────────────────────────────────────────────────────────────────
 
 export const NEWSROOM_PAGE_QUERY = `{
   "featuredPosts": *[
-    _type == "post" && status == "published" && featured == true && language == "en"
+    _type == "post" && status == "published" && featured == true && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc)[0..1]{${POST_CARD_FRAGMENT}},
   "editorPicks": *[
-    _type == "post" && status == "published" && editorPick == true && language == "en"
+    _type == "post" && status == "published" && editorPick == true && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc)[0..2]{${POST_CARD_FRAGMENT}},
   "latestPosts": *[
-    _type == "post" && status == "published" && language == "en"
+    _type == "post" && status == "published" && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc)[0..9]{${POST_CARD_FRAGMENT}},
   "categories": *[_type == "category"] | order(title asc){${CATEGORY_FRAGMENT}}
 }`
@@ -84,7 +84,7 @@ export const NEWSROOM_PAGE_QUERY = `{
 // ─── Post detail ──────────────────────────────────────────────────────────────
 
 export const POST_BY_SLUG_QUERY = `
-  *[_type == "post" && slug.current == $slug && status == "published"][0]{
+  *[_type == "post" && coalesce(language, "bn") == "bn" && slug.current == $slug && status == "published"][0]{
     ${POST_CARD_FRAGMENT},
     body[],
     coAuthors[]->{${AUTHOR_CARD_FRAGMENT}},
@@ -99,7 +99,7 @@ export const POST_BY_SLUG_QUERY = `
 `
 
 export const POST_SLUGS_QUERY = `
-  *[_type == "post" && status == "published"].slug.current
+  *[_type == "post" && coalesce(language, "bn") == "bn" && status == "published"].slug.current
 `
 
 // ─── Category archive ─────────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ export const CATEGORY_BY_SLUG_QUERY = `{
   "posts": *[
     _type == "post" && status == "published"
     && category->slug.current == $slug
-    && language == "en"
+    && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc){${POST_CARD_FRAGMENT}}
 }`
 
@@ -124,7 +124,7 @@ export const TAG_BY_SLUG_QUERY = `{
   "posts": *[
     _type == "post" && status == "published"
     && $slug in tags[]->slug.current
-    && language == "en"
+    && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc){${POST_CARD_FRAGMENT}}
 }`
 
@@ -141,7 +141,7 @@ export const AUTHOR_BY_SLUG_QUERY = `{
   "posts": *[
     _type == "post" && status == "published"
     && author->slug.current == $slug
-    && language == "en"
+    && coalesce(language, "bn") == "bn"
   ] | order(publishedAt desc){${POST_CARD_FRAGMENT}}
 }`
 
@@ -174,7 +174,7 @@ export const PROGRAMME_SLUGS_QUERY = `*[_type == "programme"].slug.current`
 // ─── Resources ────────────────────────────────────────────────────────────────
 
 export const RESOURCES_PAGE_QUERY = `
-  *[_type == "resource"] | order(pubDate desc){
+  *[_type == "resource" && coalesce(language, "bn") == "bn"] | order(pubDate desc){
     ${RESOURCE_CARD_FRAGMENT},
     relatedProgramme->{${PROGRAMME_CARD_FRAGMENT}}
   }
@@ -183,16 +183,16 @@ export const RESOURCES_PAGE_QUERY = `
 // ─── Events ───────────────────────────────────────────────────────────────────
 
 export const EVENTS_PAGE_QUERY = `{
-  "upcoming": *[_type == "event" && status == "upcoming"] | order(date asc){
+  "upcoming": *[_type == "event" && coalesce(language, "bn") == "bn" && status == "upcoming"] | order(date asc){
     _id, _type, title, slug, date, time, location, status, speakers
   },
-  "past": *[_type == "event" && status == "completed"] | order(date desc)[0..5]{
+  "past": *[_type == "event" && coalesce(language, "bn") == "bn" && status == "completed"] | order(date desc)[0..5]{
     _id, _type, title, slug, date, location, status
   }
 }`
 
 export const EVENT_BY_SLUG_QUERY = `
-  *[_type == "event" && slug.current == $slug][0]{
+  *[_type == "event" && coalesce(language, "bn") == "bn" && slug.current == $slug][0]{
     _id, title, slug, date, time, location, status,
     description[],
     speakers,
@@ -201,7 +201,7 @@ export const EVENT_BY_SLUG_QUERY = `
 `
 
 export const EVENT_SLUGS_QUERY = /* groq */ `
-  *[_type == "event" && defined(slug.current)] {
+  *[_type == "event" && coalesce(language, "bn") == "bn" && defined(slug.current)] {
     "slug": slug.current
   }
 `
@@ -219,7 +219,7 @@ export const TEAM_MEMBERS_QUERY = `
 // ─── Sitemap ──────────────────────────────────────────────────────────────────
 
 export const SITEMAP_QUERY = `{
-  "posts": *[_type == "post" && status == "published"]{
+  "posts": *[_type == "post" && coalesce(language, "bn") == "bn" && status == "published"]{
     "slug": slug.current, _updatedAt
   },
   "programmes": *[_type == "programme"]{
@@ -234,7 +234,7 @@ export const SITEMAP_QUERY = `{
   "authors": *[_type == "author"]{
     "slug": slug.current
   },
-  "events": *[_type == "event"]{
+  "events": *[_type == "event" && coalesce(language, "bn") == "bn"]{
     "slug": slug.current, _updatedAt
   }
 }`
@@ -335,7 +335,7 @@ export const HOMEPAGE_CURATION_QUERY = /* groq */ `
 // ─── Event detail with registration form ──────────────────────────────────────
 
 export const EVENT_DETAIL_WITH_REGISTRATION_QUERY = /* groq */ `
-  *[_type == "event" && slug.current == $slug][0] {
+  *[_type == "event" && coalesce(language, "bn") == "bn" && slug.current == $slug][0] {
     _id,
     _type,
     _createdAt,
@@ -444,6 +444,7 @@ export const speciesDistrictsQuery = `*[
 
 export const snakeSpeciesQuery = `*[
   _type == "speciesProfile" &&
+  coalesce(language, "bn") == "bn" &&
   publishedStatus == "published" &&
   group->slug.current == "snakes"
 ] | order(englishName asc) {
@@ -483,6 +484,7 @@ export const snakeSpeciesQuery = `*[
 
 export const speciesProfileBySlugQuery = `*[
   _type == "speciesProfile" &&
+  coalesce(language, "bn") == "bn" &&
   (slug.current == $slug || $slug in slugAliases[]) &&
   publishedStatus == "published"
 ][0] {
@@ -680,6 +682,7 @@ export const speciesProfileBySlugQuery = `*[
 
 export const prokritiKothaArticlesQuery = `*[
   _type == "prokritiKothaArticle" &&
+  coalesce(language, "bn") == "bn" &&
   status == "published"
 ] | order(publishedAt desc) {
   _id,
@@ -728,6 +731,7 @@ export const prokritiKothaArticlesQuery = `*[
 
 export const featuredProkritiKothaArticlesQuery = `*[
   _type == "prokritiKothaArticle" &&
+  coalesce(language, "bn") == "bn" &&
   status == "published" &&
   featured == true
 ] | order(publishedAt desc)[0...3] {
@@ -777,6 +781,7 @@ export const featuredProkritiKothaArticlesQuery = `*[
 
 export const prokritiKothaArticleBySlugQuery = `*[
   _type == "prokritiKothaArticle" &&
+  coalesce(language, "bn") == "bn" &&
   slug.current == $slug &&
   status == "published"
 ][0] {
@@ -900,12 +905,14 @@ export const prokritiKothaArticleBySlugQuery = `*[
 
 export const prokritiKothaArticleSlugsQuery = `*[
   _type == "prokritiKothaArticle" &&
+  coalesce(language, "bn") == "bn" &&
   status == "published" &&
   defined(slug.current)
 ].slug.current`
 
 export const PROKRITI_KOTHA_SITEMAP_QUERY = `*[
   _type == "prokritiKothaArticle" &&
+  coalesce(language, "bn") == "bn" &&
   status == "published" &&
   defined(slug.current)
 ] {
@@ -915,6 +922,7 @@ export const PROKRITI_KOTHA_SITEMAP_QUERY = `*[
 
 export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
   _type == "speciesProfile" &&
+  coalesce(language, "bn") == "bn" &&
   publishedStatus == "published" &&
   group->slug.current == "snakes" &&
   defined(slug.current)
@@ -929,7 +937,7 @@ export const SNAKE_SPECIES_SITEMAP_QUERY = `*[
 // --- Editable page content ----------------------------------------------------
 
 export const PAGE_CONTENT_BY_KEY_QUERY = /* groq */ `
-  *[_type == "pageContent" && pageKey == $pageKey && status == "published"][0] {
+  *[_type == "pageContent" && coalesce(language, "bn") == "bn" && pageKey == $pageKey && status == "published"][0] {
     _id,
     _type,
     title,
@@ -973,4 +981,5 @@ export const PAGE_CONTENT_BY_KEY_QUERY = /* groq */ `
     seo
   }
 `
+
 
