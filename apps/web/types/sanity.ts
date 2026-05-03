@@ -780,6 +780,7 @@ export interface ProkritiKothaArticleCard
 export type PageContentKey =
   | 'about'
   | 'mission'
+  | 'current-work'
   | 'governance'
   | 'team'
   | 'contact'
