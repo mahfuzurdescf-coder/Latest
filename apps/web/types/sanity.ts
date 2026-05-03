@@ -154,7 +154,7 @@ export interface Post {
   relatedPosts?: PostCard[]
 }
 
-// Lightweight card version Ã¢â‚¬â€ used in lists, grids
+// Lightweight card version ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â used in lists, grids
 export interface PostCard
   extends Pick<
     Post,
@@ -793,6 +793,7 @@ export type PageContentKey =
   | 'current-work'
   | 'programmes'
   | 'events'
+  | 'donate'
   | 'governance'
   | 'team'
   | 'contact'

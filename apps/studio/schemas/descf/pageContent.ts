@@ -6,6 +6,7 @@ const PAGE_KEYS = [
   { title: 'Current Work', value: 'current-work' },
   { title: 'Programmes', value: 'programmes' },
   { title: 'Events', value: 'events' },
+  { title: 'Donate', value: 'donate' },
   { title: 'Governance', value: 'governance' },
   { title: 'Team', value: 'team' },
   { title: 'Contact', value: 'contact' },
