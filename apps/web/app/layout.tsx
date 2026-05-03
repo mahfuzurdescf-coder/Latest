@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 import './globals.css'
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description: SITE.description,
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'bn_BD',
     url: SITE.url,
     siteName: SITE.shortName,
     title: `${SITE.shortName} — ${SITE.name}`,
@@ -61,7 +61,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="bn" className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

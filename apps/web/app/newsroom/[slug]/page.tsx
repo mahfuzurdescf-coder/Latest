@@ -47,7 +47,7 @@ function getPostDescription(post: Post): string {
 }
 
 function getPostCanonicalUrl(slug: string): string {
-  return `https://descf.org/newsroom/${slug}`
+  return `https://www.descf.org/newsroom/${slug}`
 }
 
 export async function generateStaticParams() {
@@ -126,11 +126,11 @@ export default async function NewsroomArticlePage({ params }: Props) {
   const breadcrumbJsonLd = buildBreadcrumbJSONLD([
     {
       name: 'Home',
-      url: 'https://descf.org',
+      url: 'https://www.descf.org',
     },
     {
       name: 'Newsroom',
-      url: 'https://descf.org/newsroom',
+      url: 'https://www.descf.org/newsroom',
     },
     {
       name: post.title,

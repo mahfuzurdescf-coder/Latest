@@ -13,7 +13,7 @@ const fallbackSeo = {
   title: 'Contact | DESCF',
   description:
     'Contact Deep Ecology and Snake Conservation Foundation for conservation collaboration, media queries, education programmes, and responsible public communication.',
-  canonicalUrl: 'https://descf.org/contact',
+  canonicalUrl: 'https://www.descf.org/contact',
 }
 
 const fallbackHero = {

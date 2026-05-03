@@ -12,7 +12,7 @@ const fallbackSeo = {
   title: 'Media | DESCF',
   description:
     'DESCF media information, approved communication assets, press guidance, and public conservation messaging.',
-  canonicalUrl: 'https://descf.org/media',
+  canonicalUrl: 'https://www.descf.org/media',
 }
 
 const fallbackHero = {

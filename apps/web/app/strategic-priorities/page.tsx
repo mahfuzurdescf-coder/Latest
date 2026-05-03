@@ -11,12 +11,12 @@ export const metadata: Metadata = buildMetadata({
   title: 'Strategic Priorities',
   description:
     'DESCF’s strategic priorities focus on snake conservation awareness, biodiversity documentation, conservation communication, human-wildlife coexistence, and institutional growth.',
-  canonicalUrl: 'https://descf.org/strategic-priorities',
+  canonicalUrl: 'https://www.descf.org/strategic-priorities',
 })
 
 const prioritiesJsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'Strategic Priorities', url: 'https://descf.org/strategic-priorities' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'Strategic Priorities', url: 'https://www.descf.org/strategic-priorities' },
 ])
 
 const PRIORITIES = [

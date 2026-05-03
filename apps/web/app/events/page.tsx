@@ -11,12 +11,12 @@ export const metadata: Metadata = buildMetadata({
   title: 'Events',
   description:
     'DESCF events, awareness activities, workshops, public programmes, and conservation communication activities.',
-  canonicalUrl: 'https://descf.org/events',
+  canonicalUrl: 'https://www.descf.org/events',
 })
 
 const breadcrumbs = [
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'Events', url: 'https://descf.org/events' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'Events', url: 'https://www.descf.org/events' },
 ]
 
 type EventsPageData = {

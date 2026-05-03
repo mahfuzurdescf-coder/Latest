@@ -53,7 +53,7 @@ function formatMedicalImportance(status?: string): string {
 }
 
 function getCanonicalUrl(slug: string): string {
-  return 'https://descf.org/bangladesh-wildlife/snakes/' + slug
+  return 'https://www.descf.org/bangladesh-wildlife/snakes/' + slug
 }
 
 function getSpeciesDescription(species: SpeciesProfile): string {

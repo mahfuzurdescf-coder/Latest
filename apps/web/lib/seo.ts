@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 interface BuildMetadataInput {
   title: string
@@ -41,6 +41,20 @@ function normalizeUrl(url?: string | null): string {
   return DEFAULT_OG_IMAGE
 }
 
+
+function normalizeCanonicalUrl(url?: string | null): string {
+  if (!url) return SITE_URL
+
+  if (url.startsWith('https://descf.org')) {
+    return url.replace('https://descf.org', SITE_URL)
+  }
+
+  if (url.startsWith('/')) {
+    return `${SITE_URL}${url}`
+  }
+
+  return url
+}
 export function buildMetadata({
   title,
   description,
@@ -49,7 +63,7 @@ export function buildMetadata({
 }: BuildMetadataInput): Metadata {
   const pageTitle = buildTitle(title)
   const metaDescription = description || DEFAULT_DESCRIPTION
-  const pageUrl = canonicalUrl || SITE_URL
+  const pageUrl = normalizeCanonicalUrl(canonicalUrl)
   const imageUrl = normalizeUrl(ogImage)
 
   return {

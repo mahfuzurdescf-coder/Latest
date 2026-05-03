@@ -50,7 +50,7 @@ export default async function AuthorProfilePage({ params }: Props) {
   const jsonLd = buildArticleJSONLD({
     title: author.name,
     description: author.bio ? author.bio[0]?.children?.map(c => c.text).join(' ') : undefined,
-    url: `https://descf.org/newsroom/author/${params.slug}`,
+    url: `https://www.descf.org/newsroom/author/${params.slug}`,
     authorName: author.name,
     datePublished: posts[0]?._createdAt,
     dateModified: posts[0]?._updatedAt,

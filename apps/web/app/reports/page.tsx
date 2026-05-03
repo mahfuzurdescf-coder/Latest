@@ -16,12 +16,12 @@ export const metadata: Metadata = buildMetadata({
   title: 'Reports and Publications',
   description:
     'DESCF reports, briefs, publications, and conservation resources related to biodiversity, awareness, and human-wildlife coexistence.',
-  canonicalUrl: 'https://descf.org/reports',
+  canonicalUrl: 'https://www.descf.org/reports',
 })
 
 const reportsJsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'Reports and Publications', url: 'https://descf.org/reports' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'Reports and Publications', url: 'https://www.descf.org/reports' },
 ])
 
 export default async function ReportsPage() {

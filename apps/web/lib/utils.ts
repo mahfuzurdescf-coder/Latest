@@ -58,6 +58,6 @@ export function truncateWords(text: string, wordCount = 30): string {
 
 /** Absolute URL for OG/SEO */
 export function absoluteUrl(path: string): string {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://descf.org'
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.descf.org'
   return `${base}${path}`
 }

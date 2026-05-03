@@ -34,7 +34,7 @@ export const metadata: Metadata = buildMetadata({
   title: 'Deep Ecology and Snake Conservation Foundation',
   description:
     'DESCF is a Bangladesh-based conservation organisation working on biodiversity, snake conservation, awareness, research, and human-wildlife coexistence.',
-  canonicalUrl: 'https://descf.org',
+  canonicalUrl: 'https://www.descf.org',
 })
 
 export default async function HomePage() {

@@ -40,7 +40,7 @@ const statusDescriptions: Record<ProgrammeStatus, string> = {
 }
 
 function programmeUrl(slug: string) {
-  return `https://descf.org/programmes/${slug}`
+  return `https://www.descf.org/programmes/${slug}`
 }
 
 function getProgrammeDescription(programme: Programme) {

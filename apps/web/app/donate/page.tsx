@@ -13,12 +13,12 @@ export const metadata: Metadata = buildMetadata({
   title: 'সহায়তা DESCF',
   description:
     'সহায়তা DESCF’s conservation, public awareness, research communication, and human-wildlife coexistence work in Bangladesh.',
-  canonicalUrl: 'https://descf.org/donate',
+  canonicalUrl: 'https://www.descf.org/donate',
 })
 
 const donateJsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'সহায়তা DESCF', url: 'https://descf.org/donate' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'সহায়তা DESCF', url: 'https://www.descf.org/donate' },
 ])
 
 const SUPPORT_AREAS = [

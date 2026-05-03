@@ -52,7 +52,7 @@ function validateDataset(dataset: string): string {
   return dataset
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://descf.org'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.descf.org'
 const studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? 'https://studio.descf.org'
 
 export const env: WebEnv = {

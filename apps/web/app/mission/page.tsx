@@ -13,12 +13,12 @@ const fallbackSeo = {
   title: 'মিশন ও ভিশন',
   description:
     'Read the mission, vision, and working principles of Deep Ecology and Snake Conservation Foundation.',
-  canonicalUrl: 'https://descf.org/mission',
+  canonicalUrl: 'https://www.descf.org/mission',
 }
 
 const jsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'মিশন ও ভিশন', url: 'https://descf.org/mission' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'মিশন ও ভিশন', url: 'https://www.descf.org/mission' },
 ])
 
 const fallbackHero = {

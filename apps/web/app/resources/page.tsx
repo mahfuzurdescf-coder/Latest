@@ -12,7 +12,7 @@ const fallbackSeo = {
   title: 'Resources | DESCF',
   description:
     'DESCF resources, reports, evidence, media materials, and public conservation knowledge for responsible biodiversity communication in Bangladesh.',
-  canonicalUrl: 'https://descf.org/resources',
+  canonicalUrl: 'https://www.descf.org/resources',
 }
 
 const fallbackHero = {

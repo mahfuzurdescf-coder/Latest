@@ -12,7 +12,7 @@ const fallbackSeo = {
   title: 'তথ্যপ্রমাণ ও রিসোর্স | DESCF',
   description:
     'DESCF evidence-based conservation resources, safety notes, explainers, and field learning materials.',
-  canonicalUrl: 'https://descf.org/evidence-resources',
+  canonicalUrl: 'https://www.descf.org/evidence-resources',
 }
 
 const fallbackHero = {

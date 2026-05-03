@@ -12,7 +12,7 @@ const fallbackSeo = {
   title: 'Reports & Publications | DESCF',
   description:
     'DESCF reports, publications, field summaries, and formal conservation documents.',
-  canonicalUrl: 'https://descf.org/reports-publications',
+  canonicalUrl: 'https://www.descf.org/reports-publications',
 }
 
 const fallbackHero = {

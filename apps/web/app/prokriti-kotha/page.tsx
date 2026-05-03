@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     'প্রকৃতি, বন্যপ্রাণী, সহাবস্থান, মাঠ-অভিজ্ঞতা ও সংরক্ষণ ভাবনা নিয়ে DESCF-এর editorial space.',
   alternates: {
-    canonical: 'https://descf.org/prokriti-kotha',
+    canonical: 'https://www.descf.org/prokriti-kotha',
   },
 }
 

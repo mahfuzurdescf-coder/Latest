@@ -42,7 +42,7 @@ export default async function NewsroomPage() {
   const jsonLd = buildArticleJSONLD({
     title: 'Newsroom',
     description: 'Articles, field notes, updates, and conservation stories from DESCF.',
-    url: 'https://descf.org/newsroom',
+    url: 'https://www.descf.org/newsroom',
     authorName: 'DESCF',
     datePublished: firstPost?.publishedAt,
     dateModified: firstPost?.updatedAt ?? firstPost?.publishedAt,

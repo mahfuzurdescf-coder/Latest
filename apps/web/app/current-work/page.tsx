@@ -10,12 +10,12 @@ export const metadata: Metadata = buildMetadata({
   title: 'Current Work',
   description:
     'Explore DESCF current work in snake conservation awareness, biodiversity documentation, public education, conservation communication, and human-wildlife coexistence in Bangladesh.',
-  canonicalUrl: 'https://descf.org/current-work',
+  canonicalUrl: 'https://www.descf.org/current-work',
 })
 
 const currentWorkJsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'Current Work', url: 'https://descf.org/current-work' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'Current Work', url: 'https://www.descf.org/current-work' },
 ])
 
 const workStreams = [

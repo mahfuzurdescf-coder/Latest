@@ -11,7 +11,7 @@ export const metadata: Metadata = buildMetadata({
   title: 'Programmes',
   description:
     'ডিইএসসিএফ প্রোগ্রাম connect snake conservation awareness, biodiversity documentation, conservation communication, education, and human-wildlife coexistence in Bangladesh.',
-  canonicalUrl: 'https://descf.org/programmes',
+  canonicalUrl: 'https://www.descf.org/programmes',
 })
 
 

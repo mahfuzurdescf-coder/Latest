@@ -60,7 +60,7 @@ function getArticleDescription(article: ProkritiKothaArticle): string {
 }
 
 function getCanonicalUrl(slug: string): string {
-  return `https://descf.org/prokriti-kotha/${slug}`
+  return `https://www.descf.org/prokriti-kotha/${slug}`
 }
 
 function RelatedArticleCard({ article }: { article: ProkritiKothaArticleCard }) {
@@ -220,11 +220,11 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
   const breadcrumbJsonLd = buildBreadcrumbJSONLD([
     {
       name: 'Home',
-      url: 'https://descf.org',
+      url: 'https://www.descf.org',
     },
     {
       name: 'Prokriti Kotha',
-      url: 'https://descf.org/prokriti-kotha',
+      url: 'https://www.descf.org/prokriti-kotha',
     },
     {
       name: article.title,

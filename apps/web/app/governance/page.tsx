@@ -17,12 +17,12 @@ const fallbackSeo = {
   title: 'Governance',
   description:
     'DESCF governance page outlining accountability, transparency, responsible communication, safeguarding, document standards, policy standards, and institutional trust.',
-  canonicalUrl: 'https://descf.org/governance',
+  canonicalUrl: 'https://www.descf.org/governance',
 }
 
 const jsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'Governance', url: 'https://descf.org/governance' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'Governance', url: 'https://www.descf.org/governance' },
 ])
 
 const fallbackHero = {

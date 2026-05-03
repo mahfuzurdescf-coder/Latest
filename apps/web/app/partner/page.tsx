@@ -21,7 +21,7 @@ const fallbackSeo = {
   title: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন',
   description:
     'ডিইএসসিএফের সঙ্গে যুক্ত হোন on conservation awareness, research communication, education, media, and human-wildlife coexistence initiatives in Bangladesh.',
-  canonicalUrl: 'https://descf.org/partner',
+  canonicalUrl: 'https://www.descf.org/partner',
 }
 
 const fallbackHero = {
@@ -34,8 +34,8 @@ const fallbackHero = {
 }
 
 const partnerJsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন', url: 'https://descf.org/partner' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন', url: 'https://www.descf.org/partner' },
 ])
 
 const PARTNERSHIP_AREAS = [

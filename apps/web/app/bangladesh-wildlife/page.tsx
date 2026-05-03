@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "DESCF's science-based digital field guide for snakes, frogs, birds, and other wildlife of Bangladesh.",
   alternates: {
-    canonical: 'https://descf.org/bangladesh-wildlife',
+    canonical: 'https://www.descf.org/bangladesh-wildlife',
   },
 }
 

@@ -13,12 +13,12 @@ const fallbackSeo = {
   title: 'About DESCF',
   description:
     'Learn about Deep Ecology and Snake Conservation Foundation, its conservation communication, public awareness, field learning, and human-wildlife coexistence work in Bangladesh.',
-  canonicalUrl: 'https://descf.org/about',
+  canonicalUrl: 'https://www.descf.org/about',
 }
 
 const jsonLd = buildBreadcrumbJSONLD([
-  { name: 'Home', url: 'https://descf.org' },
-  { name: 'About DESCF', url: 'https://descf.org/about' },
+  { name: 'Home', url: 'https://www.descf.org' },
+  { name: 'About DESCF', url: 'https://www.descf.org/about' },
 ])
 
 const fallbackHero = {

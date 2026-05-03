@@ -12,7 +12,7 @@ const fallbackSeo = {
   title: 'Team',
   description:
     'Meet the founder, committee members, advisors, ambassadors, and campus teams connected with Deep Ecology and Snake Conservation Foundation.',
-  canonicalUrl: 'https://descf.org/team',
+  canonicalUrl: 'https://www.descf.org/team',
 }
 
 const fallbackHero = {
