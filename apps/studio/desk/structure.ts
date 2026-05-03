@@ -70,6 +70,10 @@ export const deskStructure: StructureResolver = (S) =>
                     .items([
                       singletonItem(S, 'About Page', 'pageContent', 'pageContent.about'),
                       singletonItem(S, 'Mission Page', 'pageContent', 'pageContent.mission'),
+                      singletonItem(S, 'Current Work Page', 'pageContent', 'pageContent.current-work'),
+                      singletonItem(S, 'Programmes Page', 'pageContent', 'pageContent.programmes'),
+                      singletonItem(S, 'Events Page', 'pageContent', 'pageContent.events'),
+                      singletonItem(S, 'Donate Page', 'pageContent', 'pageContent.donate'),
                       singletonItem(S, 'Governance Page', 'pageContent', 'pageContent.governance'),
                       singletonItem(S, 'Team Page', 'pageContent', 'pageContent.team'),
                       singletonItem(S, 'Contact Page', 'pageContent', 'pageContent.contact'),
