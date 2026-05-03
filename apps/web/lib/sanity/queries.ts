@@ -36,7 +36,8 @@ export const SITE_SETTINGS_QUERY = `
   *[_type == "siteSettings"][0]{
     siteTitle, tagline, tagline_bn,
     logo{${IMAGE_FRAGMENT}},
-    navLinks[]{_key, label, href},
+    navLinks[]{_key, label, href, isExternal},
+    footerSections[]{_key, title, links[]{_key, label, href, isExternal}},
     footerLinks[]{_key, label, href, isExternal},
     social,
     contactEmail, contactPhone, address,
@@ -972,3 +973,4 @@ export const PAGE_CONTENT_BY_KEY_QUERY = /* groq */ `
     seo
   }
 `
+

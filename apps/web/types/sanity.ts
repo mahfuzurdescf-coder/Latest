@@ -312,6 +312,12 @@ export interface NavLink {
 
 // â”€â”€â”€ SiteSettings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+export interface SiteFooterSection {
+  _key?: string
+  title?: string
+  links?: NavLink[]
+}
+
 export interface SiteSettings {
   _id?: string
   _type?: 'siteSettings'
@@ -320,6 +326,7 @@ export interface SiteSettings {
   tagline_bn?: string
   logo?: SanityImage
   navLinks?: NavLink[]
+  footerSections?: SiteFooterSection[]
   footerLinks?: NavLink[]
   social?: SocialLinks
   contactEmail?: string
@@ -828,3 +835,4 @@ export interface PageContent {
     ogImage?: SanityImage
   }
 }
+

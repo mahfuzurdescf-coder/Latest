@@ -655,7 +655,8 @@ export const siteSettings = defineType({
   type: 'document',
   groups: [
     { name: 'identity', title: 'Identity', default: true },
-    { name: 'navigation', title: 'Navigation' },
+    { name: 'navigation', title: 'Header Navigation' },
+    { name: 'footer', title: 'Footer' },
     { name: 'contact', title: 'Contact' },
     { name: 'seo', title: 'SEO' },
   ],
@@ -689,16 +690,63 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: 'navLinks',
-      title: 'Navigation links',
+      title: 'Header navigation links',
       type: 'array',
       group: 'navigation',
       of: [{ type: 'link' }],
     }),
     defineField({
+      name: 'footerSections',
+      title: 'Footer sections',
+      type: 'array',
+      group: 'footer',
+      description:
+        'Preferred footer editor. Create columns such as Organisation, Work, Sections, and Connect.',
+      of: [
+        {
+          name: 'footerSection',
+          title: 'Footer section',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Section title',
+              type: 'string',
+              validation: (Rule) => Rule.required().min(2).max(40),
+            }),
+            defineField({
+              name: 'links',
+              title: 'Links',
+              type: 'array',
+              of: [{ type: 'link' }],
+              validation: (Rule) =>
+                Rule.max(10).warning('Large footer columns become hard to scan.'),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              links: 'links',
+            },
+            prepare({ title, links }) {
+              const count = Array.isArray(links) ? links.length : 0
+
+              return {
+                title: title || 'Footer section',
+                subtitle: `${count} link${count === 1 ? '' : 's'}`,
+              }
+            },
+          },
+        },
+      ],
+      validation: (Rule) =>
+        Rule.max(6).warning('Use a small number of clear footer sections.'),
+    }),
+    defineField({
       name: 'footerLinks',
       title: 'Footer links',
       type: 'array',
-      group: 'navigation',
+      group: 'footer',
       of: [{ type: 'link' }],
     }),
     defineField({
@@ -755,6 +803,7 @@ export const siteSettings = defineType({
     },
   },
 })
+
 
 
 

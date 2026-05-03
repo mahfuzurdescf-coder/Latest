@@ -1,7 +1,7 @@
 ﻿import Link from 'next/link'
 
 import { LogoMark } from '@/components/brand/LogoMark'
-import type { NavLink, SiteSettings } from '@/types/sanity'
+import type { NavLink, SiteFooterSection, SiteSettings } from '@/types/sanity'
 
 interface FooterProps {
   settings: SiteSettings
@@ -79,7 +79,24 @@ function isExternalLink(link: NavLink) {
   return link.isExternal || /^https?:\/\//.test(link.href) || link.href.startsWith('mailto:')
 }
 
+function normalizeFooterSections(sections?: SiteFooterSection[]): FooterSection[] {
+  return (
+    sections
+      ?.map((section) => ({
+        title: section.title?.trim() || 'Links',
+        links:
+          section.links?.filter((link) => link?.href && getFooterLabel(link)) ??
+          [],
+      }))
+      .filter((section) => section.links.length > 0) ?? []
+  )
+}
+
 function getFooterSections(settings: SiteSettings): FooterSection[] {
+  const studioSections = normalizeFooterSections(settings.footerSections)
+
+  if (studioSections.length > 0) return studioSections
+
   const studioLinks =
     settings.footerLinks?.filter((link) => link?.href && getFooterLabel(link)) ??
     []
@@ -245,3 +262,4 @@ export function Footer({ settings }: FooterProps) {
     </footer>
   )
 }
+
