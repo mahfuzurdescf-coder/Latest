@@ -1,10 +1,16 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
-import type { RegistrationFormPublic } from '@/types/sanity'
+import { PAGE_CONTENT_BY_KEY_QUERY } from '@/lib/sanity/queries'
+import type {
+  NavLink,
+  PageContent,
+  PageSection,
+  RegistrationFormPublic,
+} from '@/types/sanity'
 
 type PageProps = {
   params: {
@@ -50,6 +56,7 @@ type EventRecord = {
 }
 
 const SITE_URL = 'https://www.descf.org'
+const PAGE_KEY = 'events'
 
 const eventBySlugQuery = `*[_type == "event" && coalesce(language, "bn") == "bn" && slug.current == $slug][0]{
   _id,
@@ -96,6 +103,74 @@ const eventBySlugQuery = `*[_type == "event" && coalesce(language, "bn") == "bn"
   }
 }`
 
+const fallbackHero = {
+  statusFallback: 'Upcoming',
+  statusSuffix: 'event',
+  description:
+    'Join DESCF for a conservation-focused event designed to support public awareness, community learning, and stronger human-wildlife coexistence.',
+  registerCta: { label: 'নিবন্ধন করুন', href: '#registration' },
+  contactCta: { label: 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন', href: '/contact' },
+  secondaryCta: { label: 'সব ইভেন্ট দেখুন', href: '/events' },
+}
+
+const fallbackSnapshot = {
+  eyebrow: 'Event snapshot',
+  dateLabel: 'Date',
+  timeLabel: 'Time',
+  locationLabel: 'Location',
+  timeMissing: 'Time to be announced',
+  locationMissing: 'Location to be announced',
+}
+
+const fallbackQuickInfo = {
+  joinCta: { label: 'যোগ দিন', href: '#registration' },
+  contactCta: { label: 'যোগাযোগ', href: '/contact' },
+}
+
+const fallbackBody = {
+  eyebrow: 'এই ইভেন্ট সম্পর্কে',
+  title: 'ইভেন্টের বিস্তারিত',
+  description:
+    'ইভেন্টের পূর্ণ বিবরণ প্রস্তুত করা হচ্ছে। এই পাতায় ইভেন্টের উদ্দেশ্য, অংশগ্রহণকারী, কার্যক্রম, শেখার বিষয়, নিরাপত্তা নোট এবং verified partner information যুক্ত করা যাবে।',
+}
+
+const fallbackShare = {
+  eyebrow: 'Share',
+  title: 'Share',
+  description:
+    'যারা সংরক্ষণভিত্তিক শেখার মাধ্যমে উপকৃত হতে পারেন, তাদের সঙ্গে এই ডিইএসসিএফ ইভেন্ট শেয়ার করুন।',
+  facebookLabel: 'Facebook',
+  whatsappLabel: 'WhatsApp',
+  linkLabel: 'লিংক খুলুন',
+}
+
+const fallbackSafety = {
+  eyebrow: 'নিরাপত্তা নোট',
+  title: 'Education first, no risky handling.',
+  description:
+    'DESCF event content should support public education and conservation awareness. It should not encourage risky wildlife handling, catching, crowding, or disturbance.',
+}
+
+const fallbackHelp = {
+  eyebrow: 'সহায়তা দরকার?',
+  title: 'এই ইভেন্ট সম্পর্কে প্রশ্ন আছে?',
+  description: 'For event-related questions, contact DESCF through the contact page.',
+  cta: { label: 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন', href: '/contact' },
+}
+
+const fallbackMoreEvents = {
+  eyebrow: 'সংযুক্ত থাকুন',
+  title: 'আরও ডিইএসসিএফ ইভেন্ট',
+  description:
+    'Follow upcoming awareness, conservation, field learning, and community engagement activities from DESCF.',
+  cta: { label: 'ইভেন্ট দেখুন', href: '/events' },
+}
+
+const fallbackNotFound = {
+  title: 'Event not found | DESCF',
+  description: 'This DESCF event could not be found.',
+}
+
 function eventUrl(slug: string) {
   return `${SITE_URL}/events/${slug}`
 }
@@ -105,6 +180,30 @@ async function getEvent(slug: string) {
     query: eventBySlugQuery,
     params: { slug },
   }) as Promise<EventRecord | null>
+}
+
+async function getEventsPageContent() {
+  return sanityFetch<PageContent | null>({
+    query: PAGE_CONTENT_BY_KEY_QUERY,
+    params: { pageKey: PAGE_KEY },
+    tags: ['pageContent'],
+  })
+}
+
+function getSection(sections: PageSection[], sectionId: string) {
+  return sections.find((section) => section.sectionId === sectionId)
+}
+
+function getLink(link: NavLink | undefined, fallback: NavLink) {
+  return {
+    label: link?.label || fallback.label,
+    href: link?.href || fallback.href,
+  }
+}
+
+function getCardText(section: PageSection | undefined, index: number, fallback: string) {
+  const card = section?.cards?.[index]
+  return card?.title || card?.eyebrow || card?.text || fallback
 }
 
 function toPlainText(value: unknown): string {
@@ -168,19 +267,19 @@ function getFullDescription(event: EventRecord) {
   )
 }
 
-function getHeroDescription(event: EventRecord) {
+function getHeroDescription(event: EventRecord, fallbackDescription: string) {
   return compactText(
     toPlainText(event.excerpt) ||
       toPlainText(event.summary) ||
       toPlainText(event.shortDescription) ||
       getFullDescription(event) ||
-      'Join DESCF for a conservation-focused event designed to support public awareness, community learning, and stronger human-wildlife coexistence.',
+      fallbackDescription,
     260
   )
 }
 
-function getMetaDescription(event: EventRecord) {
-  return compactText(getHeroDescription(event), 155)
+function getMetaDescription(event: EventRecord, fallbackDescription: string) {
+  return compactText(getHeroDescription(event, fallbackDescription), 155)
 }
 
 function getDateSource(event: EventRecord) {
@@ -234,7 +333,7 @@ function formatMonth(value?: string) {
 
 function formatTimeFromDate(value?: string) {
   const date = makeDate(value)
-  if (!date) return '—'
+  if (!date) return ''
 
   return new Intl.DateTimeFormat('en-US', {
     hour: 'numeric',
@@ -242,7 +341,7 @@ function formatTimeFromDate(value?: string) {
   }).format(date)
 }
 
-function getTimeRange(event: EventRecord) {
+function getTimeRange(event: EventRecord, fallback: string) {
   if (event.time) return event.time
   if (event.startTime && event.endTime) return `${event.startTime} – ${event.endTime}`
   if (event.startTime) return event.startTime
@@ -253,20 +352,15 @@ function getTimeRange(event: EventRecord) {
   if (start && end) return `${start} – ${end}`
   if (start) return start
 
-  return 'Time to be announced'
+  return fallback
 }
 
-function getLocation(event: EventRecord) {
-  return (
-    toPlainText(event.location) ||
-    toPlainText(event.venue) ||
-    toPlainText(event.place) ||
-    'Location to be announced'
-  )
+function getLocation(event: EventRecord, fallback: string) {
+  return toPlainText(event.location) || toPlainText(event.venue) || toPlainText(event.place) || fallback
 }
 
-function getStatus(event: EventRecord) {
-  const raw = event.eventStatus || event.status || 'Upcoming'
+function getStatus(event: EventRecord, fallback: string) {
+  const raw = event.eventStatus || event.status || fallback
   return raw
     .replace(/-/g, ' ')
     .replace(/\b\w/g, (letter) => letter.toUpperCase())
@@ -276,21 +370,11 @@ function hasRegistration(event: EventRecord) {
   return Boolean(event.registrationForm || event.registrationLink)
 }
 
-function renderParagraphs(text: string) {
-  const paragraphs = text
+function renderParagraphs(text: string, fallback: string) {
+  const paragraphs = (text || fallback)
     .split(/\n{2,}/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean)
-
-  if (!paragraphs.length) {
-    return (
-      <p>
-        ইভেন্টের পূর্ণ বিবরণ প্রস্তুত করা হচ্ছে। এই পাতায়
-        ইভেন্টের উদ্দেশ্য, অংশগ্রহণকারী, কার্যক্রম, শেখার বিষয়, নিরাপত্তা নোট এবং
-        verified partner information.
-      </p>
-    )
-  }
 
   return paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
 }
@@ -298,29 +382,43 @@ function renderParagraphs(text: string) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const event = await getEvent(params.slug)
+  const [event, page] = await Promise.all([getEvent(params.slug), getEventsPageContent()])
+  const notFoundSection = getSection(page?.sections ?? [], 'detail-not-found')
+  const heroSection = getSection(page?.sections ?? [], 'detail-hero')
+  const heroFallbackDescription = heroSection?.description || fallbackHero.description
 
   if (!event) {
     return buildMetadata({
-      title: 'Event not found | DESCF',
-      description: 'This DESCF event could not be found.',
+      title: notFoundSection?.title || fallbackNotFound.title,
+      description: notFoundSection?.description || fallbackNotFound.description,
       canonicalUrl: eventUrl(params.slug),
     })
   }
 
   return buildMetadata({
     title: `${getTitle(event)} | DESCF`,
-    description: getMetaDescription(event),
+    description: getMetaDescription(event, heroFallbackDescription),
     canonicalUrl: eventUrl(params.slug),
   })
 }
 
 export default async function EventDetailPage({ params }: PageProps) {
-  const event = await getEvent(params.slug)
+  const [event, page] = await Promise.all([getEvent(params.slug), getEventsPageContent()])
 
   if (!event) {
     notFound()
   }
+
+  const sections = page?.sections ?? []
+  const breadcrumbSection = getSection(sections, 'detail-breadcrumb')
+  const heroSection = getSection(sections, 'detail-hero')
+  const snapshotSection = getSection(sections, 'detail-snapshot')
+  const quickInfoSection = getSection(sections, 'detail-quick-info')
+  const bodySection = getSection(sections, 'detail-body')
+  const shareSection = getSection(sections, 'detail-share')
+  const safetySection = getSection(sections, 'detail-safety')
+  const helpSection = getSection(sections, 'detail-help')
+  const moreEventsSection = getSection(sections, 'detail-more-events')
 
   const title = getTitle(event)
   const slug = event.slug?.current || params.slug
@@ -329,15 +427,68 @@ export default async function EventDetailPage({ params }: PageProps) {
   const longDate = formatLongDate(dateSource)
   const day = formatDay(dateSource)
   const month = formatMonth(dateSource)
-  const timeRange = getTimeRange(event)
-  const location = getLocation(event)
-  const status = getStatus(event)
-  const heroDescription = getHeroDescription(event)
+
+  const dateLabel = getCardText(snapshotSection, 0, fallbackSnapshot.dateLabel)
+  const timeLabel = getCardText(snapshotSection, 1, fallbackSnapshot.timeLabel)
+  const locationLabel = getCardText(snapshotSection, 2, fallbackSnapshot.locationLabel)
+
+  const timeRange = getTimeRange(event, fallbackSnapshot.timeMissing)
+  const location = getLocation(event, fallbackSnapshot.locationMissing)
+  const status = getStatus(event, fallbackHero.statusFallback)
+  const statusSuffix = heroSection?.eyebrow || fallbackHero.statusSuffix
+  const heroFallbackDescription = heroSection?.description || fallbackHero.description
+  const heroDescription = getHeroDescription(event, heroFallbackDescription)
   const fullDescription = getFullDescription(event)
   const registrationAvailable = hasRegistration(event)
   const registrationTarget = registrationAvailable ? '#registration' : '/contact'
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
+
+  const homeLabel = getCardText(breadcrumbSection, 0, 'Home')
+  const eventsLabel = getCardText(breadcrumbSection, 1, 'Events')
+
+  const primaryCta = getLink(
+    heroSection?.primaryCta,
+    registrationAvailable
+      ? { label: fallbackHero.registerCta.label, href: registrationTarget }
+      : fallbackHero.contactCta
+  )
+  const secondaryCta = getLink(heroSection?.secondaryCta, fallbackHero.secondaryCta)
+
+  const snapshotEyebrow = snapshotSection?.eyebrow || fallbackSnapshot.eyebrow
+
+  const quickCta = getLink(
+    quickInfoSection?.primaryCta,
+    registrationAvailable
+      ? { label: fallbackQuickInfo.joinCta.label, href: registrationTarget }
+      : fallbackQuickInfo.contactCta
+  )
+
+  const bodyEyebrow = bodySection?.eyebrow || fallbackBody.eyebrow
+  const bodyTitle = bodySection?.title || fallbackBody.title
+  const bodyFallback = bodySection?.description || fallbackBody.description
+
+  const shareEyebrow = shareSection?.eyebrow || fallbackShare.eyebrow
+  const shareTitle = shareSection?.title || fallbackShare.title
+  const shareDescription = shareSection?.description || fallbackShare.description
+  const facebookLabel = getCardText(shareSection, 0, fallbackShare.facebookLabel)
+  const whatsappLabel = getCardText(shareSection, 1, fallbackShare.whatsappLabel)
+  const linkLabel = getCardText(shareSection, 2, fallbackShare.linkLabel)
+
+  const safetyEyebrow = safetySection?.eyebrow || fallbackSafety.eyebrow
+  const safetyTitle = safetySection?.title || fallbackSafety.title
+  const safetyDescription = safetySection?.description || fallbackSafety.description
+
+  const helpEyebrow = helpSection?.eyebrow || fallbackHelp.eyebrow
+  const helpTitle = helpSection?.title || fallbackHelp.title
+  const helpDescription = helpSection?.description || fallbackHelp.description
+  const helpCta = getLink(helpSection?.primaryCta, fallbackHelp.cta)
+
+  const moreEventsEyebrow = moreEventsSection?.eyebrow || fallbackMoreEvents.eyebrow
+  const moreEventsTitle = moreEventsSection?.title || fallbackMoreEvents.title
+  const moreEventsDescription =
+    moreEventsSection?.description || fallbackMoreEvents.description
+  const moreEventsCta = getLink(moreEventsSection?.primaryCta, fallbackMoreEvents.cta)
 
   return (
     <main>
@@ -345,11 +496,11 @@ export default async function EventDetailPage({ params }: PageProps) {
         <div className="container-site py-12 lg:py-14">
           <nav className="mb-8 text-sm text-earth-700" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-forest-800">
-              Home
+              {homeLabel}
             </Link>
             <span className="px-2">/</span>
             <Link href="/events" className="hover:text-forest-800">
-              Events
+              {eventsLabel}
             </Link>
             <span className="px-2">/</span>
             <span className="text-earth-950">{title}</span>
@@ -358,7 +509,7 @@ export default async function EventDetailPage({ params }: PageProps) {
           <div className="grid gap-9 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-center">
             <div className="max-w-3xl">
               <p className="mb-5 text-xs font-bold uppercase tracking-[0.38em] text-forest-800">
-                {status} event
+                {status} {statusSuffix}
               </p>
 
               <h1 className="max-w-3xl font-serif text-5xl leading-[0.98] tracking-[-0.03em] text-earth-950 sm:text-6xl lg:text-[4.8rem]">
@@ -370,30 +521,24 @@ export default async function EventDetailPage({ params }: PageProps) {
               </p>
 
               <div className="mt-7 flex flex-wrap gap-3">
-                <a
-                  href={registrationTarget}
-                  className="btn-primary"
-                >
-                  {registrationAvailable ? 'নিবন্ধন করুন' : 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন'}
+                <a href={primaryCta.href} className="btn-primary">
+                  {primaryCta.label}
                 </a>
-                <Link
-                  href="/events"
-                  className="btn-secondary"
-                >
-                  সব ইভেন্ট দেখুন
+                <Link href={secondaryCta.href} className="btn-secondary">
+                  {secondaryCta.label}
                 </Link>
               </div>
             </div>
 
             <aside className="rounded-[1.75rem] border border-earth-200 bg-white/90 p-5 shadow-card backdrop-blur">
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.32em] text-forest-800">
-                Event snapshot
+                {snapshotEyebrow}
               </p>
 
               <div className="space-y-3">
                 <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-earth-600">
-                    Date
+                    {dateLabel}
                   </p>
                   <p className="mt-2 font-serif text-[1.35rem] leading-snug text-earth-950">
                     {longDate}
@@ -402,7 +547,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
                 <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-earth-600">
-                    Time
+                    {timeLabel}
                   </p>
                   <p className="mt-2 font-serif text-[1.35rem] leading-snug text-earth-950">
                     {timeRange}
@@ -411,7 +556,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
                 <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-earth-600">
-                    Location
+                    {locationLabel}
                   </p>
                   <p className="mt-2 font-serif text-[1.35rem] leading-snug text-earth-950">
                     {location}
@@ -423,7 +568,7 @@ export default async function EventDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-<section className="border-b border-earth-200 bg-white">
+      <section className="border-b border-earth-200 bg-white">
         <div className="container-site py-5">
           <div className="grid gap-3 rounded-[1.75rem] border border-earth-200 bg-earth-50/80 p-3 sm:grid-cols-2 lg:grid-cols-[150px_1fr_1fr_1.2fr_150px]">
             <div className="flex items-center gap-4 rounded-2xl bg-white p-4">
@@ -439,66 +584,62 @@ export default async function EventDetailPage({ params }: PageProps) {
 
             <div className="rounded-2xl bg-white p-4">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-earth-600">
-                Date
+                {dateLabel}
               </p>
               <p className="mt-1 font-bold text-earth-950">{longDate}</p>
             </div>
 
             <div className="rounded-2xl bg-white p-4">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-earth-600">
-                Time
+                {timeLabel}
               </p>
               <p className="mt-1 font-bold text-earth-950">{timeRange}</p>
             </div>
 
             <div className="rounded-2xl bg-white p-4">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-earth-600">
-                Location
+                {locationLabel}
               </p>
               <p className="mt-1 font-bold text-earth-950">{location}</p>
             </div>
 
             <a
-              href={registrationTarget}
+              href={quickCta.href}
               className="grid place-items-center rounded-2xl bg-forest-700 px-5 py-4 text-center text-sm font-bold text-white transition hover:bg-forest-800"
             >
-              {registrationAvailable ? 'যোগ দিন' : 'যোগাযোগ'}
+              {quickCta.label}
             </a>
           </div>
         </div>
       </section>
 
-<section className="bg-earth-50">
+      <section className="bg-earth-50">
         <div className="mx-auto grid max-w-6xl gap-7 px-6 py-10 lg:grid-cols-[minmax(0,760px)_300px] lg:items-start">
           <div className="space-y-6">
             <article className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card lg:p-8">
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-forest-800">
-                এই ইভেন্ট সম্পর্কে
+                {bodyEyebrow}
               </p>
               <h2 className="font-serif text-[2.15rem] leading-tight tracking-[-0.02em] text-earth-950">
-                ইভেন্টের বিস্তারিত
+                {bodyTitle}
               </h2>
 
               <div className="mt-6 space-y-5 text-[1.03rem] leading-8 text-earth-850">
-                {renderParagraphs(fullDescription)}
+                {renderParagraphs(fullDescription, bodyFallback)}
               </div>
             </article>
-
-            
-
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-24">
             <section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
-                Share
+                {shareEyebrow}
               </p>
               <h2 className="font-serif text-2xl leading-tight text-earth-950">
-                Share
+                {shareTitle}
               </h2>
               <p className="mt-3 text-sm leading-6 text-earth-700">
-                যারা সংরক্ষণভিত্তিক শেখার মাধ্যমে উপকৃত হতে পারেন,
-                তাদের সঙ্গে এই ডিইএসসিএফ ইভেন্ট শেয়ার করুন।
+                {shareDescription}
               </p>
 
               <div className="mt-5 flex flex-wrap gap-2">
@@ -508,7 +649,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                   rel="noreferrer"
                   className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
                 >
-                  Facebook
+                  {facebookLabel}
                 </a>
                 <a
                   href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
@@ -516,74 +657,64 @@ export default async function EventDetailPage({ params }: PageProps) {
                   rel="noreferrer"
                   className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
                 >
-                  WhatsApp
+                  {whatsappLabel}
                 </a>
                 <a
                   href={url}
                   className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
                 >
-                  লিংক খুলুন
+                  {linkLabel}
                 </a>
               </div>
             </section>
 
-<section className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-5 shadow-card">
+            <section className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-amber-700">
-                নিরাপত্তা নোট
+                {safetyEyebrow}
               </p>
               <h2 className="font-serif text-2xl leading-tight text-earth-950">
-                Education first, no risky handling.
+                {safetyTitle}
               </h2>
               <p className="mt-4 text-sm leading-6 text-earth-700">
-                DESCF event content should support public education and
-                conservation awareness. It should not encourage risky wildlife
-                handling, catching, crowding, or disturbance.
+                {safetyDescription}
               </p>
             </section>
 
-<section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-card">
+            <section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
-                সহায়তা দরকার?
+                {helpEyebrow}
               </p>
               <h2 className="font-serif text-2xl leading-tight text-earth-950">
-                এই ইভেন্ট সম্পর্কে প্রশ্ন আছে?
+                {helpTitle}
               </h2>
               <p className="mt-3 text-sm leading-6 text-earth-700">
-                For event-related questions, contact DESCF through the contact
-                page.
+                {helpDescription}
               </p>
-              <Link
-                href="/contact"
-                className="btn-secondary mt-5"
-              >
-                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
+              <Link href={helpCta.href} className="btn-secondary mt-5">
+                {helpCta.label}
               </Link>
             </section>
           </aside>
         </div>
       </section>
 
-<section className="bg-earth-50">
+      <section className="bg-earth-50">
         <div className="container-site py-10">
           <div className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card lg:flex lg:items-center lg:justify-between lg:p-8">
             <div>
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-forest-800">
-                সংযুক্ত থাকুন
+                {moreEventsEyebrow}
               </p>
               <h2 className="font-serif text-3xl leading-tight text-earth-950">
-                আরও ডিইএসসিএফ ইভেন্ট
+                {moreEventsTitle}
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-earth-700">
-                Follow upcoming awareness, conservation, field learning, and
-                community engagement activities from DESCF.
+                {moreEventsDescription}
               </p>
             </div>
 
-            <Link
-              href="/events"
-              className="btn-primary mt-6 lg:mt-0"
-            >
-              ইভেন্ট দেখুন
+            <Link href={moreEventsCta.href} className="btn-primary mt-6 lg:mt-0">
+              {moreEventsCta.label}
             </Link>
           </div>
         </div>
@@ -591,9 +722,3 @@ export default async function EventDetailPage({ params }: PageProps) {
     </main>
   )
 }
-
-
-
-
-
-
