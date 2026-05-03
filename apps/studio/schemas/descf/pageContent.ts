@@ -1,9 +1,10 @@
-import { defineField, defineType } from 'sanity'
+﻿import { defineField, defineType } from 'sanity'
 
 const PAGE_KEYS = [
   { title: 'About', value: 'about' },
   { title: 'Mission', value: 'mission' },
   { title: 'Current Work', value: 'current-work' },
+  { title: 'Programmes', value: 'programmes' },
   { title: 'Governance', value: 'governance' },
   { title: 'Team', value: 'team' },
   { title: 'Contact', value: 'contact' },
@@ -167,3 +168,4 @@ export const pageContent = defineType({
     },
   },
 })
+
