@@ -7,6 +7,7 @@ const PAGE_KEYS = [
   { title: 'Programmes', value: 'programmes' },
   { title: 'Events', value: 'events' },
   { title: 'Donate', value: 'donate' },
+  { title: 'Strategic Priorities', value: 'strategic-priorities' },
   { title: 'Governance', value: 'governance' },
   { title: 'Team', value: 'team' },
   { title: 'Contact', value: 'contact' },
