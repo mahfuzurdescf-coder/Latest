@@ -374,13 +374,13 @@ export default async function EventDetailPage({ params }: PageProps) {
                   href={registrationTarget}
                   className="btn-primary"
                 >
-                  {registrationAvailable ? 'Register now' : 'Contact DESCF'}
+                  {registrationAvailable ? 'নিবন্ধন করুন' : 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন'}
                 </a>
                 <Link
                   href="/events"
                   className="btn-secondary"
                 >
-                  View all events
+                  সব ইভেন্ট দেখুন
                 </Link>
               </div>
             </div>
@@ -462,7 +462,7 @@ export default async function EventDetailPage({ params }: PageProps) {
               href={registrationTarget}
               className="grid place-items-center rounded-2xl bg-forest-700 px-5 py-4 text-center text-sm font-bold text-white transition hover:bg-forest-800"
             >
-              {registrationAvailable ? 'Join' : 'Contact'}
+              {registrationAvailable ? 'যোগ দিন' : 'যোগাযোগ'}
             </a>
           </div>
         </div>
@@ -522,7 +522,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                   href={url}
                   className="rounded-full border border-earth-200 px-4 py-2 text-sm font-bold text-earth-800 hover:bg-earth-50"
                 >
-                  Open link
+                  লিংক খুলুন
                 </a>
               </div>
             </section>
@@ -556,7 +556,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                 href="/contact"
                 className="btn-secondary mt-5"
               >
-                Contact DESCF
+                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
               </Link>
             </section>
           </aside>
@@ -583,7 +583,7 @@ export default async function EventDetailPage({ params }: PageProps) {
               href="/events"
               className="btn-primary mt-6 lg:mt-0"
             >
-              View events
+              ইভেন্ট দেখুন
             </Link>
           </div>
         </div>

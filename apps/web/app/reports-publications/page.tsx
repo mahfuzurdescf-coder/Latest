@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildMetadata } from '@/lib/seo'
@@ -20,8 +20,8 @@ const fallbackHero = {
   title: 'Reports that document conservation work with credibility.',
   description:
     'This section should become DESCF’s formal archive for reports, publications, field summaries, research communication, and public documents when they are ready for responsible release.',
-  primaryCta: { label: 'Back to resources', href: '/resources' },
-  secondaryCta: { label: 'Submit document', href: '/contact' },
+  primaryCta: { label: 'রিসোর্সে ফিরুন', href: '/resources' },
+  secondaryCta: { label: 'ডকুমেন্ট জমা দিন', href: '/contact' },
 }
 
 const standards = [
@@ -301,7 +301,7 @@ function FallbackReportsSections() {
                 href="/contact"
                 className="mt-8 inline-flex btn-secondary px-5 py-3 text-sm"
               >
-                Contact DESCF
+                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
               </Link>
             </div>
           </div>

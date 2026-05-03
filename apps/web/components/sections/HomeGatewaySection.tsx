@@ -11,9 +11,9 @@ const gateways = [
     label: 'Organisation Portfolio',
     title: 'DESCF as an institution',
     description:
-      "Explore DESCF's mission, current work, programmes, governance, team, and collaboration pathways.",
+      "ডিইএসসিএফ দেখুন's mission, current work, programmes, governance, team, and collaboration pathways.",
     href: '/about',
-    cta: 'Explore organisation',
+    cta: 'সংগঠন দেখুন',
     cardClass: 'border-forest-200 bg-white text-earth-950',
     labelClass: 'text-forest-700',
     ctaClass: 'text-forest-800 hover:text-forest-950',
@@ -35,7 +35,7 @@ const gateways = [
     description:
       "Browse DESCF's public-friendly snake guide with names, identification clues, safety notes, and species profiles.",
     href: '/bangladesh-wildlife/snakes',
-    cta: 'Explore snake database',
+    cta: 'সাপের ডাটাবেস দেখুন',
     cardClass: 'border-forest-900 bg-forest-950 text-white',
     labelClass: 'text-bark-300',
     ctaClass: 'text-bark-200 hover:text-white',
@@ -47,7 +47,7 @@ export function HomeGatewaySection() {
     <section className="border-b border-earth-200 bg-earth-50">
       <Container className="py-10 md:py-12 lg:py-14">
         <div className="mb-7 max-w-3xl">
-          <p className="section-label mb-3">Explore DESCF</p>
+          <p className="section-label mb-3">ডিইএসসিএফ দেখুন</p>
           <h2 className="font-serif text-h2 text-earth-950">
             Three connected spaces, one conservation identity.
           </h2>

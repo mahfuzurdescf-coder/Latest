@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildMetadata } from '@/lib/seo'
@@ -20,8 +20,8 @@ const fallbackHero = {
   title: 'Public knowledge that is useful, careful, and accountable.',
   description:
     'DESCF resources should work as a credible public knowledge system: reports, evidence, media material, safety-first explainers, and conservation learning documents arranged in one clear place.',
-  primaryCta: { label: 'Explore resources', href: '/evidence-resources' },
-  secondaryCta: { label: 'Contact DESCF', href: '/contact' },
+  primaryCta: { label: 'রিসোর্স দেখুন', href: '/evidence-resources' },
+  secondaryCta: { label: 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন', href: '/contact' },
 }
 
 const resourceCards = [
@@ -31,7 +31,7 @@ const resourceCards = [
     description:
       'A place for verified reports, institutional publications, field summaries, research notes, and public documents when DESCF is ready to publish them.',
     href: '/reports-publications',
-    cta: 'View reports',
+    cta: 'রিপোর্ট দেখুন',
   },
   {
     eyebrow: 'Evidence & Resources',
@@ -39,7 +39,7 @@ const resourceCards = [
     description:
       'Learning resources, safety notes, field evidence, explainers, and reference materials that support responsible public understanding.',
     href: '/evidence-resources',
-    cta: 'Explore evidence',
+    cta: 'তথ্যপ্রমাণ দেখুন',
   },
   {
     eyebrow: 'Media',
@@ -381,7 +381,7 @@ function FallbackResourcesSections() {
               href="/contact"
               className="mt-8 inline-flex btn-light px-6 py-3 text-sm md:mt-0"
             >
-              Share a resource
+              রিসোর্স শেয়ার করুন
             </Link>
           </div>
         </div>

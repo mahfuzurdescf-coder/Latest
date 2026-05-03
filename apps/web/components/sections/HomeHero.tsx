@@ -29,12 +29,12 @@ export function HomeHero({ curation }: HomeHeroProps) {
     'Deep Ecology and Snake Conservation Foundation works to strengthen wildlife conservation, snake awareness, ecological education, and human-wildlife coexistence in Bangladesh.'
 
   const primaryCta = curation?.primaryCta ?? {
-    label: 'Explore our work',
+    label: 'আমাদের কাজ দেখুন',
     href: '/current-work',
   }
 
   const secondaryCta = curation?.secondaryCta ?? {
-    label: 'Partner with DESCF',
+    label: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন',
     href: '/partner',
   }
 

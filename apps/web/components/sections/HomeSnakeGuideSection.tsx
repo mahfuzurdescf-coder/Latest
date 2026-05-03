@@ -48,14 +48,14 @@ export function HomeSnakeGuideSection() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/bangladesh-wildlife/snakes" variant="cta">
-                Explore snake database
+                সাপের ডাটাবেস দেখুন
               </Button>
               <Button
                 href="/prokriti-kotha"
                 variant="secondary"
                 className="border-forest-200 text-forest-50 hover:bg-white/10"
               >
-                Read related stories
+                সম্পর্কিত লেখা পড়ুন
               </Button>
             </div>
           </div>

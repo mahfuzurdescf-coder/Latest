@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
@@ -12,7 +12,7 @@ interface ShareButtonsProps {
 export function ShareButtons({
   title,
   description,
-  label = 'Share this content',
+  label = 'এই কনটেন্ট শেয়ার করুন',
 }: ShareButtonsProps) {
   const pathname = usePathname()
   const [currentUrl, setCurrentUrl] = useState('')
@@ -59,7 +59,7 @@ export function ShareButtons({
     <div className="rounded-2xl border border-earth-200 bg-white p-5 shadow-sm">
       <h2 className="font-serif text-xl text-earth-900">{label}</h2>
       <p className="mt-2 text-sm leading-6 text-earth-600">
-        Share this DESCF content with your community.
+        আপনার কমিউনিটির সঙ্গে ডিইএসসিএফ কনটেন্ট শেয়ার করুন।
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
