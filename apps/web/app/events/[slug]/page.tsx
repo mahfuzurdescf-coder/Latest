@@ -243,7 +243,7 @@ function formatTimeFromDate(value?: string) {
 
 function getTimeRange(event: EventRecord) {
   if (event.time) return event.time
-  if (event.startTime && event.endTime) return `${event.startTime} Ã¢â‚¬â€œ ${event.endTime}`
+  if (event.startTime && event.endTime) return `${event.startTime} – ${event.endTime}`
   if (event.startTime) return event.startTime
 
   const start = formatTimeFromDate(event.startAt || event.startDateTime)
@@ -590,4 +590,7 @@ export default async function EventDetailPage({ params }: PageProps) {
     </main>
   )
 }
+
+
+
 
