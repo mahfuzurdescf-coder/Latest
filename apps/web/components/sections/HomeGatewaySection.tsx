@@ -11,7 +11,7 @@ const gateways = [
     label: 'Organisation Portfolio',
     title: 'DESCF as an institution',
     description:
-      "ডিইএসসিএফ দেখুন's mission, current work, programmes, governance, team, and collaboration pathways.",
+      "ডিইএসসিএফের মিশন, চলমান কাজ, প্রোগ্রাম, গভর্নেন্স, টিম এবং সহযোগিতার পথগুলো দেখুন।",
     href: '/about',
     cta: 'সংগঠন দেখুন',
     cardClass: 'border-forest-200 bg-white text-earth-950',

@@ -226,7 +226,7 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
             আপনার ফিল্টারের সঙ্গে কোনো প্রজাতি মেলেনি
           </h2>
           <p className="mt-3 text-body text-earth-600">
-            Try changing the search term, venom status, or IUCN অবস্থা filter.
+            সার্চ শব্দ, বিষের অবস্থা বা IUCN ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন।
           </p>
         </div>
       )}
