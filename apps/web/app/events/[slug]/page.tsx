@@ -202,7 +202,7 @@ function makeDate(value?: string) {
 
 function formatLongDate(value?: string) {
   const date = makeDate(value)
-  if (!date) return 'Date to be announced'
+  if (!date) return '—'
 
   return new Intl.DateTimeFormat('en-US', {
     month: 'long',
@@ -213,7 +213,7 @@ function formatLongDate(value?: string) {
 
 function formatDay(value?: string) {
   const date = makeDate(value)
-  if (!date) return 'Ã¢â‚¬â€'
+  if (!date) return '—'
 
   return new Intl.DateTimeFormat('en-US', {
     day: '2-digit',
@@ -222,7 +222,7 @@ function formatDay(value?: string) {
 
 function formatMonth(value?: string) {
   const date = makeDate(value)
-  if (!date) return 'TBA'
+  if (!date) return '—'
 
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
@@ -233,7 +233,7 @@ function formatMonth(value?: string) {
 
 function formatTimeFromDate(value?: string) {
   const date = makeDate(value)
-  if (!date) return ''
+  if (!date) return '—'
 
   return new Intl.DateTimeFormat('en-US', {
     hour: 'numeric',
@@ -590,3 +590,4 @@ export default async function EventDetailPage({ params }: PageProps) {
     </main>
   )
 }
+
