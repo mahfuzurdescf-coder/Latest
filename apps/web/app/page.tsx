@@ -109,7 +109,7 @@ const websiteJsonLd = {
         <HomeProgrammes programmes={programmes} content={getHomepageSection('programmes')} />
         <HomeNewsroom posts={uniquePosts} content={getHomepageSection('newsroom')} />
         <HomeSnakeGuideSection content={getHomepageSection('snake-guide')} />
-        <HomeResources resources={resources} />
+        <HomeResources resources={resources} content={getHomepageSection('resources')} />
         <HomeCTA />
       </main>
     </>
