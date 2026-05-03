@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
@@ -8,16 +8,16 @@ import { urlForImage } from '@/lib/sanity/image'
 import type { ConservationStatus, SpeciesProfileCard, VenomStatus } from '@/types/sanity'
 
 const VENOM_FILTERS: { label: string; value: VenomStatus | 'all' }[] = [
-  { label: 'All venom status', value: 'all' },
-  { label: 'Non-venomous', value: 'non-venomous' },
-  { label: 'Mildly venomous', value: 'mildly-venomous' },
-  { label: 'Venomous', value: 'venomous' },
-  { label: 'Highly venomous', value: 'highly-venomous' },
-  { label: 'Unknown', value: 'unknown' },
+  { label: 'সব বিষের অবস্থা', value: 'all' },
+  { label: 'নির্বিষ', value: 'non-venomous' },
+  { label: 'মৃদু বিষধর', value: 'mildly-venomous' },
+  { label: 'বিষধর', value: 'venomous' },
+  { label: 'উচ্চমাত্রায় বিষধর', value: 'highly-venomous' },
+  { label: 'অজানা', value: 'unknown' },
 ]
 
 const IUCN_FILTERS: { label: string; value: ConservationStatus | 'all' }[] = [
-  { label: 'All IUCN status', value: 'all' },
+  { label: 'All IUCN অবস্থা', value: 'all' },
   { label: 'NE', value: 'NE' },
   { label: 'DD', value: 'DD' },
   { label: 'LC', value: 'LC' },
@@ -29,18 +29,18 @@ const IUCN_FILTERS: { label: string; value: ConservationStatus | 'all' }[] = [
 
 function formatVenomStatus(status?: string): string {
   const labels: Record<string, string> = {
-    'non-venomous': 'Non-venomous',
-    'mildly-venomous': 'Mildly venomous',
-    venomous: 'Venomous',
-    'highly-venomous': 'Highly venomous',
-    unknown: 'Unknown',
+    'non-venomous': 'নির্বিষ',
+    'mildly-venomous': 'মৃদু বিষধর',
+    venomous: 'বিষধর',
+    'highly-venomous': 'উচ্চমাত্রায় বিষধর',
+    unknown: 'অজানা',
   }
 
-  return status ? labels[status] || status : 'Unknown'
+  return status ? labels[status] || status : 'অজানা'
 }
 
 function formatIucnStatus(status?: string): string {
-  if (!status) return 'Not listed'
+  if (!status) return 'তালিকাভুক্ত নয়'
   return status
 }
 
@@ -102,20 +102,20 @@ function SpeciesCard({ species }: { species: SpeciesProfileCard }) {
           <div className="mt-5 flex flex-wrap gap-2 text-xs text-earth-500">
             {species.family && (
               <span className="rounded-full bg-earth-100 px-3 py-1">
-                Family: {species.family}
+                পরিবার: {species.family}
               </span>
             )}
 
             {species.bangladeshStatus && (
               <span className="rounded-full bg-earth-100 px-3 py-1">
-                BD: {species.bangladeshStatus}
+                বাংলাদেশ: {species.bangladeshStatus}
               </span>
             )}
           </div>
         
 
           <div className="mt-6 inline-flex text-sm font-semibold text-forest-800 transition group-hover:text-forest-950">
-            View species profile <span aria-hidden="true" className="ml-1">-&gt;</span>
+            প্রজাতি প্রোফাইল দেখুন <span aria-hidden="true" className="ml-1">-&gt;</span>
           </div>
         </div>
       </Link>
@@ -160,21 +160,21 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
         <div className="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
           <div>
             <label htmlFor="snake-search" className="mb-2 block text-sm font-medium text-earth-900">
-              Search the snake field guide
+              সাপের ফিল্ড গাইডে খুঁজুন
             </label>
             <input
               id="snake-search"
               type="search"
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Try Bangla, English, local name, scientific name, or family..."
+              placeholder="বাংলা নাম, ইংরেজি নাম, স্থানীয় নাম, বৈজ্ঞানিক নাম বা পরিবার দিয়ে খুঁজুন..."
               className="w-full rounded-xl border border-earth-200 bg-white px-4 py-3 text-sm text-earth-900 outline-none transition placeholder:text-earth-400 focus:border-forest-500 focus:ring-2 focus:ring-forest-100"
             />
           </div>
 
           <div>
             <label htmlFor="venom-filter" className="mb-2 block text-sm font-medium text-earth-900">
-              Venom status
+              বিষের অবস্থা
             </label>
             <select
               id="venom-filter"
@@ -192,7 +192,7 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
 
           <div>
             <label htmlFor="iucn-filter" className="mb-2 block text-sm font-medium text-earth-900">
-              IUCN status
+              IUCN অবস্থা
             </label>
             <select
               id="iucn-filter"
@@ -210,7 +210,7 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
         </div>
 
         <p className="mt-4 text-sm text-earth-500">
-          Showing {filteredSpecies.length} of {species.length}
+          দেখানো হচ্ছে {filteredSpecies.length} / মোট {species.length}
         </p>
       </div>
 
@@ -223,10 +223,10 @@ export function SnakeSpeciesBrowser({ species }: { species: SpeciesProfileCard[]
       ) : (
         <div className="mt-8 rounded-2xl border border-earth-200 bg-earth-50 p-8">
           <h2 className="font-serif text-2xl text-earth-900">
-            No species matched your filters
+            আপনার ফিল্টারের সঙ্গে কোনো প্রজাতি মেলেনি
           </h2>
           <p className="mt-3 text-body text-earth-600">
-            Try changing the search term, venom status, or IUCN status filter.
+            Try changing the search term, venom status, or IUCN অবস্থা filter.
           </p>
         </div>
       )}
