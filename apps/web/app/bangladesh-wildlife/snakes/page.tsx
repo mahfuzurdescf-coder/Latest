@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { SnakeSpeciesBrowser } from '@/components/wildlife/SnakeSpeciesBrowser'
@@ -119,7 +119,7 @@ export default async function BangladeshSnakesPage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center">
             <div className="max-w-4xl">
               <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">
-                Digital field guide ? Bangladesh Wildlife
+                Digital field guide — Bangladesh Wildlife
               </p>
 
               <h1 className="mt-5 font-serif text-[clamp(3.4rem,8vw,6.6rem)] leading-[0.96] tracking-tight text-white">
@@ -313,3 +313,4 @@ export default async function BangladeshSnakesPage() {
     </main>
   )
 }
+

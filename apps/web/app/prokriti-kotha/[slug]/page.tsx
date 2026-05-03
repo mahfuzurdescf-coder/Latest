@@ -245,7 +245,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
       <main id="main-content">
         <article>
-          <header className="bg-[#102414] text-white">
+          <header className="bg-forest-950 text-white">
             <div className="container-site py-16 sm:py-20 lg:py-24">
               <nav
                 aria-label="Breadcrumb"
@@ -311,14 +311,14 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                     {typeof article.readingTime === 'number' &&
                       article.readingTime > 0 && (
                         <>
-                          <span aria-hidden="true">?</span>
+                          <span aria-hidden="true">•</span>
                           <span>{article.readingTime} min read</span>
                         </>
                       )}
                   </div>
                 </div>
 
-                <div className="rounded-[2rem] border border-white/15 bg-white/10 p-3 shadow-2xl shadow-black/25">
+                <div className="rounded-[2rem] border border-white/15 bg-white/10 p-3 shadow-card-lg">
                   {coverImageUrl ? (
                     <figure className="overflow-hidden rounded-[1.5rem] bg-white/5">
                       <Image
@@ -335,7 +335,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                           {article.coverImage.caption}
                           {article.coverImage.caption &&
                           article.coverImage.credit
-                            ? ' ? '
+                            ? ' — '
                             : ''}
                           {article.coverImage.credit}
                         </figcaption>
@@ -516,6 +516,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
     </>
   )
 }
+
 
 
 
