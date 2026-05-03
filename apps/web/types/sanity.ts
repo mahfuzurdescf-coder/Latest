@@ -1,4 +1,4 @@
-﻿import type { PortableTextBlock } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/react'
 
 // --- Shared primitives --------------------------------------------------------
 
@@ -782,6 +782,7 @@ export type PageContentKey =
   | 'mission'
   | 'current-work'
   | 'programmes'
+  | 'events'
   | 'governance'
   | 'team'
   | 'contact'
@@ -873,4 +874,3 @@ export interface UiLabels {
   submissionFailed?: LocalizedLabel
   registrationFailed?: LocalizedLabel
 }
-
