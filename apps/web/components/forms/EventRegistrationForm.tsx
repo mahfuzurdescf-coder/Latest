@@ -11,6 +11,22 @@ interface EventRegistrationFormProps {
   eventTitle: string
 }
 
+const fallbackLabels = {
+  eyebrow: 'Registration',
+  closedTitle: 'Registration is closed',
+  closedMessage: 'Registration for this event is currently closed.',
+  titlePrefix: 'Register for',
+  deadline: 'Deadline',
+  selectPlaceholder: 'Select an option',
+  checkboxFallbackOption: 'Yes',
+  submitting: 'Submitting...',
+  submit: 'Submit registration',
+  requiredNote: 'Required fields are marked with an asterisk.',
+  error: 'Registration failed. Please check the form and try again.',
+  retryError: 'Registration failed. Please try again later.',
+  success: 'Thank you. Your registration has been received.',
+}
+
 function isDeadlinePassed(deadline?: string): boolean {
   if (!deadline) return false
 
@@ -43,6 +59,18 @@ export function EventRegistrationForm({
 }: EventRegistrationFormProps) {
   const fields = useMemo(() => form.fields ?? [], [form.fields])
   const isClosed = !form.isActive || isDeadlinePassed(form.deadline)
+
+  const eyebrowLabel = form.eyebrowLabel || fallbackLabels.eyebrow
+  const closedTitle = form.closedTitle || fallbackLabels.closedTitle
+  const deadlineLabel = form.deadlineLabel || fallbackLabels.deadline
+  const selectPlaceholder = form.selectPlaceholder || fallbackLabels.selectPlaceholder
+  const checkboxFallbackOption =
+    form.checkboxFallbackOption || fallbackLabels.checkboxFallbackOption
+  const submittingLabel = form.submittingLabel || fallbackLabels.submitting
+  const submitButtonLabel = form.submitButtonLabel || fallbackLabels.submit
+  const requiredNote = form.requiredNote || fallbackLabels.requiredNote
+  const errorMessage = form.errorMessage || fallbackLabels.error
+  const retryErrorMessage = form.retryErrorMessage || fallbackLabels.retryError
 
   const initialAnswers = useMemo(() => {
     return fields.reduce<Record<string, string>>((accumulator, field) => {
@@ -104,24 +132,17 @@ export function EventRegistrationForm({
 
       if (!response.ok || !result?.ok) {
         setStatus('error')
-        setFeedback(
-          result?.message ||
-            'Registration failed. Please check the form and try again.',
-        )
+        setFeedback(result?.message || errorMessage)
         setErrors(Array.isArray(result?.errors) ? result.errors : [])
         return
       }
 
       setStatus('success')
-      setFeedback(
-        result.message ||
-          form.successMessage ||
-          'Thank you. Your registration has been received.',
-      )
+      setFeedback(result.message || form.successMessage || fallbackLabels.success)
       setAnswers(initialAnswers)
     } catch {
       setStatus('error')
-      setFeedback('Registration failed. Please try again later.')
+      setFeedback(retryErrorMessage)
     }
   }
 
@@ -132,12 +153,10 @@ export function EventRegistrationForm({
   if (isClosed) {
     return (
       <div className="rounded-3xl border border-earth-200 bg-earth-50 p-6">
-        <p className="section-label mb-3">Registration</p>
-        <h2 className="font-serif text-2xl text-earth-950">
-          Registration is closed
-        </h2>
+        <p className="section-label mb-3">{eyebrowLabel}</p>
+        <h2 className="font-serif text-2xl text-earth-950">{closedTitle}</h2>
         <p className="mt-3 text-body-sm text-earth-700">
-          {form.closedMessage || 'Registration for this event is currently closed.'}
+          {form.closedMessage || fallbackLabels.closedMessage}
         </p>
       </div>
     )
@@ -146,9 +165,9 @@ export function EventRegistrationForm({
   return (
     <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-card">
       <div className="mb-6">
-        <p className="section-label mb-3">Registration</p>
+        <p className="section-label mb-3">{eyebrowLabel}</p>
         <h2 className="font-serif text-2xl text-earth-950">
-          {form.registrationTitle || `Register for ${eventTitle}`}
+          {form.registrationTitle || `${fallbackLabels.titlePrefix} ${eventTitle}`}
         </h2>
 
         {form.registrationIntro && (
@@ -159,7 +178,7 @@ export function EventRegistrationForm({
 
         {form.deadline && (
           <p className="mt-3 text-caption text-earth-500">
-            Deadline: {formatDeadline(form.deadline)}
+            {deadlineLabel}: {formatDeadline(form.deadline)}
           </p>
         )}
       </div>
@@ -228,7 +247,7 @@ export function EventRegistrationForm({
                   onChange={(event) => updateAnswer(field.fieldKey, event.target.value)}
                   className="mt-2 w-full rounded-2xl border border-earth-200 bg-white px-4 py-3 text-earth-950 outline-none transition focus:border-forest-700 focus:ring-4 focus:ring-forest-100"
                 >
-                  <option value="">Select an option</option>
+                  <option value="">{selectPlaceholder}</option>
                   {(field.options ?? []).map((option) => (
                     <option key={option} value={option}>
                       {option}
@@ -287,7 +306,7 @@ export function EventRegistrationForm({
                 <div className="mt-3 space-y-2">
                   {(field.options && field.options.length > 0
                     ? field.options
-                    : ['Yes']
+                    : [checkboxFallbackOption]
                   ).map((option) => (
                     <label
                       key={option}
@@ -376,15 +395,12 @@ export function EventRegistrationForm({
             disabled={status === 'submitting'}
             className="btn-primary disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {status === 'submitting' ? 'Submitting...' : 'Submit registration'}
+            {status === 'submitting' ? submittingLabel : submitButtonLabel}
           </button>
 
-          <p className="text-sm text-earth-500">
-            Required fields are marked with an asterisk.
-          </p>
+          <p className="text-sm text-earth-500">{requiredNote}</p>
         </div>
       </form>
     </div>
   )
 }
-

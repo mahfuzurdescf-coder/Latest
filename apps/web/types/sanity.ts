@@ -154,7 +154,7 @@ export interface Post {
   relatedPosts?: PostCard[]
 }
 
-// Lightweight card version â€” used in lists, grids
+// Lightweight card version Ã¢â‚¬â€ used in lists, grids
 export interface PostCard
   extends Pick<
     Post,
@@ -526,6 +526,16 @@ export interface RegistrationFormPublic {
   capacity?: number
   successMessage?: string
   closedMessage?: string
+  eyebrowLabel?: string
+  closedTitle?: string
+  deadlineLabel?: string
+  selectPlaceholder?: string
+  checkboxFallbackOption?: string
+  submittingLabel?: string
+  submitButtonLabel?: string
+  requiredNote?: string
+  errorMessage?: string
+  retryErrorMessage?: string
   fields?: PublicFormField[]
 }
 
