@@ -110,7 +110,7 @@ const websiteJsonLd = {
         <HomeNewsroom posts={uniquePosts} content={getHomepageSection('newsroom')} />
         <HomeSnakeGuideSection content={getHomepageSection('snake-guide')} />
         <HomeResources resources={resources} content={getHomepageSection('resources')} />
-        <HomeCTA />
+        <HomeCTA content={getHomepageSection('final-cta')} />
       </main>
     </>
   )
