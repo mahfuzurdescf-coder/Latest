@@ -320,6 +320,24 @@ export const HOMEPAGE_CURATION_QUERY = /* groq */ `
     },
     primaryCta,
     secondaryCta,
+    sections[]{
+      _key,
+      sectionId,
+      theme,
+      layout,
+      eyebrow,
+      title,
+      description,
+      cards[]{
+        _key,
+        eyebrow,
+        title,
+        text,
+        link
+      },
+      primaryCta,
+      secondaryCta
+    },
     featuredProgrammes[]->{
       ${PROGRAMME_CARD_FRAGMENT}
     },
