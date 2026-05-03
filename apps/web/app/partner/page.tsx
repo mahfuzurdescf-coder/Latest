@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -18,15 +18,15 @@ import type { NavLink, PageContent, PageSection, PartnerCard } from '@/types/san
 const PAGE_KEY = 'partner-with-us'
 
 const fallbackSeo = {
-  title: 'Partner With DESCF',
+  title: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন',
   description:
-    'Partner with DESCF on conservation awareness, research communication, education, media, and human-wildlife coexistence initiatives in Bangladesh.',
+    'ডিইএসসিএফের সঙ্গে যুক্ত হোন on conservation awareness, research communication, education, media, and human-wildlife coexistence initiatives in Bangladesh.',
   canonicalUrl: 'https://descf.org/partner',
 }
 
 const fallbackHero = {
   eyebrow: 'Partnership',
-  title: 'Partner with DESCF',
+  title: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন',
   description:
     'DESCF welcomes serious collaboration with institutions, researchers, educators, media professionals, conservation organisations, and community partners committed to biodiversity protection and human-wildlife coexistence.',
   primaryCta: { label: 'Email DESCF', href: `mailto:${SITE.contactEmail}` },
@@ -35,27 +35,27 @@ const fallbackHero = {
 
 const partnerJsonLd = buildBreadcrumbJSONLD([
   { name: 'Home', url: 'https://descf.org' },
-  { name: 'Partner With DESCF', url: 'https://descf.org/partner' },
+  { name: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন', url: 'https://descf.org/partner' },
 ])
 
 const PARTNERSHIP_AREAS = [
   {
-    title: 'Research and documentation',
+    title: 'গবেষণা ও ডকুমেন্টেশন',
     description:
       'Collaborate on biodiversity documentation, field learning, ecological communication, and responsible knowledge sharing.',
   },
   {
-    title: 'Education and awareness',
+    title: 'শিক্ষা ও সচেতনতা',
     description:
       'Develop awareness activities, learning materials, workshops, and public communication on snakes and wildlife.',
   },
   {
-    title: 'Media and storytelling',
+    title: 'মিডিয়া ও গল্পভিত্তিক যোগাযোগ',
     description:
       'Collaborate on ethical conservation storytelling, field notes, photo stories, interviews, and nature communication.',
   },
   {
-    title: 'Institutional support',
+    title: 'প্রাতিষ্ঠানিক সহায়তা',
     description:
       'Support DESCF through technical advice, resources, training, sponsorship, or long-term organisational collaboration.',
   },
@@ -330,7 +330,7 @@ function FallbackPartnerSections() {
         <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div>
             <SectionHeader
-              eyebrow="Collaboration areas"
+              eyebrow="সহযোগিতার ক্ষেত্র"
               title="Partnership should create practical conservation value"
               description="DESCF is best suited for collaborations that connect field learning, conservation communication, public awareness, and responsible storytelling."
             />
@@ -456,7 +456,7 @@ function PartnerRecordsSection({
           <EmptyState
             title="Partner records are being prepared"
             description="Published DESCF partner records will appear here after they are added in Sanity Studio."
-            actionLabel="Contact DESCF"
+            actionLabel="ডিইএসসিএফের সঙ্গে যোগাযোগ করুন"
             actionHref="/contact"
           />
         )}

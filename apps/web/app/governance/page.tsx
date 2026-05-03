@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
@@ -30,8 +30,8 @@ const fallbackHero = {
   title: 'Accountability systems for serious conservation work.',
   description:
     'DESCF’s governance page explains how the organisation approaches accountability, transparency, responsible communication, safeguarding, policy standards, and public trust.',
-  primaryCta: { label: 'View resources', href: '/resources' },
-  secondaryCta: { label: 'Governance contact', href: '/contact' },
+  primaryCta: { label: 'রিসোর্স দেখুন', href: '/resources' },
+  secondaryCta: { label: 'গভর্নেন্স যোগাযোগ', href: '/contact' },
 }
 
 type GovernanceDocument = {
@@ -61,7 +61,7 @@ const governanceAreas = [
   {
     eyebrow: 'Transparency',
     title: 'Readable public records',
-    text: 'Governance documents, policies, reports, and public notes should be presented with context, date, source, and document type wherever available.',
+    text: 'গভর্নেন্স ডকুমেন্ট, policies, reports, and public notes should be presented with context, date, source, and document type wherever available.',
   },
   {
     eyebrow: 'Communication',
@@ -352,7 +352,7 @@ function FallbackGovernanceSections({
       <section className="border-b border-earth-200 bg-white">
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="mb-10 max-w-3xl">
-            <p className="section-label mb-4">Governance framework</p>
+            <p className="section-label mb-4">গভর্নেন্স কাঠামো</p>
             <h2 className="text-h2 text-earth-950">
               Governance should make the organisation easier to evaluate.
             </h2>
@@ -422,7 +422,7 @@ function FallbackGovernanceSections({
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="section-label mb-4">Governance documents</p>
+              <p className="section-label mb-4">গভর্নেন্স ডকুমেন্ট</p>
               <h2 className="text-h2 text-earth-950">
                 Published documents should appear with context.
               </h2>
@@ -476,10 +476,10 @@ function FallbackGovernanceSections({
               ) : (
                 <div className="rounded-[1.5rem] border border-dashed border-earth-300 bg-white p-8">
                   <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-forest-800">
-                    No records yet
+                    এখনো কোনো রেকর্ড নেই
                   </p>
                   <h3 className="mt-4 font-serif text-3xl leading-tight text-earth-950">
-                    No governance documents published yet.
+                    এখনো কোনো গভর্নেন্স ডকুমেন্ট প্রকাশিত হয়নি।
                   </h3>
                   <p className="mt-4 text-body-sm text-earth-700">
                     Policies, governance notes, accountability documents, and
@@ -551,7 +551,7 @@ function FallbackGovernanceSections({
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <p className="mb-4 section-label text-gold-300">
-                  Governance contact
+                  গভর্নেন্স যোগাযোগ
                 </p>
                 <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-[-0.03em]">
                   Accountability improves when communication is clear.
@@ -564,13 +564,13 @@ function FallbackGovernanceSections({
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link href="/contact" className="btn-light px-5 py-3 text-sm">
-                  Contact DESCF
+                  ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
                 </Link>
                 <Link
                   href="/resources"
                   className="btn-outline-light px-5 py-3 text-sm"
                 >
-                  View resources
+                  রিসোর্স দেখুন
                 </Link>
               </div>
             </div>
@@ -633,7 +633,7 @@ export default async function GovernancePage() {
 
             <aside className="rounded-[2rem] border border-white/10 bg-forest-950 p-8 text-white shadow-card-lg">
               <p className="section-label text-gold-300">
-                Governance principle
+                গভর্নেন্স নীতি
               </p>
               <h2 className="mt-5 font-serif text-3xl leading-tight">
                 Trust is built through records, restraint, and clear standards.

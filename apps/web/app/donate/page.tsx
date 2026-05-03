@@ -10,37 +10,37 @@ import { buildMetadata } from '@/lib/seo'
 import { SITE } from '@/lib/site'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Support DESCF',
+  title: 'সহায়তা DESCF',
   description:
-    'Support DESCF’s conservation, public awareness, research communication, and human-wildlife coexistence work in Bangladesh.',
+    'সহায়তা DESCF’s conservation, public awareness, research communication, and human-wildlife coexistence work in Bangladesh.',
   canonicalUrl: 'https://descf.org/donate',
 })
 
 const donateJsonLd = buildBreadcrumbJSONLD([
   { name: 'Home', url: 'https://descf.org' },
-  { name: 'Support DESCF', url: 'https://descf.org/donate' },
+  { name: 'সহায়তা DESCF', url: 'https://descf.org/donate' },
 ])
 
 const SUPPORT_AREAS = [
   {
     title: 'Public awareness',
     description:
-      'Support educational communication that helps reduce fear, misinformation, and harmful responses toward snakes and wildlife.',
+      'সহায়তা educational communication that helps reduce fear, misinformation, and harmful responses toward snakes and wildlife.',
   },
   {
     title: 'Field documentation',
     description:
-      'Support conservation documentation, ecological learning, and responsible communication from field-based work.',
+      'সহায়তা conservation documentation, ecological learning, and responsible communication from field-based work.',
   },
   {
     title: 'Conservation storytelling',
     description:
-      'Support accessible nature communication that connects science, culture, and community awareness.',
+      'সহায়তা accessible nature communication that connects science, culture, and community awareness.',
   },
   {
     title: 'Institutional capacity',
     description:
-      'Support tools, materials, and organisational capacity needed for sustained conservation action.',
+      'সহায়তা tools, materials, and organisational capacity needed for sustained conservation action.',
   },
 ]
 
@@ -56,9 +56,9 @@ export default function DonatePage() {
         <section className="border-b border-earth-200 bg-earth-50">
           <Container className="section-padding-sm">
             <div className="max-w-3xl">
-              <p className="section-label mb-4">Support</p>
+              <p className="section-label mb-4">সহায়তা</p>
               <h1 className="font-serif text-h1 text-earth-950">
-                Support conservation work with DESCF
+                সহায়তা conservation work with DESCF
               </h1>
               <p className="mt-5 text-body-lg text-earth-700">
                 DESCF welcomes support from individuals, institutions, researchers,
@@ -74,9 +74,9 @@ export default function DonatePage() {
             <div className="grid gap-8 lg:grid-cols-[1fr_0.85fr]">
               <div>
                 <SectionHeader
-                  eyebrow="Why support matters"
+                  eyebrow="সহায়তা কেন গুরুত্বপূর্ণ"
                   title="Conservation needs long-term trust, communication, and field learning"
-                  description="Support can help DESCF continue responsible awareness, documentation, and conservation communication without overclaiming impact or making unverifiable promises."
+                  description="সহায়তা can help DESCF continue responsible awareness, documentation, and conservation communication without overclaiming impact or making unverifiable promises."
                 />
 
                 <div className="grid gap-5 md:grid-cols-2">
@@ -98,7 +98,7 @@ export default function DonatePage() {
               <Card className="self-start">
                 <CardContent className="p-8">
                   <h2 className="font-serif text-h3 text-earth-950">
-                    How to support
+                    কীভাবে সহায়তা করবেন
                   </h2>
 
                   <p className="mt-4 text-body text-earth-700">
@@ -122,7 +122,7 @@ export default function DonatePage() {
                       Email DESCF
                     </Button>
                     <Button href="/partner" variant="secondary">
-                      Partner with us
+                      আমাদের সঙ্গে যুক্ত হোন
                     </Button>
                   </div>
 
@@ -141,10 +141,10 @@ export default function DonatePage() {
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <p className="section-label mb-3 text-forest-300">
-                  Responsible support
+                  দায়িত্বশীল সহায়তা
                 </p>
                 <h2 className="font-serif text-h3 text-white">
-                  Support should strengthen conservation capacity, not create empty publicity.
+                  সহায়তা should strengthen conservation capacity, not create empty publicity.
                 </h2>
               </div>
 
@@ -152,7 +152,7 @@ export default function DonatePage() {
                 href="/contact"
                 className="inline-flex justify-center rounded-lg border border-forest-300 px-5 py-2.5 text-sm font-semibold text-forest-50 transition-colors hover:bg-forest-800"
               >
-                Contact DESCF
+                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
               </Link>
             </div>
           </Container>

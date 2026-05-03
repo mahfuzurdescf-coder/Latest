@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildMetadata } from '@/lib/seo'
@@ -9,18 +9,18 @@ import type { NavLink, PageContent, PageSection } from '@/types/sanity'
 const PAGE_KEY = 'evidence-resources'
 
 const fallbackSeo = {
-  title: 'Evidence & Resources | DESCF',
+  title: 'তথ্যপ্রমাণ ও রিসোর্স | DESCF',
   description:
     'DESCF evidence-based conservation resources, safety notes, explainers, and field learning materials.',
   canonicalUrl: 'https://descf.org/evidence-resources',
 }
 
 const fallbackHero = {
-  eyebrow: 'Evidence & Resources',
+  eyebrow: 'তথ্যপ্রমাণ ও রিসোর্স',
   title: 'Evidence-based learning for safer biodiversity awareness.',
   description:
     'This section should hold DESCF’s public explainers, learning resources, safety notes, field evidence, and conservation education materials in a structured, responsible format.',
-  primaryCta: { label: 'Back to resources', href: '/resources' },
+  primaryCta: { label: 'রিসোর্সে ফিরুন', href: '/resources' },
   secondaryCta: {
     label: 'Snake field guide',
     href: '/bangladesh-wildlife/snakes',
@@ -30,7 +30,7 @@ const fallbackHero = {
 const resourceTypes = [
   {
     label: 'Safety',
-    title: 'Snake and wildlife safety notes',
+    title: 'সাপ ও বন্যপ্রাণী নিরাপত্তা নোট',
     text: 'Public guidance should reduce fear, discourage risky handling, and support safer response.',
   },
   {
@@ -40,7 +40,7 @@ const resourceTypes = [
   },
   {
     label: 'Explainers',
-    title: 'Simple public education',
+    title: 'সহজ জনশিক্ষা',
     text: 'Complex biodiversity issues should be explained in language that general readers can understand.',
   },
 ]
@@ -286,7 +286,7 @@ function FallbackEvidenceSections() {
           <div className="rounded-[2rem] border border-dashed border-earth-300 bg-earth-50 p-10">
             <p className="section-label">Resource library</p>
             <h2 className="mt-4 font-serif text-4xl leading-tight text-earth-950">
-              Evidence resources are being prepared.
+              তথ্যপ্রমাণভিত্তিক রিসোর্স প্রস্তুত করা হচ্ছে।
             </h2>
             <p className="mt-5 max-w-3xl text-body text-earth-700">
               Later, Sanity can manage resource title, category, summary,
@@ -346,7 +346,7 @@ export default async function EvidenceResourcesPage() {
                 Resource principle
               </p>
               <h2 className="mt-5 font-serif text-3xl leading-tight text-white sm:text-4xl">
-                Education first. Panic never.
+                আগে শিক্ষা, আতঙ্ক নয়।
               </h2>
               <p className="mt-5 text-body-sm text-forest-100/75">
                 DESCF resources should help people understand nature before

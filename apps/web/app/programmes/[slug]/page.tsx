@@ -47,7 +47,7 @@ function getProgrammeDescription(programme: Programme) {
   return (
     programme.seoDescription ||
     programme.shortDescription ||
-    `DESCF programme profile: ${programme.title}.`
+    `ডিইএসসিএফ প্রোগ্রাম প্রোফাইল: ${programme.title}.`
   )
 }
 
@@ -153,7 +153,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
             </nav>
 
             <p className="section-label mb-4 text-bark-300">
-              DESCF programme profile
+              ডিইএসসিএফ প্রোগ্রাম প্রোফাইল
             </p>
 
             <h1 className="max-w-4xl font-serif text-h1 text-white">
@@ -166,7 +166,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
               </p>
             ) : (
               <p className="mt-6 max-w-2xl text-body-lg text-forest-50">
-                A DESCF programme profile for conservation awareness, public education,
+                A ডিইএসসিএফ প্রোগ্রাম প্রোফাইল for conservation awareness, public education,
                 field-informed learning, and responsible communication.
               </p>
             )}
@@ -197,7 +197,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
             ) : (
               <div className="flex aspect-[4/3] w-full items-center justify-center rounded-2xl bg-white/10 p-8 text-center">
                 <div>
-                  <p className="section-label mb-3 text-bark-300">Programme</p>
+                  <p className="section-label mb-3 text-bark-300">প্রোগ্রাম</p>
                   <p className="font-serif text-3xl text-white">{programme.title}</p>
                 </div>
               </div>
@@ -221,7 +221,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
           <article className="rounded-2xl border border-earth-200 bg-earth-50 p-6 shadow-sm">
             <p className="section-label mb-3">Focus</p>
             <h2 className="font-serif text-2xl text-earth-950">
-              Public conservation learning
+              জনসম্মুখে সংরক্ষণ শেখা
             </h2>
             <p className="mt-2 text-body-sm text-earth-700">
               Designed for awareness, education, and responsible communication.
@@ -241,7 +241,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
           <article className="rounded-2xl border border-bark-200 bg-bark-50 p-6 shadow-sm">
             <p className="section-label mb-3">Partnership</p>
             <h2 className="font-serif text-2xl text-earth-950">
-              Collaboration-ready
+              সহযোগিতার জন্য প্রস্তুত
             </h2>
             <p className="mt-2 text-body-sm text-earth-700">
               Built to support credible institutional collaboration.
@@ -253,7 +253,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
       <section className="border-b border-earth-200 bg-earth-50">
         <div className="container-site grid gap-8 py-16 md:grid-cols-[minmax(0,1fr)_360px] md:py-20">
           <article className="rounded-3xl border border-earth-200 bg-white p-7 shadow-card md:p-10">
-            <p className="section-label mb-4">Programme brief</p>
+            <p className="section-label mb-4">প্রোগ্রাম সংক্ষিপ্ত বিবরণ</p>
 
             {hasBody ? (
               <div className="prose prose-earth max-w-none">
@@ -276,7 +276,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
 
           <aside className="space-y-5">
             <div className="rounded-3xl border border-earth-200 bg-white p-6 shadow-sm">
-              <p className="section-label mb-3">Programme use</p>
+              <p className="section-label mb-3">প্রোগ্রামের ব্যবহার</p>
               <h2 className="font-serif text-2xl text-earth-950">
                 Designed for public clarity
               </h2>
@@ -287,7 +287,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
             </div>
 
             <div className="rounded-3xl border border-bark-200 bg-bark-50 p-6 shadow-sm">
-              <p className="section-label mb-3">Safety note</p>
+              <p className="section-label mb-3">নিরাপত্তা নোট</p>
               <p className="text-body-sm text-earth-800">
                 DESCF programme content should support education and awareness. It should not
                 encourage risky wildlife handling, catching, or disturbance.
@@ -298,7 +298,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
               href="/partner"
               className="inline-flex w-full items-center justify-center rounded-xl bg-forest-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-forest-800"
             >
-              Discuss collaboration
+              সহযোগিতা নিয়ে আলোচনা করুন
             </Link>
           </aside>
         </div>
@@ -310,7 +310,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
             <div>
               <p className="section-label mb-4">Key activities</p>
               <h2 className="font-serif text-h2 text-earth-950">
-                What this programme can include
+                এই প্রোগ্রামে যা থাকতে পারে
               </h2>
 
               {hasActivities ? (
@@ -340,7 +340,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
                       className="rounded-2xl border border-earth-200 bg-earth-50 p-5"
                     >
                       <p className="text-label font-semibold uppercase tracking-[0.18em] text-forest-700">
-                        Programme area {index + 1}
+                        প্রোগ্রাম ক্ষেত্র {index + 1}
                       </p>
                       <p className="mt-2 text-body text-earth-800">{activity}</p>
                     </article>
@@ -409,7 +409,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
 
             {relatedResources.length > 0 ? (
               <div>
-                <p className="section-label mb-4">Resources</p>
+                <p className="section-label mb-4">রিসোর্স</p>
                 <h2 className="font-serif text-h2 text-earth-950">
                   Documents and materials
                 </h2>
@@ -443,7 +443,7 @@ export default async function ProgrammeDetailPage({ params }: Props) {
                 href="/partner"
                 className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-forest-950 transition hover:bg-earth-100"
               >
-                Partner with DESCF
+                ডিইএসসিএফের সঙ্গে যুক্ত হোন
               </Link>
             </div>
           </div>

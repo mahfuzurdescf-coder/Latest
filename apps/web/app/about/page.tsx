@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
@@ -27,8 +27,8 @@ const fallbackHero = {
     'A conservation organisation built around learning, trust, and coexistence.',
   description:
     'Deep Ecology and Snake Conservation Foundation works at the intersection of biodiversity conservation, snake awareness, ecological education, responsible communication, and public engagement in Bangladesh.',
-  primaryCta: { label: 'Explore current work', href: '/current-work' },
-  secondaryCta: { label: 'Contact DESCF', href: '/contact' },
+  primaryCta: { label: 'চলমান কাজ দেখুন', href: '/current-work' },
+  secondaryCta: { label: 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন', href: '/contact' },
 }
 
 const workAreas = [
@@ -307,7 +307,7 @@ function FallbackAboutSections() {
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="section-label mb-4">Public standard</p>
+              <p className="section-label mb-4">জনসম্মুখে প্রকাশের মানদণ্ড</p>
               <h2 className="text-h2 text-earth-950">
                 The brand should feel calm, credible, and careful.
               </h2>
@@ -351,13 +351,13 @@ function FallbackAboutSections() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link href="/mission" className="btn-light px-5 py-3 text-sm">
-                  Mission & vision
+                  মিশন ও ভিশন
                 </Link>
                 <Link
                   href="/team"
                   className="btn-outline-light px-5 py-3 text-sm"
                 >
-                  Meet the team
+                  টিম দেখুন
                 </Link>
               </div>
             </div>

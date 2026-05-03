@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildMetadata } from '@/lib/seo'
@@ -16,12 +16,12 @@ const fallbackSeo = {
 }
 
 const fallbackHero = {
-  eyebrow: 'DESCF Media',
+  eyebrow: 'ডিইএসসিএফ মিডিয়া',
   title: 'Media communication without fear-based storytelling.',
   description:
     'This section should support journalists, media partners, institutions, and public communicators with approved information, responsible language, and conservation-focused context.',
-  primaryCta: { label: 'Back to resources', href: '/resources' },
-  secondaryCta: { label: 'Media contact', href: '/contact' },
+  primaryCta: { label: 'রিসোর্সে ফিরুন', href: '/resources' },
+  secondaryCta: { label: 'মিডিয়া যোগাযোগ', href: '/contact' },
 }
 
 const mediaStandards = [
@@ -256,7 +256,7 @@ function FallbackMediaSections() {
     <>
       <section className="border-b border-earth-200 bg-earth-50">
         <div className="container-site py-14 md:py-16 lg:py-20">
-          <p className="section-label">Media standard</p>
+          <p className="section-label">মিডিয়া মানদণ্ড</p>
           <h2 className="mt-4 max-w-3xl text-h2 text-earth-950">
             Public communication should reduce confusion, not create noise.
           </h2>
@@ -282,7 +282,7 @@ function FallbackMediaSections() {
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-8 md:grid-cols-[1fr_0.8fr]">
             <div className="rounded-[2rem] border border-dashed border-earth-300 bg-earth-50 p-10">
-              <p className="section-label">Media kit</p>
+              <p className="section-label">মিডিয়া কিট</p>
               <h2 className="mt-4 font-serif text-4xl leading-tight text-earth-950">
                 Approved media materials are being prepared.
               </h2>
@@ -306,7 +306,7 @@ function FallbackMediaSections() {
                 href="/contact"
                 className="mt-8 inline-flex btn-secondary px-5 py-3 text-sm"
               >
-                Contact DESCF
+                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
               </Link>
             </div>
           </div>
@@ -358,7 +358,7 @@ export default async function MediaPage() {
             </div>
 
             <div className="rounded-[2rem] border border-white/12 bg-white/[0.06] p-8 shadow-card-lg">
-              <p className="section-label text-gold-300">Media principle</p>
+              <p className="section-label text-gold-300">মিডিয়া নীতি</p>
               <h2 className="mt-5 font-serif text-3xl leading-tight text-white sm:text-4xl">
                 Communicate wildlife with accuracy, restraint, and
                 responsibility.

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { ContactForm } from '@/components/forms/ContactForm'
@@ -17,12 +17,12 @@ const fallbackSeo = {
 }
 
 const fallbackHero = {
-  eyebrow: 'Contact DESCF',
+  eyebrow: 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন',
   title: 'Start the conversation with clear purpose.',
   description:
     'Contact Deep Ecology and Snake Conservation Foundation for conservation collaboration, public education, media queries, institutional partnership, and responsible biodiversity communication in Bangladesh.',
   primaryCta: { label: 'Email DESCF', href: 'mailto:info@descf.org' },
-  secondaryCta: { label: 'Partner with DESCF', href: '/partner' },
+  secondaryCta: { label: 'ডিইএসসিএফের সঙ্গে যুক্ত হোন', href: '/partner' },
 }
 
 const contactChannels = [
@@ -417,7 +417,7 @@ function FallbackContactSections() {
             </div>
 
             <div className="rounded-[2rem] border border-gold-300/35 bg-white p-8 shadow-card md:p-10">
-              <p className="section-label">Public safety</p>
+              <p className="section-label">জননিরাপত্তা</p>
               <h3 className="mt-4 font-serif text-3xl leading-tight text-earth-950">
                 For wildlife situations, do not create risk for a photo.
               </h3>
@@ -455,7 +455,7 @@ function FallbackContactSections() {
               href="/partner"
               className="mt-8 inline-flex btn-light px-6 py-3 text-sm md:mt-0"
             >
-              Partner with DESCF
+              ডিইএসসিএফের সঙ্গে যুক্ত হোন
             </Link>
           </div>
         </div>
@@ -520,7 +520,7 @@ export default async function ContactPage() {
               </p>
 
               <div className="mt-8 rounded-2xl border border-gold-300/35 bg-gold-300/10 p-5">
-                <p className="text-sm font-bold text-gold-300">Safety note</p>
+                <p className="text-sm font-bold text-gold-300">নিরাপত্তা নোট</p>
                 <p className="mt-2 text-body-sm text-forest-100/75">
                   DESCF content is for education and conservation awareness. It
                   is not a snake handling, catching, or rescue manual.

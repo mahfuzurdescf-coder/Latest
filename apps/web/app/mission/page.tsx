@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildBreadcrumbJSONLD } from '@/lib/json-ld'
@@ -10,7 +10,7 @@ import type { NavLink, PageContent, PageSection } from '@/types/sanity'
 const PAGE_KEY = 'mission'
 
 const fallbackSeo = {
-  title: 'Mission & Vision',
+  title: 'মিশন ও ভিশন',
   description:
     'Read the mission, vision, and working principles of Deep Ecology and Snake Conservation Foundation.',
   canonicalUrl: 'https://descf.org/mission',
@@ -18,16 +18,16 @@ const fallbackSeo = {
 
 const jsonLd = buildBreadcrumbJSONLD([
   { name: 'Home', url: 'https://descf.org' },
-  { name: 'Mission & Vision', url: 'https://descf.org/mission' },
+  { name: 'মিশন ও ভিশন', url: 'https://descf.org/mission' },
 ])
 
 const fallbackHero = {
-  eyebrow: 'Mission & Vision',
+  eyebrow: 'মিশন ও ভিশন',
   title: 'Public conservation learning for safer coexistence.',
   description:
     'DESCF’s mission is to strengthen biodiversity awareness, snake conservation communication, field-informed learning, and responsible human-wildlife coexistence in Bangladesh.',
-  primaryCta: { label: 'View current work', href: '/current-work' },
-  secondaryCta: { label: 'Explore programmes', href: '/programmes' },
+  primaryCta: { label: 'চলমান কাজ দেখুন', href: '/current-work' },
+  secondaryCta: { label: 'প্রোগ্রাম দেখুন', href: '/programmes' },
 }
 
 const missionPoints = [
@@ -275,7 +275,7 @@ function FallbackMissionSections() {
       <section className="border-b border-earth-200 bg-white">
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="max-w-3xl">
-            <p className="section-label mb-4">Mission</p>
+            <p className="section-label mb-4">মিশন</p>
             <h2 className="text-h2 text-earth-950">
               Make conservation understandable, practical, and safe.
             </h2>
@@ -385,13 +385,13 @@ function FallbackMissionSections() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link href="/resources" className="btn-light px-5 py-3 text-sm">
-                  View resources
+                  রিসোর্স দেখুন
                 </Link>
                 <Link
                   href="/contact"
                   className="btn-outline-light px-5 py-3 text-sm"
                 >
-                  Contact DESCF
+                  ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
                 </Link>
               </div>
             </div>

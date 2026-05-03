@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { buildMetadata } from '@/lib/seo'
@@ -16,13 +16,13 @@ const fallbackSeo = {
 }
 
 const fallbackHero = {
-  eyebrow: 'DESCF Team',
+  eyebrow: 'ডিইএসসিএফ টিম',
   title:
     'People behind conservation learning, public awareness, and responsible action.',
   description:
     'DESCF’s team page should present the founder, working committee, advisors, ambassadors, and campus committees with verified profiles, clear roles, and responsible public representation.',
-  primaryCta: { label: 'Contact DESCF', href: '/contact' },
-  secondaryCta: { label: 'Partner with us', href: '/partner' },
+  primaryCta: { label: 'ডিইএসসিএফের সঙ্গে যোগাযোগ করুন', href: '/contact' },
+  secondaryCta: { label: 'আমাদের সঙ্গে যুক্ত হোন', href: '/partner' },
 }
 
 type ProfileCard = {
@@ -500,7 +500,7 @@ function FallbackTeamSections() {
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <p className="mb-4 section-label text-gold-300">
-                  Public representation
+                  জনসম্মুখে প্রতিনিধিত্ব
                 </p>
                 <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-[-0.03em]">
                   Team visibility should strengthen DESCF’s credibility.
@@ -512,7 +512,7 @@ function FallbackTeamSections() {
               </div>
 
               <Link href="/contact" className="btn-light px-5 py-3 text-sm">
-                Contact DESCF
+                ডিইএসসিএফের সঙ্গে যোগাযোগ করুন
               </Link>
             </div>
           </div>

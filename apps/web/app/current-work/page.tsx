@@ -85,7 +85,7 @@ export default function CurrentWorkPage() {
           <Container className="py-20 md:py-28">
             <div className="grid gap-12 lg:grid-cols-[1.05fr_0.85fr] lg:items-center">
               <div>
-                <p className="section-label mb-5 text-forest-300">Current work</p>
+                <p className="section-label mb-5 text-forest-300">চলমান কাজ</p>
                 <h1 className="max-w-4xl font-serif text-5xl leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
                   Conservation work with clear public purpose.
                 </h1>
@@ -97,14 +97,14 @@ export default function CurrentWorkPage() {
 
                 <div className="mt-9 flex flex-wrap gap-3">
                   <Button href="/programmes" variant="cta">
-                    View programmes
+                    প্রোগ্রাম দেখুন
                   </Button>
                   <Button
                     href="/bangladesh-wildlife/snakes"
                     variant="secondary"
                     className="border-white/25 text-white hover:bg-white/10"
                   >
-                    Explore snake guide
+                    সাপ গাইড দেখুন
                   </Button>
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default function CurrentWorkPage() {
                   <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
                     <p className="font-serif text-4xl text-white">1</p>
                     <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-earth-200">
-                      Public system
+                      জনসম্মুখের ব্যবস্থা
                     </p>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
@@ -250,7 +250,7 @@ export default function CurrentWorkPage() {
                     Partnership and next step
                   </p>
                   <h2 className="font-serif text-4xl leading-tight text-white sm:text-5xl">
-                    Current work becomes stronger when it is clear, useful, and accountable.
+                    চলমান কাজ becomes stronger when it is clear, useful, and accountable.
                   </h2>
                   <p className="mt-5 text-body text-earth-100">
                     Researchers, educators, institutions, media teams, and conservation
@@ -260,7 +260,7 @@ export default function CurrentWorkPage() {
 
                 <div className="flex flex-wrap gap-3">
                   <Button href="/partner" variant="cta">
-                    Partner with DESCF
+                    ডিইএসসিএফের সঙ্গে যুক্ত হোন
                   </Button>
                   <Button
                     href={`mailto:${SITE.contactEmail}`}

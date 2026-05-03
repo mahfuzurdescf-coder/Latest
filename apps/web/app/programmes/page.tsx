@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { ProgrammeCard } from '@/components/cards'
@@ -10,7 +10,7 @@ import type { ProgrammeCard as ProgrammeCardType, ProgrammeStatus } from '@/type
 export const metadata: Metadata = buildMetadata({
   title: 'Programmes',
   description:
-    'DESCF programmes connect snake conservation awareness, biodiversity documentation, conservation communication, education, and human-wildlife coexistence in Bangladesh.',
+    'ডিইএসসিএফ প্রোগ্রাম connect snake conservation awareness, biodiversity documentation, conservation communication, education, and human-wildlife coexistence in Bangladesh.',
   canonicalUrl: 'https://descf.org/programmes',
 })
 
@@ -63,14 +63,14 @@ export default async function ProgrammesPage() {
       <section className="border-b border-earth-200 bg-forest-950 text-white">
         <div className="container-site grid gap-12 py-20 md:grid-cols-[1.1fr_0.9fr] md:items-center lg:py-28">
           <div>
-            <p className="section-label mb-5 text-bark-300">DESCF programmes</p>
+            <p className="section-label mb-5 text-bark-300">ডিইএসসিএফ প্রোগ্রাম</p>
 
             <h1 className="max-w-4xl font-serif text-h1 text-white">
               Conservation work with institutional purpose.
             </h1>
 
             <p className="mt-6 max-w-2xl text-body-lg text-forest-50">
-              DESCF programmes connect awareness, biodiversity learning, field documentation,
+              ডিইএসসিএফ প্রোগ্রাম connect awareness, biodiversity learning, field documentation,
               public education, and human-wildlife coexistence through a clear conservation
               portfolio.
             </p>
@@ -80,13 +80,13 @@ export default async function ProgrammesPage() {
                 href="#programme-portfolio"
                 className="inline-flex items-center justify-center rounded-xl bg-bark-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-bark-600"
               >
-                Explore programmes
+                প্রোগ্রাম দেখুন
               </a>
               <Link
                 href="/partner"
                 className="inline-flex items-center justify-center rounded-xl border border-white/35 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
               >
-                Partner with DESCF
+                ডিইএসসিএফের সঙ্গে যুক্ত হোন
               </Link>
             </div>
           </div>
@@ -135,9 +135,9 @@ export default async function ProgrammesPage() {
       <section id="programme-portfolio" className="border-b border-earth-200 bg-white">
         <div className="container-site py-16 md:py-20">
           <div className="max-w-3xl">
-            <p className="section-label mb-4">Programme portfolio</p>
+            <p className="section-label mb-4">প্রোগ্রাম পোর্টফোলিও</p>
             <h2 className="font-serif text-h2 text-earth-950">
-              Published DESCF programmes
+              Published ডিইএসসিএফ প্রোগ্রাম
             </h2>
             <p className="mt-4 text-body text-earth-700">
               Programme records should help visitors understand DESCF’s work as a serious
@@ -167,7 +167,7 @@ export default async function ProgrammesPage() {
                 href="/partner"
                 className="mt-6 inline-flex items-center justify-center rounded-xl bg-forest-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-forest-800"
               >
-                Discuss programme collaboration
+                প্রোগ্রাম সহযোগিতা নিয়ে আলোচনা করুন
               </Link>
             </div>
           )}
@@ -177,7 +177,7 @@ export default async function ProgrammesPage() {
       <section className="border-b border-earth-200 bg-earth-50">
         <div className="container-site py-16 md:py-20">
           <div className="max-w-3xl">
-            <p className="section-label mb-4">Programme standard</p>
+            <p className="section-label mb-4">প্রোগ্রাম মানদণ্ড</p>
             <h2 className="font-serif text-h2 text-earth-950">
               What a DESCF programme page should communicate
             </h2>
@@ -219,7 +219,7 @@ export default async function ProgrammesPage() {
                 href="/partner"
                 className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-forest-950 transition hover:bg-earth-100"
               >
-                Partner with DESCF
+                ডিইএসসিএফের সঙ্গে যুক্ত হোন
               </Link>
             </div>
           </div>
