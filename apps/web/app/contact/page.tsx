@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
-import { PAGE_CONTENT_BY_KEY_QUERY } from '@/lib/sanity/queries'
-import type { NavLink, PageContent, PageSection } from '@/types/sanity'
+import { PAGE_CONTENT_BY_KEY_QUERY, UI_LABELS_QUERY } from '@/lib/sanity/queries'
+import type { NavLink, PageContent, PageSection, UiLabels } from '@/types/sanity'
 
 const PAGE_KEY = 'contact'
 
@@ -74,6 +74,13 @@ const inquiryTypes = [
     text: 'Share broad location, date, photo, and context where appropriate. Avoid publishing exact sensitive wildlife locations publicly.',
   },
 ]
+
+async function getUiLabels() {
+  return sanityFetch<UiLabels | null>({
+    query: UI_LABELS_QUERY,
+    tags: ['uiLabels'],
+  }).catch(() => null)
+}
 
 async function getContactPageContent() {
   return sanityFetch<PageContent | null>({
@@ -284,7 +291,8 @@ function StudioSections({ sections }: { sections: PageSection[] }) {
   )
 }
 
-function ContactFormSection() {
+async function ContactFormSection() {
+  const uiLabels = await getUiLabels()
   return (
     <section className="border-b border-earth-200 bg-white">
       <div className="container-site py-14 md:py-16 lg:py-20">
@@ -301,7 +309,7 @@ function ContactFormSection() {
             </p>
           </div>
 
-          <ContactForm />
+          <ContactForm uiLabels={uiLabels} />
         </div>
       </div>
     </section>
@@ -533,3 +541,4 @@ export default async function ContactPage() {
     </main>
   )
 }
+

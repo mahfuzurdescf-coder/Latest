@@ -2,6 +2,9 @@
 
 import { FormEvent, useState } from 'react'
 
+import { getUiLabel } from '@/lib/ui-labels'
+import type { UiLabels } from '@/types/sanity'
+
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 const PURPOSE_OPTIONS = [
@@ -36,7 +39,7 @@ const initialFormState: ContactFormState = {
   website: '',
 }
 
-export function ContactForm() {
+export function ContactForm({ uiLabels }: { uiLabels?: UiLabels | null }) {
   const [form, setForm] = useState<ContactFormState>(initialFormState)
   const [status, setStatus] = useState<FormStatus>('idle')
   const [feedback, setFeedback] = useState('')
@@ -76,7 +79,7 @@ export function ContactForm() {
         setStatus('error')
         setFeedback(
           result?.message ||
-            'Submission failed. Please check the form and try again.',
+            getUiLabel(uiLabels, 'submissionFailed'),
         )
         setErrors(Array.isArray(result?.errors) ? result.errors : [])
         return
@@ -85,12 +88,12 @@ export function ContactForm() {
       setStatus('success')
       setFeedback(
         result.message ||
-          'Thank you. Your message has been received.',
+          'ধন্যবাদ। আপনার বার্তাটি গ্রহণ করা হয়েছে।',
       )
       setForm(initialFormState)
     } catch {
       setStatus('error')
-      setFeedback('Submission failed. Please try again later.')
+      setFeedback(getUiLabel(uiLabels, 'submissionFailed'))
     }
   }
 
@@ -256,13 +259,14 @@ export function ContactForm() {
           disabled={status === 'submitting'}
           className="btn-primary disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {status === 'submitting' ? 'Sending...' : 'Send message'}
+          {status === 'submitting' ? getUiLabel(uiLabels, 'sending') : getUiLabel(uiLabels, 'submit')}
         </button>
 
         <p className="text-sm text-earth-500">
-          Required fields are marked with an asterisk.
+          আবশ্যিক ঘরগুলো তারকা চিহ্ন দিয়ে দেখানো হয়েছে।
         </p>
       </div>
     </form>
   )
 }
+
