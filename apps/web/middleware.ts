@@ -9,6 +9,9 @@ const legacyRedirects: Record<string, string> = {
   '/training': '/programmes',
   '/awareness': '/programmes',
   '/awareness-programmes': '/programmes',
+  '/green-initiative': '/programmes',
+  '/green-initiatives': '/programmes',
+  '/green-initiative-bangladesh': '/programmes',
   '/mission-vision': '/mission',
   '/partner-with-us': '/partner',
 }
@@ -47,3 +50,4 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }
+
