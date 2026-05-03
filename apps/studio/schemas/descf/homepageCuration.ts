@@ -1,4 +1,4 @@
-﻿import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export const homepageCuration = defineType({
   name: 'homepageCuration',
@@ -9,6 +9,7 @@ export const homepageCuration = defineType({
   groups: [
     { name: 'hero', title: 'Hero', default: true },
     { name: 'featured', title: 'Featured content' },
+    { name: 'sections', title: 'Homepage sections' },
     { name: 'cta', title: 'CTA' },
   ],
   fields: [
@@ -91,6 +92,18 @@ export const homepageCuration = defineType({
       group: 'cta',
       description:
         'Secondary homepage action button. Recommended examples: Partner with DESCF, Contact us.',
+    }),
+
+    defineField({
+      name: 'sections',
+      title: 'Editable homepage sections',
+      type: 'array',
+      group: 'sections',
+      description:
+        'Optional Studio overrides for homepage section text, cards, and buttons. If empty, the website uses safe fallback content.',
+      of: [{ type: 'pageSection' }],
+      validation: (Rule) =>
+        Rule.max(12).warning('Homepage should stay focused. Avoid too many sections.'),
     }),
 
     defineField({

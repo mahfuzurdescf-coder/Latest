@@ -1,4 +1,4 @@
-﻿import type { PortableTextBlock } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/react'
 
 // --- Shared primitives --------------------------------------------------------
 
