@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.shortName} — ${SITE.name}`,
+    default: `${SITE.shortName} â€” ${SITE.name}`,
     template: `%s | ${SITE.shortName}`,
   },
   description: SITE.description,
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
     locale: 'bn_BD',
     url: SITE.url,
     siteName: SITE.shortName,
-    title: `${SITE.shortName} — ${SITE.name}`,
+    title: `${SITE.shortName} â€” ${SITE.name}`,
     description: SITE.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE.shortName} — ${SITE.name}`,
+    title: `${SITE.shortName} â€” ${SITE.name}`,
     description: SITE.description,
   },
   robots: {
@@ -65,7 +65,21 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
+      
+{/* Google Analytics */}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QB65DP9R63"></script>
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QB65DP9R63');
+    `,
+  }}
+/>
+
+</head>
       <body className="flex min-h-screen flex-col bg-earth-50 text-earth-800">
         <SkipLink />
         <Header settings={safeSettings} />
@@ -75,4 +89,6 @@ export default async function RootLayout({
     </html>
   )
 }
+
+
 

@@ -9,6 +9,7 @@ import { HomeProgrammes } from '@/components/sections/HomeProgrammes'
 import { HomeResources } from '@/components/sections/HomeResources'
 import { HomeSnakeGuideSection } from '@/components/sections/HomeSnakeGuideSection'
 import { buildOrganizationJSONLD } from '@/lib/json-ld'
+import { SITE } from '@/lib/site'
 import { buildMetadata } from '@/lib/seo'
 import { sanityFetch } from '@/lib/sanity/client'
 import { HOME_PAGE_QUERY, HOMEPAGE_CURATION_QUERY } from '@/lib/sanity/queries'
@@ -86,12 +87,7 @@ const websiteJsonLd = {
     '@type': 'ImageObject',
     url: SITE.ogImage,
   },
-  sameAs: [
-    'https://www.facebook.com/descf',
-    'https://twitter.com/descf',
-    'https://www.instagram.com/descf',
-  ],
-  publisher: organizationJsonLd.publisher,
+  publisher: organizationJsonLd,
 }
 
   return (
