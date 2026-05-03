@@ -1,9 +1,16 @@
-import { Button } from '@/components/ui/Button'
+﻿import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
+import type { PageSection } from '@/types/sanity'
 
-const SNAKES_BD = '\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6\u09c7\u09b0 \u09b8\u09be\u09aa'
+const SNAKES_BD = 'বাংলাদেশের সাপ'
 
-const guidePoints = [
+type GuidePoint = {
+  label: string
+  title: string
+  description: string
+}
+
+const fallbackGuidePoints: GuidePoint[] = [
   {
     label: 'Identification',
     title: 'Names, clues, and species profiles',
@@ -24,7 +31,33 @@ const guidePoints = [
   },
 ]
 
-export function HomeSnakeGuideSection() {
+function buildGuidePoints(content?: PageSection): GuidePoint[] {
+  const cards = content?.cards?.filter(
+    (card) => card.title || card.text || card.eyebrow,
+  )
+
+  if (!cards?.length) return fallbackGuidePoints
+
+  return cards.slice(0, 3).map((card, index) => {
+    const fallback = fallbackGuidePoints[index] ?? fallbackGuidePoints[0]
+
+    return {
+      label: card.eyebrow || fallback.label,
+      title: card.title || fallback.title,
+      description: card.text || fallback.description,
+    }
+  })
+}
+
+interface HomeSnakeGuideSectionProps {
+  content?: PageSection
+}
+
+export function HomeSnakeGuideSection({ content }: HomeSnakeGuideSectionProps) {
+  const guidePoints = buildGuidePoints(content)
+  const primaryCta = content?.primaryCta
+  const secondaryCta = content?.secondaryCta
+
   return (
     <section className="relative overflow-hidden bg-forest-950 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(173,125,37,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(95,135,79,0.16),transparent_32%)]" />
@@ -33,29 +66,29 @@ export function HomeSnakeGuideSection() {
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold tracking-normal text-bark-300">
-              {SNAKES_BD}
+              {content?.eyebrow || SNAKES_BD}
             </p>
 
             <h2 className="mt-4 font-serif text-h2 leading-tight text-white">
-              A calm, scientific field guide to the snakes of Bangladesh.
+              {content?.title ||
+                'A calm, scientific field guide to the snakes of Bangladesh.'}
             </h2>
 
             <p className="mt-5 max-w-2xl text-body leading-8 text-forest-100">
-              DESCF&apos;s snake database should feel different from the institutional pages:
-              darker, focused, field-guide inspired, and built around learning, safety,
-              and respect for wildlife.
+              {content?.description ||
+                "DESCF's snake database should feel different from the institutional pages: darker, focused, field-guide inspired, and built around learning, safety, and respect for wildlife."}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="/bangladesh-wildlife/snakes" variant="cta">
-                সাপের ডাটাবেস দেখুন
+              <Button href={primaryCta?.href || '/bangladesh-wildlife/snakes'} variant="cta">
+                {primaryCta?.label || 'সাপের ডাটাবেস দেখুন'}
               </Button>
               <Button
-                href="/prokriti-kotha"
+                href={secondaryCta?.href || '/prokriti-kotha'}
                 variant="secondary"
                 className="border-forest-200 text-forest-50 hover:bg-white/10"
               >
-                সম্পর্কিত লেখা পড়ুন
+                {secondaryCta?.label || 'সম্পর্কিত লেখা পড়ুন'}
               </Button>
             </div>
           </div>
@@ -63,7 +96,7 @@ export function HomeSnakeGuideSection() {
           <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
             {guidePoints.map((item) => (
               <article
-                key={item.title}
+                key={`${item.label}-${item.title}`}
                 className="rounded-3xl border border-white/10 bg-white/[0.055] p-5 backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:border-bark-300/70 hover:bg-white/[0.08]"
               >
                 <p className="text-label font-semibold uppercase tracking-[0.18em] text-bark-300">

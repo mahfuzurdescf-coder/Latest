@@ -108,7 +108,7 @@ const websiteJsonLd = {
         <HomeTrustStrip content={getHomepageSection('trust-strip')} />
         <HomeProgrammes programmes={programmes} content={getHomepageSection('programmes')} />
         <HomeNewsroom posts={uniquePosts} content={getHomepageSection('newsroom')} />
-        <HomeSnakeGuideSection />
+        <HomeSnakeGuideSection content={getHomepageSection('snake-guide')} />
         <HomeResources resources={resources} />
         <HomeCTA />
       </main>
