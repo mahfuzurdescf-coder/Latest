@@ -52,6 +52,7 @@ export const deskStructure: StructureResolver = (S) =>
             .title('Website Management')
             .items([
               singletonItem(S, 'Site Settings', 'siteSettings', 'siteSettings'),
+              singletonItem(S, 'UI Labels', 'uiLabels', 'uiLabels'),
 
               singletonItem(
                 S,
@@ -474,6 +475,7 @@ export const deskStructure: StructureResolver = (S) =>
             ]),
         ),
     ])
+
 
 
 
