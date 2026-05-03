@@ -32,13 +32,13 @@ export function HomeProgrammes({ programmes }: HomeProgrammesProps) {
                 Explore current work
               </Button>
               <Button href="/programmes" variant="secondary">
-                View programmes
+                প্রোগ্রাম দেখুন
               </Button>
             </div>
           </div>
 
           <div className="rounded-3xl border border-earth-200/80 bg-earth-50 p-6 shadow-card md:p-8">
-            <p className="section-label mb-4">Featured programme</p>
+            <p className="section-label mb-4">নির্বাচিত প্রোগ্রাম</p>
 
             <h3 className="font-serif text-3xl leading-tight text-earth-950 md:text-4xl">
               {featured.title}

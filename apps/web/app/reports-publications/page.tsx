@@ -277,7 +277,7 @@ function FallbackReportsSections() {
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-start">
             <div>
-              <p className="section-label">Document archive</p>
+              <p className="section-label">ডকুমেন্ট আর্কাইভ</p>
               <h2 className="mt-4 text-h2 text-earth-950">
                 Published documents will appear here.
               </h2>
@@ -288,7 +288,7 @@ function FallbackReportsSections() {
             </div>
 
             <div className="rounded-[1.75rem] border border-dashed border-earth-300 bg-earth-50 p-8">
-              <p className="section-label">No records yet</p>
+              <p className="section-label">এখনো কোনো রেকর্ড নেই</p>
               <h3 className="mt-4 font-serif text-3xl leading-tight text-earth-950">
                 Publication library is being prepared.
               </h3>

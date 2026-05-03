@@ -23,7 +23,7 @@ export function HomeResources({ resources }: HomeResourcesProps) {
           />
 
           <Button href="/evidence-resources" variant="secondary">
-            View resources
+            রিসোর্স দেখুন
           </Button>
         </div>
 

@@ -285,8 +285,8 @@ function renderParagraphs(text: string) {
   if (!paragraphs.length) {
     return (
       <p>
-        Full event details are being prepared. This page should explain the
-        event purpose, audience, activities, learning outcome, safety note, and
+        ইভেন্টের পূর্ণ বিবরণ প্রস্তুত করা হচ্ছে। এই পাতায়
+        ইভেন্টের উদ্দেশ্য, অংশগ্রহণকারী, কার্যক্রম, শেখার বিষয়, নিরাপত্তা নোট এবং
         verified partner information.
       </p>
     )
@@ -473,10 +473,10 @@ export default async function EventDetailPage({ params }: PageProps) {
           <div className="space-y-6">
             <article className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card lg:p-8">
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.35em] text-forest-800">
-                About this event
+                এই ইভেন্ট সম্পর্কে
               </p>
               <h2 className="font-serif text-[2.15rem] leading-tight tracking-[-0.02em] text-earth-950">
-                Event details
+                ইভেন্টের বিস্তারিত
               </h2>
 
               <div className="mt-6 space-y-5 text-[1.03rem] leading-8 text-earth-850">
@@ -497,8 +497,8 @@ export default async function EventDetailPage({ params }: PageProps) {
                 Share
               </h2>
               <p className="mt-3 text-sm leading-6 text-earth-700">
-                Share this DESCF event with people who may benefit from
-                conservation learning.
+                যারা সংরক্ষণভিত্তিক শেখার মাধ্যমে উপকৃত হতে পারেন,
+                তাদের সঙ্গে এই ডিইএসসিএফ ইভেন্ট শেয়ার করুন।
               </p>
 
               <div className="mt-5 flex flex-wrap gap-2">
@@ -529,7 +529,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
 <section className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-amber-700">
-                Safety note
+                নিরাপত্তা নোট
               </p>
               <h2 className="font-serif text-2xl leading-tight text-earth-950">
                 Education first, no risky handling.
@@ -543,10 +543,10 @@ export default async function EventDetailPage({ params }: PageProps) {
 
 <section className="rounded-[1.35rem] border border-earth-200 bg-white p-5 shadow-card">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-earth-700">
-                Need help?
+                সহায়তা দরকার?
               </p>
               <h2 className="font-serif text-2xl leading-tight text-earth-950">
-                Questions about this event?
+                এই ইভেন্ট সম্পর্কে প্রশ্ন আছে?
               </h2>
               <p className="mt-3 text-sm leading-6 text-earth-700">
                 For event-related questions, contact DESCF through the contact
@@ -568,10 +568,10 @@ export default async function EventDetailPage({ params }: PageProps) {
           <div className="rounded-[1.75rem] border border-earth-200 bg-white p-7 shadow-card lg:flex lg:items-center lg:justify-between lg:p-8">
             <div>
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-forest-800">
-                Stay connected
+                সংযুক্ত থাকুন
               </p>
               <h2 className="font-serif text-3xl leading-tight text-earth-950">
-                More DESCF events
+                আরও ডিইএসসিএফ ইভেন্ট
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-earth-700">
                 Follow upcoming awareness, conservation, field learning, and

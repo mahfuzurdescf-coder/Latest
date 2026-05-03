@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -312,7 +312,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                       article.readingTime > 0 && (
                         <>
                           <span aria-hidden="true">•</span>
-                          <span>{article.readingTime} min read</span>
+                          <span>{article.readingTime} মিনিট পড়া</span>
                         </>
                       )}
                   </div>
@@ -376,12 +376,12 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                 </div>
 
                 <div className="rounded-2xl border border-earth-200 bg-white p-5">
-                  <p className="section-label mb-2">Reading time</p>
+                  <p className="section-label mb-2">পড়ার সময়</p>
                   <p className="font-serif text-2xl text-earth-950">
                     {typeof article.readingTime === 'number' &&
                     article.readingTime > 0
                       ? (
-                          <>{article.readingTime} min read</>
+                          <>{article.readingTime} মিনিট পড়া</>
                         )
                       : (
                           'Not specified'
@@ -404,11 +404,11 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                     <div>
                       <p className="section-label mb-4">Article body</p>
                       <h2 className="font-serif text-3xl text-earth-950">
-                        Full article content is being prepared
+                        সম্পূর্ণ লেখার কনটেন্ট প্রস্তুত করা হচ্ছে
                       </h2>
                       <p className="mt-4 max-w-2xl text-body leading-8 text-earth-700">
                         This article has been published, but the full body
-                        content has not been added in Sanity Studio yet.
+                        কনটেন্ট এখনো Sanity Studio-তে যোগ করা হয়নি।
                       </p>
                     </div>
                   )}
@@ -419,7 +419,7 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
                 <ShareButtons
                   title={article.title}
                   description={getArticleDescription(article)}
-                  label="Share this article"
+                  label="এই লেখা শেয়ার করুন"
                 />
 
                 <div className="rounded-2xl border border-earth-200 bg-earth-50 p-5">
@@ -455,10 +455,10 @@ export default async function ProkritiKothaArticlePage({ params }: Props) {
 
                 <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
                   <h2 className="font-serif text-xl text-earth-950">
-                    Editorial safety note
+                    সম্পাদকীয় নিরাপত্তা নোট
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-earth-700">
-                    DESCF content is for education and conservation awareness.
+                    ডিইএসসিএফ কনটেন্ট শিক্ষা ও সংরক্ষণ সচেতনতার জন্য।
                     It should not be treated as snake handling, catching, or
                     rescue instruction.
                   </p>

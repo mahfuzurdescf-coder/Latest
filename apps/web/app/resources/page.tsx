@@ -288,7 +288,7 @@ function FallbackResourcesSections() {
     <>
       <section className="border-b border-earth-200 bg-earth-50">
         <div className="container-site py-14 md:py-16 lg:py-20">
-          <p className="section-label">Resource sections</p>
+          <p className="section-label">রিসোর্স বিভাগ</p>
           <div className="mt-4 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end">
             <h2 className="text-h2 text-earth-950">
               Organise public material before publishing more of it.
@@ -330,7 +330,7 @@ function FallbackResourcesSections() {
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="grid gap-10 md:grid-cols-[0.85fr_1.15fr]">
             <div>
-              <p className="section-label">Publishing standard</p>
+              <p className="section-label">প্রকাশনার মানদণ্ড</p>
               <h2 className="mt-4 text-h2 text-earth-950">
                 Every resource should make DESCF more trustworthy.
               </h2>
@@ -365,7 +365,7 @@ function FallbackResourcesSections() {
         <div className="container-site py-14 md:py-16 lg:py-20">
           <div className="rounded-[2rem] bg-forest-950 p-8 text-white shadow-card-lg md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:p-12">
             <div>
-              <p className="section-label text-gold-300">Next step</p>
+              <p className="section-label text-gold-300">পরবর্তী ধাপ</p>
               <h2 className="mt-4 max-w-3xl text-h2">
                 Build resources slowly, but structure them correctly from day
                 one.
