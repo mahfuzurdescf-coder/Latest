@@ -77,6 +77,10 @@ export default async function HomePage() {
       ? curation.featuredResources
       : data.latestResources ?? []
 
+
+  const homepageSections = curation?.sections ?? []
+  const getHomepageSection = (sectionId: string) =>
+    homepageSections.find((section) => section.sectionId === sectionId)
   const organizationJsonLd = buildOrganizationJSONLD()
 const websiteJsonLd = {
   '@context': 'https://schema.org',
@@ -99,7 +103,7 @@ const websiteJsonLd = {
 
       <main id="main-content">
         <HomeHero curation={curation} />
-        <HomeGatewaySection />
+        <HomeGatewaySection content={getHomepageSection('gateway')} />
         <HomeTrustStrip />
         <HomeProgrammes programmes={programmes} />
         <HomeNewsroom posts={uniquePosts} />
